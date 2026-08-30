@@ -73,6 +73,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .sticky{position:sticky;top:0;z-index:5}.red{background:#d92323;color:#fff;text-align:center;padding:18px 14px;font-size:21px;font-weight:950}.red small{display:block;font-size:15px;margin-top:6px}.timer{background:#17182d;color:#b4b7c5;text-align:center;padding:13px;font-weight:850;letter-spacing:.08em}.timer b{color:#f04747;font-size:31px;margin-left:8px}
 .danger{background:linear-gradient(135deg,#b51f24,#d92727);color:#fff;border-radius:26px;padding:27px 22px;text-align:center}.danger h2{margin:0 0 12px}.reportcard{background:#fff;border-radius:25px;margin-top:20px;padding:23px}.dark{background:var(--dark);color:#e9eaf0}.dark h2{text-align:center}.r{display:flex;gap:14px;padding:17px 0;border-bottom:1px solid #323349;font-size:18px;line-height:1.45}.r b{color:#ff6969}.ico{min-width:46px;height:46px;border-radius:13px;background:#392a40;display:grid;place-items:center}
 .pill{text-align:center;border:1px solid #c84a55;color:#ff747c;border-radius:999px;padding:8px;font-weight:900;font-size:13px;letter-spacing:.06em}
+.urgentTip{margin-top:18px;background:#fef3c7;border:2px solid #f59e0b;border-radius:16px;padding:16px 18px;color:#78350f;font-weight:800;line-height:1.5;font-size:15.5px;animation:tipPulse 1.8s infinite}
+.urgentTip strong{color:#b45309}
+@keyframes tipPulse{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.35)}50%{box-shadow:0 0 0 9px rgba(245,158,11,0)}}
 .chat{margin-top:18px;background:#20323a;border-radius:20px;padding:17px}.chathead{font-weight:900;margin-bottom:16px}.bubble{padding:13px 14px;border-radius:15px;margin-top:9px;max-width:90%;line-height:1.35}.in{background:#303c42}.out{background:#0c5d52;margin-left:auto}.disclosure{text-align:center;color:#8995a5;font-size:12px;line-height:1.4;margin:20px 0}
 
 .meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
@@ -545,6 +548,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   <div class="r"><div class="ico">💬</div><div>“Quero te ver, to cheio de tesão 😈”</div></div>
   <div class="r"><div class="ico">💬</div><div>“Tá marcado! Mesmo lugar de sempre 😍”</div></div>
 </div>
+<div class="urgentTip">⚠️ <strong>IMPORTANTE:</strong> Se quiser flagrar a conversa, <span id="tipWhen">carregando...</span> é o momento com mais conversas suspeitas. Hoje é bom dia para você entender o que está acontecendo.</div>
 <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="trackCheckout()">🔓 VER RESULTADO COMPLETO</a>
 
 <div class="lockedGallery">
@@ -598,7 +602,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <script>
 const $=id=>document.getElementById(id);
-let analysisTimer, clockTimer, shown='', clockStarted=false, lastRegion='', visitorCity='';
+let analysisTimer, clockTimer, shown='', clockStarted=false, lastRegion='', visitorCity='', visitorRegion='';
 function trackCheckout(){
   try{ if(typeof fbq==='function') fbq('track','InitiateCheckout'); }catch(e){}
   try{ if(typeof gtag==='function') gtag('event','begin_checkout'); }catch(e){}
@@ -608,6 +612,7 @@ function trackCheckout(){
 (function fetchVisitorCity(){
   fetch('https://ipapi.co/json/').then(r=>r.json()).then(d=>{
     if(d && d.city) visitorCity = d.city;
+    if(d && d.region) visitorRegion = d.region;
   }).catch(()=>{});
 })();
 function fillLeakCity(){
@@ -658,11 +663,51 @@ const nearCityMap={
 function normalizeCityName(s){
   return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim();
 }
+// Capital de cada estado — usada como 2º/3º nível de fallback quando a
+// cidade exata do visitante não está no nearCityMap acima, cobrindo o
+// Brasil inteiro em vez de só as ~40 cidades mapeadas manualmente.
+const stateCapitalMap={
+  'acre':'Rio Branco','alagoas':'Maceió','amapa':'Macapá','amazonas':'Manaus',
+  'bahia':'Salvador','ceara':'Fortaleza','distrito federal':'Brasília',
+  'espirito santo':'Vitória','goias':'Goiânia','maranhao':'São Luís',
+  'mato grosso':'Cuiabá','mato grosso do sul':'Campo Grande','minas gerais':'Belo Horizonte',
+  'para':'Belém','paraiba':'João Pessoa','parana':'Curitiba','pernambuco':'Recife',
+  'piaui':'Teresina','rio de janeiro':'Rio de Janeiro','rio grande do norte':'Natal',
+  'rio grande do sul':'Porto Alegre','rondonia':'Porto Velho','roraima':'Boa Vista',
+  'santa catarina':'Florianópolis','sao paulo':'São Paulo','sergipe':'Aracaju','tocantins':'Palmas',
+};
 function fillNearProximity(){
   const el=$('nearProximity');
   if(!el) return;
-  const near=nearCityMap[normalizeCityName(visitorCity)];
+  const near = nearCityMap[normalizeCityName(visitorCity)]
+    || stateCapitalMap[normalizeCityName(visitorRegion)]
+    || stateCapitalMap[normalizeCityName(lastRegion)];
   el.textContent = near ? ('próximo de '+near) : 'a poucos quilômetros deste dispositivo';
+}
+// Sugere "o próximo período do dia" (manhã→tarde→noite→madrugada, com
+// madrugada já caindo no dia seguinte) como o "momento com mais
+// conversas suspeitas" — sempre calculado a partir da hora real de agora.
+const WEEKDAYS=['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+function periodOfHour(h){
+  if(h<6) return 'madrugada';
+  if(h<12) return 'manhã';
+  if(h<18) return 'tarde';
+  return 'noite';
+}
+function nextPeriod(p){
+  if(p==='madrugada') return {period:'manhã',addDay:0};
+  if(p==='manhã') return {period:'tarde',addDay:0};
+  if(p==='tarde') return {period:'noite',addDay:0};
+  return {period:'madrugada',addDay:1};
+}
+function fillUrgentTip(){
+  const el=$('tipWhen');
+  if(!el) return;
+  const now=new Date();
+  const nxt=nextPeriod(periodOfHour(now.getHours()));
+  const d=new Date(now);
+  d.setDate(d.getDate()+nxt.addDay);
+  el.textContent = WEEKDAYS[d.getDay()]+' de '+nxt.period;
 }
 function digits(v){return v.replace(/\D/g,'')}
 function isObviousFakeNumber(d){
@@ -714,6 +759,7 @@ function show(n){
         if(!clockStarted){ clockStarted=true; beginClock(); }
         fillLeakCity();
         fillNearProximity();
+        fillUrgentTip();
       }
       try { window.scrollTo({top:0,left:0,behavior:'auto'}); } catch(e) { window.scrollTo(0,0); }
     }
