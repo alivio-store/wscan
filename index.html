@@ -72,7 +72,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 /* relatório */
 .sticky{position:sticky;top:0;z-index:5}.red{background:#d92323;color:#fff;text-align:center;padding:18px 14px;font-size:21px;font-weight:950}.red small{display:block;font-size:15px;margin-top:6px}.timer{background:#17182d;color:#b4b7c5;text-align:center;padding:13px;font-weight:850;letter-spacing:.08em}.timer b{color:#f04747;font-size:31px;margin-left:8px}
 .danger{background:linear-gradient(135deg,#b51f24,#d92727);color:#fff;border-radius:26px;padding:27px 22px;text-align:center}.danger h2{margin:0 0 12px}.reportcard{background:#fff;border-radius:25px;margin-top:20px;padding:23px}.dark{background:var(--dark);color:#e9eaf0}.dark h2{text-align:center}.r{display:flex;gap:14px;padding:17px 0;border-bottom:1px solid #323349;font-size:18px;line-height:1.45}.r b{color:#ff6969}.ico{min-width:46px;height:46px;border-radius:13px;background:#392a40;display:grid;place-items:center}
-.complete{background:#118577;color:#fff;text-align:center;font-size:20px}.complete strong{display:block;font-size:25px;margin-bottom:8px}
 .pill{text-align:center;border:1px solid #c84a55;color:#ff747c;border-radius:999px;padding:8px;font-weight:900;font-size:13px;letter-spacing:.06em}
 .chat{margin-top:18px;background:#20323a;border-radius:20px;padding:17px}.chathead{font-weight:900;margin-bottom:16px}.bubble{padding:13px 14px;border-radius:15px;margin-top:9px;max-width:90%;line-height:1.35}.in{background:#303c42}.out{background:#0c5d52;margin-left:auto}.disclosure{text-align:center;color:#8995a5;font-size:12px;line-height:1.4;margin:20px 0}
 
@@ -173,29 +172,42 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   gap:8px;
 }
 .printBubble{
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
   max-width:78%;
-  padding:9px 13px;
+  padding:8px 12px 6px;
   font-weight:700;
   font-size:14.5px;
   line-height:1.35;
   box-shadow:0 4px 14px rgba(0,0,0,.3);
 }
+.printBubble .msgText{flex:1}
+.printBubble .msgTime{flex-shrink:0;font-size:10.5px;font-weight:600;opacity:.75;white-space:nowrap}
 .printBubble.in{
   align-self:flex-start;
   background:#202c33;
   color:#e9edef;
   border-radius:4px 14px 14px 14px;
 }
+.printBubble.in .msgTime{color:#8696a0}
 .printBubble.out{
   align-self:flex-end;
   background:#005c4b;
   color:#fff;
   border-radius:14px 4px 14px 14px;
 }
+.printBubble.out .msgTime{color:#d8fdd2}
 .printBubble.blur{
   filter:blur(5.5px);
   user-select:none;
 }
+.printBubble.audioMsg{align-items:center;gap:10px;padding:8px 14px 8px 8px}
+.audioPlay{
+  flex-shrink:0;width:30px;height:30px;border-radius:50%;
+  background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:12px;
+}
+.audioWave{flex:1;letter-spacing:1px;font-size:15px;line-height:1;opacity:.85;white-space:nowrap;overflow:hidden}
 .lockedGallery{
   margin-top:22px;
   background:#fff;
@@ -488,7 +500,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 </section>
 
 <section id="s4" class="screen">
-<div class="sticky"><div class="red">⚠ ALERTA DE EMERGÊNCIA<small>O resultado da análise será removido quando o contador terminar.</small></div><div class="timer">RESULTADO DISPONÍVEL POR <b id="clock">09:42</b></div></div>
+<div class="sticky"><div class="red">⚠ ALERTA DE EMERGÊNCIA<small>O resultado da análise será removido quando o contador terminar.</small></div><div class="timer">ANÁLISE DE <span class="dyn"></span> SERÁ DELETADA EM <b id="clock">09:42</b></div></div>
 <div class="wrap">
 <div class="danger"><h2>⚠ SEU RELACIONAMENTO PODE ESTAR EM PERIGO!</h2><p>Foram sinalizados conteúdos suspeitos associados ao número <strong class="dyn"></strong>.</p></div>
 <div class="reportcard">
@@ -501,17 +513,17 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   </div>
   <div style="margin-top:16px;color:#5f6f82;font-weight:800;font-size:15px">Conseguimos recuperar um print:</div>
   <div class="printLeak">
-    <div class="printBubble in blur">Oi, sumiu 👀</div>
-    <div class="printBubble out blur">To sem tempo hoje, depois te ligo</div>
-    <div class="printBubble in blur">Não esquece de mim 🙈</div>
-    <div class="printBubble out blur">Jamais esqueceria</div>
-    <div class="printBubble in blur">Vi suas fotos novas 😍</div>
-    <div class="printBubble in">Estou com saudade ❤️</div>
+    <div class="printBubble in blur"><span class="msgText">Oi, sumiu 👀</span><span class="msgTime">21:32</span></div>
+    <div class="printBubble out blur"><span class="msgText">To sem tempo hoje, depois te ligo</span><span class="msgTime">21:33</span></div>
+    <div class="printBubble in blur audioMsg"><span class="audioPlay">▶</span><span class="audioWave">▂▅▇▃▆▂▇▄▅▂▆▃▇▄</span><span class="msgTime">0:41</span></div>
+    <div class="printBubble out blur"><span class="msgText">Jamais esqueceria</span><span class="msgTime">21:38</span></div>
+    <div class="printBubble in blur"><span class="msgText">Vi suas fotos novas 😍</span><span class="msgTime">21:44</span></div>
+    <div class="printBubble in"><span class="msgText">Estou com saudade ❤️</span><span class="msgTime">21:47</span></div>
   </div>
 </div>
 
 <div class="reportcard" style="text-align:center;color:#68788a;line-height:1.55;font-size:18px">
-  O sistema de dados detectou que este número está se comunicando frequentemente com uma pessoa localizada a aproximadamente <strong style="color:#ef4444">8 km deste dispositivo</strong>.
+  O sistema de dados detectou que este número está se comunicando frequentemente com uma pessoa localizada <strong id="nearProximity" style="color:#ef4444">a poucos quilômetros deste dispositivo</strong>.
   <div style="margin-top:14px">
     <span class="live" style="background:#effff6;color:#078d77;border:1px solid #72e4ad">Precisão do relatório: 98%</span>
   </div>
@@ -525,7 +537,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <div class="r"><div class="ico">👁</div><div><b>9 imagens</b> de visualização única foram sinalizadas</div></div>
 <div class="r"><div class="ico">☎</div><div><b>2 conversas arquivadas</b> foram marcadas como suspeitas</div></div>
 </div>
-<div class="reportcard complete"><strong>Análise 100% concluída!</strong>Encontramos conteúdo que merece sua atenção.</div>
 <div class="reportcard dark">
 <div class="pill">● PADRÕES DE CONVERSA IDENTIFICADOS</div>
 <h2 style="text-align:left">Algumas frases se repetem em conversas entre fevereiro e maio de 2026</h2>
@@ -603,6 +614,56 @@ function fillLeakCity(){
   const el=$('leakCity');
   if(el) el.textContent = visitorCity || lastRegion || 'sua região';
 }
+// Cidade vizinha "sugerida" pra cada cidade grande detectada por IP —
+// não é geolocalização real, é só uma cidade próxima conhecida.
+const nearCityMap={
+  'cabo frio':'Búzios','buzios':'Cabo Frio',
+  'niteroi':'São Gonçalo','sao goncalo':'Niterói',
+  'rio de janeiro':'Niterói','duque de caxias':'Nova Iguaçu','nova iguacu':'Duque de Caxias',
+  'petropolis':'Teresópolis','teresopolis':'Petrópolis',
+  'fortaleza':'Caucaia','caucaia':'Fortaleza','maracanau':'Fortaleza',
+  'sao paulo':'Guarulhos','guarulhos':'São Paulo',
+  'campinas':'Jundiaí','jundiai':'Campinas',
+  'santos':'São Vicente','sao vicente':'Santos',
+  'osasco':'São Paulo',
+  'santo andre':'São Bernardo do Campo','sao bernardo do campo':'Santo André',
+  'sorocaba':'Itu',
+  'belo horizonte':'Contagem','contagem':'Belo Horizonte',
+  'uberlandia':'Uberaba','uberaba':'Uberlândia',
+  'juiz de fora':'Barbacena',
+  'salvador':'Lauro de Freitas','lauro de freitas':'Salvador','feira de santana':'Salvador',
+  'porto alegre':'Canoas','canoas':'Porto Alegre',
+  'caxias do sul':'Bento Gonçalves',
+  'curitiba':'São José dos Pinhais',
+  'londrina':'Cambé','maringa':'Sarandi',
+  'florianopolis':'São José','sao jose':'Florianópolis',
+  'joinville':'Jaraguá do Sul','blumenau':'Gaspar',
+  'recife':'Olinda','olinda':'Recife',
+  'jaboatao dos guararapes':'Recife','caruaru':'Recife',
+  'belem':'Ananindeua','ananindeua':'Belém',
+  'manaus':'Iranduba',
+  'goiania':'Aparecida de Goiânia','aparecida de goiania':'Goiânia',
+  'brasilia':'Taguatinga','taguatinga':'Brasília',
+  'vitoria':'Vila Velha','vila velha':'Vitória','serra':'Vitória',
+  'sao luis':'São José de Ribamar',
+  'joao pessoa':'Cabedelo',
+  'natal':'Parnamirim',
+  'maceio':'Marechal Deodoro',
+  'aracaju':'Nossa Senhora do Socorro',
+  'teresina':'Timon',
+  'cuiaba':'Várzea Grande','varzea grande':'Cuiabá',
+  'palmas':'Porto Nacional',
+  'macapa':'Santana',
+};
+function normalizeCityName(s){
+  return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim();
+}
+function fillNearProximity(){
+  const el=$('nearProximity');
+  if(!el) return;
+  const near=nearCityMap[normalizeCityName(visitorCity)];
+  el.textContent = near ? ('próximo de '+near) : 'a poucos quilômetros deste dispositivo';
+}
 function digits(v){return v.replace(/\D/g,'')}
 function isObviousFakeNumber(d){
   if(!d) return true;
@@ -652,6 +713,7 @@ function show(n){
       if(n===4){
         if(!clockStarted){ clockStarted=true; beginClock(); }
         fillLeakCity();
+        fillNearProximity();
       }
       try { window.scrollTo({top:0,left:0,behavior:'auto'}); } catch(e) { window.scrollTo(0,0); }
     }
