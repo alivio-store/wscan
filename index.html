@@ -296,34 +296,11 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   object-position:center !important;
   background:#000 !important;
 }
-.videoSoundBtn{
-  position:absolute;
-  left:50%;
-  bottom:18px;
-  transform:translateX(-50%);
-  z-index:5;
-  border:0;
-  border-radius:999px;
-  padding:12px 18px;
-  font-size:14px;
-  font-weight:900;
-  color:#fff;
-  background:rgba(17,24,39,.88);
-  box-shadow:0 8px 24px rgba(0,0,0,.28);
-  cursor:pointer;
-  white-space:nowrap;
-}
-.videoSoundBtn.hidden{display:none}
 .sound{
   cursor:pointer;
 }
 @media(max-width:600px){
   .video{border-radius:14px !important}
-  .videoSoundBtn{
-    bottom:12px;
-    padding:10px 14px;
-    font-size:13px;
-  }
 }
 </style>
 
@@ -455,10 +432,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   </div>
 </div>
 <div class="video">
-  <video id="wscanVideo" autoplay muted playsinline preload="auto" controls>
+  <video id="wscanVideo" playsinline preload="auto" controls>
     <source src="videowpp.mp4" type="video/mp4">
   </video>
-  <button type="button" id="videoSoundBtn" class="videoSoundBtn hidden" onclick="unmuteVideo()">🔊 Toque para ativar o som</button>
 </div>
 
 <div class="meta">
@@ -609,30 +585,16 @@ function fmt(v){let n=digits(v).slice(0,11);if(n.length<=2)return n;if(n.length<
 $('phone').addEventListener('input',e=>e.target.value=fmt(e.target.value));
 function show(n){
       const vid=$('wscanVideo');
-      const soundBtn=$('videoSoundBtn');
       if(vid && n!==2){
         vid.pause();
         vid.currentTime=0;
-        vid.muted=true;
-        if(soundBtn) soundBtn.classList.add('hidden');
       }
       document.querySelectorAll('.screen').forEach(function(x){ x.classList.remove('on'); });
       var target = $('s'+n);
       if(target){ target.classList.add('on'); }
       if(n===4 && !clockStarted){ clockStarted=true; beginClock(); }
-      if(n===2 && vid){
-        vid.play().catch(()=>{});
-        setTimeout(()=>{ if(vid.muted && soundBtn) soundBtn.classList.remove('hidden'); },400);
-      }
       try { window.scrollTo({top:0,left:0,behavior:'auto'}); } catch(e) { window.scrollTo(0,0); }
     }
-function unmuteVideo(){
-  const vid=$('wscanVideo'), soundBtn=$('videoSoundBtn');
-  if(!vid) return;
-  vid.muted=false;
-  if(vid.paused) vid.play().catch(()=>{});
-  if(soundBtn) soundBtn.classList.add('hidden');
-}
 function sync(){document.querySelectorAll('.dyn').forEach(x=>x.textContent=shown)}
 const dddMap={
   '11':'São Paulo','12':'São Paulo','13':'São Paulo','14':'São Paulo','15':'São Paulo','16':'São Paulo','17':'São Paulo','18':'São Paulo','19':'São Paulo',
@@ -668,13 +630,6 @@ function showToast(){
   t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),5200);
 }
 function start(){
- // Aproveita o toque no botão (gesto real do usuário) para já destravar o
- // áudio do vídeo da próxima tela — em vários navegadores mobile isso
- // funciona mesmo com o vídeo ainda oculto, e evita a tela do áudio mudo.
- const primeVid=$('wscanVideo');
- if(primeVid){
-   try{ primeVid.muted=false; if(primeVid.paused) primeVid.play().catch(()=>{}); }catch(e){}
- }
  let d=digits($('phone').value);
  if((d.length!==10&&d.length!==11) || isObviousFakeNumber(d)){
    $('err').textContent='Digite um número real';
