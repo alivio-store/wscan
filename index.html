@@ -524,7 +524,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   <div class="r"><div class="ico">💬</div><div>“Vou dar um jeito de te ver”</div></div>
   <div class="r"><div class="ico">💬</div><div>“Tem alguém perto?”</div></div>
 </div>
-<a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box">🔓 VER RESULTADO COMPLETO</a>
+<a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="trackCheckout()">🔓 VER RESULTADO COMPLETO</a>
 
 <div class="lockedGallery">
   <div class="lockedGalleryHead">
@@ -554,7 +554,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
     De: <span style="text-decoration:line-through">R$ 99,90</span>
   </div>
   <div style="font-size:31px;font-weight:950;color:#16a34a;margin-bottom:15px">R$ 29,90</div>
-  <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box">DESBLOQUEAR AGORA</a>
+  <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="trackCheckout()">DESBLOQUEAR AGORA</a>
   
 </div>
 
@@ -566,6 +566,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <script>
 const $=id=>document.getElementById(id);
 let analysisTimer, clockTimer, shown='', clockStarted=false;
+function trackCheckout(){
+  try{ if(typeof fbq==='function') fbq('track','InitiateCheckout'); }catch(e){}
+  try{ if(typeof gtag==='function') gtag('event','begin_checkout'); }catch(e){}
+}
 function digits(v){return v.replace(/\D/g,'')}
 function isObviousFakeNumber(d){
   if(!d) return true;
