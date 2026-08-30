@@ -122,6 +122,16 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .chatBubble.out{align-self:flex-end;background:var(--g);color:#fff;border-radius:14px 4px 14px 14px}
 .chatTime{flex-shrink:0;font-size:10.5px;font-weight:600;opacity:.65;white-space:nowrap}
 
+.mapBox{
+  height:160px;border-radius:16px;margin-bottom:14px;position:relative;overflow:hidden;
+  background:
+    linear-gradient(rgba(37,211,102,.15),rgba(37,211,102,.15)),
+    repeating-linear-gradient(0deg,#dfe6ee 0 1px,transparent 1px 34px),
+    repeating-linear-gradient(90deg,#dfe6ee 0 1px,transparent 1px 34px),
+    #eef3f0;
+}
+.mapPin{position:absolute;left:50%;top:50%;transform:translate(-50%,-60%);font-size:34px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}
+
 .bottomnav{position:sticky;bottom:0;background:#fff;display:flex;box-shadow:0 -2px 14px rgba(15,23,42,.08);z-index:5}
 .navitem{flex:1;background:none;border:0;padding:10px 4px 14px;display:flex;flex-direction:column;align-items:center;gap:3px;color:#94a3b8;font-size:11px;font-weight:800;cursor:pointer}
 .navitem .navIco{font-size:19px}
@@ -209,6 +219,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
         <button data-sub="Midias" onclick="switchSub('Midias',this)">MÍDIAS</button>
         <button data-sub="Atividade" onclick="switchSub('Atividade',this)">ATIVIDADE</button>
         <button data-sub="Contatos" onclick="switchSub('Contatos',this)">CONTATOS</button>
+        <button data-sub="Local" onclick="switchSub('Local',this)">LOCALIZAÇÃO</button>
       </div>
 
       <div id="subResumo" class="subpanel">
@@ -249,9 +260,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
         </div>
         <div class="paywall">
           <div class="lock">🔒</div>
-          <b>Fotos e vídeos protegidos</b>
-          <p style="color:var(--muted);margin:8px 0 16px">Adquira o acesso para visualizar as mídias em alta resolução.</p>
-          <a class="btn" href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" onclick="trackCheckout()">DESBLOQUEAR AGORA</a>
+          <b>Imagens bloqueadas</b>
+          <p style="color:var(--muted);margin:8px 0 0">A operadora do usuário deste número bloqueou a pré-visualização dessas imagens.</p>
         </div>
       </div>
 
@@ -274,23 +284,34 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
         <div class="rrow"><div><b>Contato desconhecido</b><span>Número não salvo na agenda · 4 chamadas</span></div></div>
         <div class="rrow"><div><b>Contato desconhecido</b><span>Número não salvo na agenda · 1 conversa</span></div></div>
       </div>
-    </div>
 
-    <div id="tabMonitor" class="tabpanel">
-      <div class="lockedFeature">
-        <div class="big">🖥️</div>
-        <b style="font-size:17px">Monitoramento contínuo bloqueado</b>
-        <p style="color:var(--muted);margin:10px 0 18px">Acompanhe a atividade desse número em tempo real, com alertas automáticos.</p>
-        <a class="btn" href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" onclick="trackCheckout()">DESBLOQUEAR AGORA</a>
+      <div id="subLocal" class="subpanel" style="display:none">
+        <div class="mapBox">
+          <div class="mapPin">📍</div>
+        </div>
+        <div class="rrow"><div><b>Última localização identificada</b><span id="locCity">Identificando...</span></div></div>
+        <div class="rrow"><div><b>Contato suspeito localizado</b><span id="locNear">Identificando...</span></div></div>
+        <div class="rrow"><div><b>Precisão do sinal</b><span>Aproximada, baseada em triangulação</span></div></div>
       </div>
     </div>
 
+    <div id="tabMonitor" class="tabpanel">
+      <div class="numCard" style="margin-bottom:16px">
+        <div class="ico">🟢</div>
+        <div><b>Monitoramento ativo</b><div class="live">● Rastreando esse número em tempo real</div></div>
+      </div>
+      <div class="rrow"><div><b>Status atual</b><span>Online agora</span></div><div class="num">🟢</div></div>
+      <div class="rrow"><div><b>Localização aproximada</b><span id="monLocation">Identificando...</span></div></div>
+      <div class="rrow"><div><b>Último alerta</b><span>Nova conversa às <span id="monAlertTime">--:--</span></span></div></div>
+      <div class="rrow"><div><b>Alertas automáticos</b><span>Ativados para esse número</span></div></div>
+    </div>
+
     <div id="tabSettings" class="tabpanel">
-      <div class="settingsRow"><span>Conta</span><span>seuemail@exemplo.com</span></div>
+      <div class="settingsRow"><span>Conta</span><span>Verificada ✓</span></div>
       <div class="settingsRow"><span>Notificações</span><span>Ativadas</span></div>
       <div class="settingsRow"><span>Privacidade</span><span>100% anônimo</span></div>
-      <div class="settingsRow"><span>Créditos de análise</span><span>0 restantes</span></div>
-      <a class="btn" style="margin-top:18px" href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" onclick="trackCheckout()">COMPRAR MAIS CRÉDITOS</a>
+      <div class="settingsRow"><span>Plano</span><span>Acesso liberado</span></div>
+      <div class="settingsRow"><span>Créditos de análise</span><span>Ilimitado</span></div>
     </div>
 
   </div>
@@ -306,11 +327,57 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <script>
 const $=id=>document.getElementById(id);
-let shown='', targetName='';
+let shown='', targetName='', visitorCity='', visitorRegion='';
 
-function trackCheckout(){
-  try{ if(typeof fbq==='function') fbq('track','InitiateCheckout'); }catch(e){}
-  try{ if(typeof gtag==='function') gtag('event','begin_checkout'); }catch(e){}
+// Detecta a cidade do visitante pelo IP assim que a página carrega —
+// mesma técnica usada no site principal, só pra preencher a tela de
+// Localização mais tarde.
+(function fetchVisitorCity(){
+  fetch('https://ipapi.co/json/').then(r=>r.json()).then(d=>{
+    if(d && d.city) visitorCity = d.city;
+    if(d && d.region) visitorRegion = d.region;
+  }).catch(()=>{});
+})();
+function normalizeCityName(s){
+  return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim();
+}
+const nearCityMap={
+  'cabo frio':'Búzios','buzios':'Cabo Frio','niteroi':'São Gonçalo','sao goncalo':'Niterói',
+  'rio de janeiro':'Niterói','duque de caxias':'Nova Iguaçu','nova iguacu':'Duque de Caxias',
+  'petropolis':'Teresópolis','teresopolis':'Petrópolis','fortaleza':'Caucaia','caucaia':'Fortaleza',
+  'maracanau':'Fortaleza','sao paulo':'Guarulhos','guarulhos':'São Paulo','campinas':'Jundiaí',
+  'jundiai':'Campinas','santos':'São Vicente','sao vicente':'Santos','osasco':'São Paulo',
+  'santo andre':'São Bernardo do Campo','sao bernardo do campo':'Santo André','sorocaba':'Itu',
+  'belo horizonte':'Contagem','contagem':'Belo Horizonte','uberlandia':'Uberaba','uberaba':'Uberlândia',
+  'juiz de fora':'Barbacena','salvador':'Lauro de Freitas','lauro de freitas':'Salvador',
+  'feira de santana':'Salvador','porto alegre':'Canoas','canoas':'Porto Alegre',
+  'caxias do sul':'Bento Gonçalves','curitiba':'São José dos Pinhais','londrina':'Cambé',
+  'maringa':'Sarandi','florianopolis':'São José','sao jose':'Florianópolis','joinville':'Jaraguá do Sul',
+  'blumenau':'Gaspar','recife':'Olinda','olinda':'Recife','jaboatao dos guararapes':'Recife',
+  'caruaru':'Recife','belem':'Ananindeua','ananindeua':'Belém','manaus':'Iranduba',
+  'goiania':'Aparecida de Goiânia','aparecida de goiania':'Goiânia','brasilia':'Taguatinga',
+  'taguatinga':'Brasília','vitoria':'Vila Velha','vila velha':'Vitória','serra':'Vitória',
+  'sao luis':'São José de Ribamar','joao pessoa':'Cabedelo','natal':'Parnamirim',
+  'maceio':'Marechal Deodoro','aracaju':'Nossa Senhora do Socorro','teresina':'Timon',
+  'cuiaba':'Várzea Grande','varzea grande':'Cuiabá','palmas':'Porto Nacional','macapa':'Santana',
+};
+const stateNearCityMap={
+  'acre':'Senador Guiomard','alagoas':'Marechal Deodoro','amapa':'Santana','amazonas':'Iranduba',
+  'bahia':'Lauro de Freitas','ceara':'Caucaia','distrito federal':'Taguatinga',
+  'espirito santo':'Vila Velha','goias':'Aparecida de Goiânia','maranhao':'São José de Ribamar',
+  'mato grosso':'Várzea Grande','mato grosso do sul':'Terenos','minas gerais':'Contagem',
+  'para':'Ananindeua','paraiba':'Cabedelo','parana':'São José dos Pinhais','pernambuco':'Olinda',
+  'piaui':'Timon','rio de janeiro':'Niterói','rio grande do norte':'Parnamirim',
+  'rio grande do sul':'Canoas','rondonia':'Candeias do Jamari','roraima':'Cantá',
+  'santa catarina':'São José','sao paulo':'Guarulhos','sergipe':'Nossa Senhora do Socorro','tocantins':'Porto Nacional',
+};
+function fillLocation(){
+  const near = nearCityMap[normalizeCityName(visitorCity)] || stateNearCityMap[normalizeCityName(visitorRegion)];
+  const cityTxt = visitorCity || 'Região não identificada';
+  const nearTxt = near ? ('Próximo de '+near) : 'Sinal impreciso na região';
+  if($('locCity')) $('locCity').textContent = cityTxt;
+  if($('locNear')) $('locNear').textContent = nearTxt;
+  if($('monLocation')) $('monLocation').textContent = nearTxt;
 }
 
 // Tela de login puramente decorativa — não valida credenciais reais,
@@ -385,11 +452,13 @@ function fillReport(){
   const pad2=n=>String(n).padStart(2,'0');
   $('reportStamp').textContent=pad2(now.getDate())+'/'+pad2(now.getMonth()+1)+'/'+now.getFullYear()+' às '+pad2(now.getHours())+':'+pad2(now.getMinutes());
   $('lastSeen').textContent=pad2(now.getHours())+':'+pad2(now.getMinutes());
+  $('monAlertTime').textContent=pad2(now.getHours())+':'+pad2(now.getMinutes());
   const heights=[20,15,10,25,45,60,70,85,65,55,40,30,90,75,60,50,80,95,70,60,45,35,25,20];
   ['activityBars','activityBars2'].forEach(id=>{
     const bars=$(id);
     if(bars && !bars.children.length) bars.innerHTML=heights.map(h=>'<i style="height:'+h+'%"></i>').join('');
   });
+  fillLocation();
 }
 
 function switchTab(name, btn){
