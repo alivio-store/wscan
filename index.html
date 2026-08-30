@@ -164,34 +164,37 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .printLeak{
   position:relative;
   margin-top:10px;
-  min-height:120px;
   border-radius:16px;
   overflow:hidden;
   background:#0b141a;
+  padding:14px;
   display:flex;
-  align-items:flex-end;
-  padding:16px;
-}
-.printBlur{
-  position:absolute;
-  inset:-10px;
-  background:
-    repeating-linear-gradient(135deg,#2a3942 0 14px,#1f2c33 14px 28px),
-    repeating-linear-gradient(45deg,#233138 0 10px,#1a262c 10px 20px);
-  background-blend-mode:overlay;
-  filter:blur(7px);
-  transform:scale(1.06);
+  flex-direction:column;
+  gap:8px;
 }
 .printBubble{
-  position:relative;
-  z-index:2;
+  max-width:78%;
+  padding:9px 13px;
+  font-weight:700;
+  font-size:14.5px;
+  line-height:1.35;
+  box-shadow:0 4px 14px rgba(0,0,0,.3);
+}
+.printBubble.in{
+  align-self:flex-start;
+  background:#202c33;
+  color:#e9edef;
+  border-radius:4px 14px 14px 14px;
+}
+.printBubble.out{
+  align-self:flex-end;
   background:#005c4b;
   color:#fff;
-  font-weight:700;
-  padding:10px 14px;
-  border-radius:4px 14px 14px 14px;
-  max-width:78%;
-  box-shadow:0 8px 20px rgba(0,0,0,.35);
+  border-radius:14px 4px 14px 14px;
+}
+.printBubble.blur{
+  filter:blur(5.5px);
+  user-select:none;
 }
 .lockedGallery{
   margin-top:22px;
@@ -498,8 +501,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   </div>
   <div style="margin-top:16px;color:#5f6f82;font-weight:800;font-size:15px">Conseguimos recuperar um print:</div>
   <div class="printLeak">
-    <div class="printBlur"></div>
-    <div class="printBubble">Estou com saudade ❤️</div>
+    <div class="printBubble in blur">Oi, sumiu 👀</div>
+    <div class="printBubble out blur">To sem tempo hoje, depois te ligo</div>
+    <div class="printBubble in blur">Não esquece de mim 🙈</div>
+    <div class="printBubble out blur">Jamais esqueceria</div>
+    <div class="printBubble in blur">Vi suas fotos novas 😍</div>
+    <div class="printBubble in">Estou com saudade ❤️</div>
   </div>
 </div>
 
