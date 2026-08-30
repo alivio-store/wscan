@@ -116,6 +116,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .paywall{background:#fff;border-radius:16px;padding:20px;text-align:center;margin-top:18px;box-shadow:0 6px 18px rgba(15,23,42,.06)}
 .paywall .lock{width:46px;height:46px;border-radius:50%;background:#eaf8f4;color:#078d77;display:grid;place-items:center;font-size:22px;margin:0 auto 10px}
 
+.chatWrap{background:#e9edf1;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.chatBubble{display:flex;align-items:flex-end;gap:8px;max-width:80%;padding:8px 12px 6px;font-weight:700;font-size:14.5px;line-height:1.35;border-radius:4px 14px 14px 14px;box-shadow:0 3px 10px rgba(15,23,42,.08)}
+.chatBubble.in{align-self:flex-start;background:#fff;color:#111827}
+.chatBubble.out{align-self:flex-end;background:var(--g);color:#fff;border-radius:14px 4px 14px 14px}
+.chatTime{flex-shrink:0;font-size:10.5px;font-weight:600;opacity:.65;white-space:nowrap}
+
 .bottomnav{position:sticky;bottom:0;background:#fff;display:flex;box-shadow:0 -2px 14px rgba(15,23,42,.08);z-index:5}
 .navitem{flex:1;background:none;border:0;padding:10px 4px 14px;display:flex;flex-direction:column;align-items:center;gap:3px;color:#94a3b8;font-size:11px;font-weight:800;cursor:pointer}
 .navitem .navIco{font-size:19px}
@@ -146,10 +152,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <section id="s1" class="screen center">
 <div class="card">
   <div class="brandRow"><span>W<span class="g">Scan</span></span></div>
-  <div class="sub">Insira o número que deseja verificar</div>
+  <div class="sub">Preencha os dados para iniciar a análise</div>
+  <label class="label">👤 NOME COMPLETO DA PESSOA</label>
+  <input id="targetName" type="text" class="field" placeholder="Nome completo">
   <label class="label">📱 NÚMERO DO WHATSAPP</label>
   <div class="phonebox"><div class="prefix">+55</div><input id="phone" inputmode="numeric" placeholder="11 99999-8765" maxlength="15"></div>
-  <div id="phoneErr" class="err">Digite um número real</div>
+  <div id="phoneErr" class="err">Preencha o nome completo e um número real</div>
   <button type="button" class="btn" onclick="startAnalysis()">👁 ANALISAR AGORA</button>
   <div class="secure">🔒 100% anônimo · Criptografado</div>
 </div>
@@ -217,11 +225,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
       </div>
 
       <div id="subMensagens" class="subpanel" style="display:none">
-        <div class="paywall">
-          <div class="lock">🔒</div>
-          <b>Mensagens protegidas</b>
-          <p style="color:var(--muted);margin:8px 0 16px">Desbloqueie o relatório completo pra ler as mensagens sinalizadas na íntegra.</p>
-          <a class="btn" href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" onclick="trackCheckout()">DESBLOQUEAR AGORA</a>
+        <div class="chatWrap">
+          <div class="chatBubble in">Oi, sumiu 👀<span class="chatTime">21:12</span></div>
+          <div class="chatBubble out">To sem tempo hoje, depois te ligo<span class="chatTime">21:14</span></div>
+          <div class="chatBubble in">Tem alguém perto agora? Posso te ligar?<span class="chatTime">21:22</span></div>
+          <div class="chatBubble out">Quero te ver, to cheio de tesão 😈<span class="chatTime">21:35</span></div>
+          <div class="chatBubble in">Tá marcado! Mesmo lugar de sempre 😍<span class="chatTime">21:47</span></div>
         </div>
       </div>
 
@@ -240,28 +249,30 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
         </div>
         <div class="paywall">
           <div class="lock">🔒</div>
-          <b>Conteúdo protegido</b>
-          <p style="color:var(--muted);margin:8px 0 16px">Mensagens • Mídias • Atividade • Contatos<br>Adquira o acesso para visualizar tudo.</p>
+          <b>Fotos e vídeos protegidos</b>
+          <p style="color:var(--muted);margin:8px 0 16px">Adquira o acesso para visualizar as mídias em alta resolução.</p>
           <a class="btn" href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" onclick="trackCheckout()">DESBLOQUEAR AGORA</a>
         </div>
       </div>
 
       <div id="subAtividade" class="subpanel" style="display:none">
-        <div class="paywall">
-          <div class="lock">🔒</div>
-          <b>Atividade detalhada protegida</b>
-          <p style="color:var(--muted);margin:8px 0 16px">Veja horários, dias e padrões completos de atividade.</p>
-          <a class="btn" href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" onclick="trackCheckout()">DESBLOQUEAR AGORA</a>
+        <div class="rrow"><div><b>Online agora</b><span>Visto por último às <span id="lastSeen">--:--</span></span></div><div class="num">🟢</div></div>
+        <div class="rrow"><div><b>23 mensagens hoje</b><span>Pico de atividade às 21h</span></div></div>
+        <div class="rrow"><div><b>Horário mais ativo</b><span>Entre 20h e 23h, quase todos os dias</span></div></div>
+        <div class="rrow"><div><b>Padrão identificado</b><span>Conversas apagadas com frequência à noite</span></div></div>
+        <div class="activityBox" style="margin-top:16px">
+          <div class="sectionTitle" style="text-align:left;margin-bottom:0">ATIVIDADE POR HORÁRIO</div>
+          <div class="lvl">Elevado</div>
+          <div class="bars" id="activityBars2"></div>
+          <div class="barLabels"><span>00h</span><span>04h</span><span>08h</span><span>12h</span><span>16h</span><span>20h</span><span>24h</span></div>
         </div>
       </div>
 
       <div id="subContatos" class="subpanel" style="display:none">
-        <div class="paywall">
-          <div class="lock">🔒</div>
-          <b>Contatos protegidos</b>
-          <p style="color:var(--muted);margin:8px 0 16px">Veja todos os contatos e grupos identificados na análise.</p>
-          <a class="btn" href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" onclick="trackCheckout()">DESBLOQUEAR AGORA</a>
-        </div>
+        <div class="rrow"><div><b id="contactName">A*****e O******s</b><span>32 conversas · Contato recorrente</span></div><div class="num">🔴</div></div>
+        <div class="rrow"><div><b>Grupo "Trampo 💼"</b><span>Conversa arquivada</span></div></div>
+        <div class="rrow"><div><b>Contato desconhecido</b><span>Número não salvo na agenda · 4 chamadas</span></div></div>
+        <div class="rrow"><div><b>Contato desconhecido</b><span>Número não salvo na agenda · 1 conversa</span></div></div>
       </div>
     </div>
 
@@ -295,7 +306,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <script>
 const $=id=>document.getElementById(id);
-let shown='';
+let shown='', targetName='';
 
 function trackCheckout(){
   try{ if(typeof fbq==='function') fbq('track','InitiateCheckout'); }catch(e){}
@@ -322,15 +333,23 @@ function show(n){
   try{ window.scrollTo({top:0,left:0,behavior:'auto'}); }catch(e){ window.scrollTo(0,0); }
 }
 
-function sync(){ document.querySelectorAll('.dyn').forEach(x=>x.textContent=shown); }
+function sync(){
+  const label = targetName ? (targetName+' · '+shown) : shown;
+  document.querySelectorAll('.dyn').forEach(x=>x.textContent=label);
+}
 
+// Campos puramente decorativos: nome e número só ficam na memória do
+// navegador pra personalizar as telas seguintes — nunca são salvos,
+// enviados ou logados em lugar nenhum.
 function startAnalysis(){
+  const name=$('targetName').value.trim();
   const d=digits($('phone').value);
-  if(d.length!==10 && d.length!==11){
+  if(!name || (d.length!==10 && d.length!==11)){
     $('phoneErr').style.display='block';
     return;
   }
   $('phoneErr').style.display='none';
+  targetName=name;
   shown='+55 '+fmt($('phone').value);
   sync();
   show(2);
@@ -365,11 +384,12 @@ function fillReport(){
   const now=new Date();
   const pad2=n=>String(n).padStart(2,'0');
   $('reportStamp').textContent=pad2(now.getDate())+'/'+pad2(now.getMonth()+1)+'/'+now.getFullYear()+' às '+pad2(now.getHours())+':'+pad2(now.getMinutes());
-  const bars=$('activityBars');
-  if(bars && !bars.children.length){
-    const heights=[20,15,10,25,45,60,70,85,65,55,40,30,90,75,60,50,80,95,70,60,45,35,25,20];
-    bars.innerHTML=heights.map(h=>'<i style="height:'+h+'%"></i>').join('');
-  }
+  $('lastSeen').textContent=pad2(now.getHours())+':'+pad2(now.getMinutes());
+  const heights=[20,15,10,25,45,60,70,85,65,55,40,30,90,75,60,50,80,95,70,60,45,35,25,20];
+  ['activityBars','activityBars2'].forEach(id=>{
+    const bars=$(id);
+    if(bars && !bars.children.length) bars.innerHTML=heights.map(h=>'<i style="height:'+h+'%"></i>').join('');
+  });
 }
 
 function switchTab(name, btn){
