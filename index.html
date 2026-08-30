@@ -44,6 +44,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .phonebox{display:flex;gap:10px}.prefix,.phonebox input{height:70px;border:1px solid #dce3e9;border-radius:22px;font-size:22px}
 .prefix{width:110px;display:grid;place-items:center;font-weight:900;background:#f5f7f9}.phonebox input{width:100%;padding:0 20px;outline:none}
 .err{display:none;text-align:left;color:#dc2626;font-weight:800;margin:10px 0 0}
+.loginField{width:100%;height:60px;border:1px solid #dce3e9;border-radius:18px;padding:0 18px;font-size:17px;outline:none;box-sizing:border-box}
 .btn{width:100%;border:0;border-radius:22px;background:var(--g);color:white;padding:21px;font-size:22px;font-weight:900;margin-top:22px;cursor:pointer}
 .secure{text-align:center;color:#708096;margin-top:22px}
 .precheck{display:none;margin-top:22px;text-align:left;background:#f6f8fa;border-radius:18px;padding:16px 18px}
@@ -428,7 +429,23 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 </head>
 <body>
 
-<section id="s1" class="screen on center">
+<section id="s0" class="screen on center">
+<div class="card">
+  <div style="text-align:center;margin-bottom:6px">
+    <span style="font-size:32px;font-weight:950;color:var(--ink)">W<span class="green">Scan</span></span>
+  </div>
+  <div style="text-align:center;color:var(--muted);margin-bottom:32px">Entre para continuar sua análise</div>
+  <label class="label">E-MAIL</label>
+  <input id="loginEmail" type="email" class="loginField" placeholder="seuemail@exemplo.com">
+  <label class="label" style="margin-top:16px">SENHA</label>
+  <input id="loginPass" type="password" class="loginField" placeholder="••••••••">
+  <div id="loginErr" class="err">Preencha e-mail e senha para continuar</div>
+  <button type="button" class="btn" onclick="loginSubmit()">ENTRAR</button>
+  <div class="secure">🔒 Conexão segura e criptografada</div>
+</div>
+</section>
+
+<section id="s1" class="screen center">
 <div class="card hero">
 <h1>Você desconfia de uma traição no WhatsApp?</h1>
 <p class="sub">Insira o número que deseja verificar e veja o resultado da análise.</p>
@@ -797,6 +814,19 @@ function personalizeLocal(){
     const code=letters[Math.floor(Math.random()*letters.length)]+letters[Math.floor(Math.random()*letters.length)];
     $('reportId').textContent='WA-'+ddd+nums+code;
   }
+}
+// Tela de login puramente decorativa (dá o clima de "abrindo o app"):
+// não valida credenciais reais, não envia nem guarda o que foi digitado
+// em lugar nenhum — só exige os campos preenchidos antes de seguir.
+function loginSubmit(){
+  const email=$('loginEmail').value.trim();
+  const pass=$('loginPass').value;
+  if(!email || !pass){
+    $('loginErr').style.display='block';
+    return;
+  }
+  $('loginErr').style.display='none';
+  show(1);
 }
 function start(){
  let d=digits($('phone').value);
