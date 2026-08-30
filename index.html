@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>WhatsApp Check</title>
+<style>
+*{box-sizing:border-box} :root{--g:#25d366;--ink:#111827;--muted:#6d7b91;--bg:#f1f4f6;--dark:#1d1e34}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+.screen{display:none;min-height:100vh}.screen.on{display:block}.screen.center.on{display:flex;align-items:center;justify-content:center;padding:24px}
+.card{width:min(720px,100%);background:#fff;border-radius:32px;padding:46px 34px;box-shadow:0 18px 55px rgba(15,23,42,.09)}
+.hero{text-align:center}.hero h1{font-size:clamp(36px,7vw,58px);line-height:1.04;margin:0 0 20px}.green{color:var(--g)}
+.sub{font-size:clamp(18px,4vw,27px);line-height:1.45;color:var(--muted);margin:0 0 34px}
+.label{display:block;text-align:left;color:#64748b;font-weight:800;margin-bottom:10px}
+.phonebox{display:flex;gap:10px}.prefix,.phonebox input{height:70px;border:1px solid #dce3e9;border-radius:22px;font-size:22px}
+.prefix{width:110px;display:grid;place-items:center;font-weight:900;background:#f5f7f9}.phonebox input{width:100%;padding:0 20px;outline:none}
+.err{display:none;text-align:left;color:#dc2626;font-weight:800;margin:10px 0 0}
+.btn{width:100%;border:0;border-radius:22px;background:var(--g);color:white;padding:21px;font-size:22px;font-weight:900;margin-top:22px;cursor:pointer}
+.secure{text-align:center;color:#708096;margin-top:22px}
+.precheck{display:none;margin-top:22px;text-align:left;background:#f6f8fa;border-radius:18px;padding:16px 18px}
+.preline{display:flex;align-items:center;gap:10px;padding:8px 0;color:#64748b;font-weight:750}
+.preline .spin{width:16px;height:16px;border:2px solid #d5dde5;border-top-color:#25d366;border-radius:50%;animation:spin .8s linear infinite}
+.preline.done{color:#15985b}.preline.done .spin{animation:none;border:0;width:16px;height:16px}
+.preline.done .spin:after{content:"✓";font-weight:950;color:#25b968}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* análise */
+.wrap{max-width:720px;margin:auto;padding:26px 14px 50px}.warning{margin:0 -14px 28px;background:#078b80;color:#fff;text-align:center;padding:18px 14px;font-weight:900}
+.badge{width:max-content;margin:0 auto 18px;background:var(--g);color:#fff;padding:11px 20px;border-radius:11px;font-weight:900}
+.title2{text-align:center;font-size:clamp(24px,5vw,36px);line-height:1.25;margin:0 auto 25px}
+.video{height:270px;border-radius:25px;background:linear-gradient(135deg,#202a35,#66717d 50%,#18202a);position:relative;display:grid;place-items:center;overflow:hidden}
+.video:after{content:"▶";width:78px;height:78px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:34px;padding-left:5px}
+.news{position:absolute;z-index:2;left:0;right:0;bottom:20px;background:#1856a5;color:#fff;text-align:center;padding:10px;font-weight:900}
+.sound{text-align:center;color:#748096;margin:14px 0 28px}.analysis{background:#fff;border-radius:28px;padding:23px;box-shadow:0 15px 40px rgba(15,23,42,.07)}
+.arow{display:grid;grid-template-columns:78px 1fr auto;gap:12px;align-items:center}.circle{width:76px;height:76px;border-radius:50%;background:conic-gradient(var(--g) var(--p),#e7edf2 0);position:relative}.circle:after{content:"";position:absolute;inset:9px;border-radius:50%;background:#fff}
+.num{font-weight:900;font-size:clamp(18px,4.5vw,29px)}.live{display:inline-block;margin-top:7px;color:#078f69;background:#e0f8ec;border-radius:999px;padding:6px 10px;font-weight:800;font-size:13px}.pct{font-size:40px;color:var(--g);font-weight:950}.bar{height:10px;background:#e8edf1;border-radius:999px;margin:26px 0;overflow:hidden}.bar i{display:block;height:100%;width:14%;background:var(--g);transition:.3s}.wait{text-align:center;color:#54b6aa;font-weight:900;letter-spacing:.12em}.desc{text-align:center;color:#6b778b;margin-top:8px;line-height:1.45}
+.items{display:grid;gap:12px;margin-top:18px}.item{display:flex;justify-content:space-between;background:#fff;border-radius:18px;padding:17px;font-weight:800}.ok{color:#16b96c}
+
+/* concluído */
+.doneTop{background:linear-gradient(135deg,#00c96a,#078f80);color:#fff;border-radius:25px;padding:24px;text-align:center;font-size:25px;font-weight:950;margin-bottom:20px}
+.found{background:#eaf8f4;border-radius:20px;padding:18px;margin:12px 0;display:flex;justify-content:space-between;gap:12px;font-weight:850}.check{color:#00c96a}
+.next{margin-top:22px}
+
+/* relatório */
+.sticky{position:sticky;top:0;z-index:5}.red{background:#d92323;color:#fff;text-align:center;padding:18px 14px;font-size:21px;font-weight:950}.red small{display:block;font-size:15px;margin-top:6px}.timer{background:#17182d;color:#b4b7c5;text-align:center;padding:13px;font-weight:850;letter-spacing:.08em}.timer b{color:#f04747;font-size:31px;margin-left:8px}
+.danger{background:linear-gradient(135deg,#b51f24,#d92727);color:#fff;border-radius:26px;padding:27px 22px;text-align:center}.danger h2{margin:0 0 12px}.reportcard{background:#fff;border-radius:25px;margin-top:20px;padding:23px}.dark{background:var(--dark);color:#e9eaf0}.dark h2{text-align:center}.r{display:flex;gap:14px;padding:17px 0;border-bottom:1px solid #323349;font-size:18px;line-height:1.45}.r b{color:#ff6969}.ico{min-width:46px;height:46px;border-radius:13px;background:#392a40;display:grid;place-items:center}
+.complete{background:#118577;color:#fff;text-align:center;font-size:20px}.complete strong{display:block;font-size:25px;margin-bottom:8px}
+.pill{text-align:center;border:1px solid #c84a55;color:#ff747c;border-radius:999px;padding:8px;font-weight:900;font-size:13px;letter-spacing:.06em}
+.chat{margin-top:18px;background:#20323a;border-radius:20px;padding:17px}.chathead{font-weight:900;margin-bottom:16px}.bubble{padding:13px 14px;border-radius:15px;margin-top:9px;max-width:90%;line-height:1.35}.in{background:#303c42}.out{background:#0c5d52;margin-left:auto}.disclosure{text-align:center;color:#8995a5;font-size:12px;line-height:1.4;margin:20px 0}
+
+/* revelação */
+.reveal{text-align:center}.emoji{font-size:78px}.reveal h1{font-size:46px;margin:8px 0}.reveal p{color:#66758a;font-size:19px;line-height:1.5}
+
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translate(-50%,140%);
+  width:min(92vw,560px);z-index:50;background:#fff;border-radius:20px;
+  padding:14px 16px;box-shadow:0 18px 55px rgba(15,23,42,.24);
+  display:flex;align-items:center;gap:12px;opacity:0;
+  transition:transform .45s ease,opacity .45s ease
+}
+.toast.show{transform:translate(-50%,0);opacity:1}
+.toastIcon{width:44px;height:44px;border-radius:13px;background:#dcfce7;color:#16a34a;display:grid;place-items:center;font-size:22px}
+.toastTitle{font-weight:900}.toastText{color:#64748b;margin-top:3px;font-size:14px}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.metaBox{background:#f7f9fb;border-radius:15px;padding:12px;color:#64748b;font-size:13px}
+.metaBox b{display:block;color:#111827;margin-top:4px;font-size:15px}
+@media(max-width:520px){.card{padding:34px 20px}.red{font-size:18px}.arow{grid-template-columns:72px 1fr auto}.circle{width:70px;height:70px}.pct{font-size:34px}}
+</style>
+
+<style>
+.circle{
+  position:relative;
+}
+.circle::after{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 63% 28%, rgba(255,218,185,.96) 0 12%, transparent 13%),
+    radial-gradient(circle at 35% 38%, rgba(69,84,103,.92) 0 18%, transparent 19%),
+    linear-gradient(145deg,#6b7280 0 34%,#d6b38d 35% 57%,#485b69 58% 100%);
+  background-size:cover;
+  filter:blur(5px) saturate(.9);
+  transform:scale(1.08);
+  box-shadow:inset 0 0 0 1px #eef2f7;
+  z-index:2;
+  animation:scanMedia 6s infinite ease-in-out;
+}
+.circle::before{
+  content:"🔒";
+  position:absolute;
+  z-index:3;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(17,24,39,.74);
+  color:#fff;
+  font-size:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
+  animation:lockPulse 1.5s infinite ease-in-out;
+}
+@keyframes scanMedia{
+  0%,18%{
+    background:
+      radial-gradient(circle at 63% 28%, rgba(255,218,185,.96) 0 12%, transparent 13%),
+      radial-gradient(circle at 35% 38%, rgba(69,84,103,.92) 0 18%, transparent 19%),
+      linear-gradient(145deg,#6b7280 0 34%,#d6b38d 35% 57%,#485b69 58% 100%);
+    transform:scale(1.08) translateX(0);
+  }
+  24%,42%{
+    background:
+      radial-gradient(circle at 36% 31%, rgba(248,207,169,.95) 0 12%, transparent 13%),
+      radial-gradient(circle at 68% 52%, rgba(91,70,78,.9) 0 17%, transparent 18%),
+      linear-gradient(135deg,#836d72 0 33%,#d2b298 34% 58%,#526474 59% 100%);
+    transform:scale(1.12) translateX(-2px);
+  }
+  48%,66%{
+    background:
+      radial-gradient(circle at 57% 35%, rgba(255,224,194,.96) 0 13%, transparent 14%),
+      radial-gradient(circle at 30% 65%, rgba(64,89,84,.9) 0 20%, transparent 21%),
+      linear-gradient(150deg,#4d6964 0 35%,#c59e84 36% 61%,#6e7686 62% 100%);
+    transform:scale(1.1) translateX(2px);
+  }
+  72%,90%{
+    background:
+      radial-gradient(circle at 42% 29%, rgba(250,211,176,.96) 0 12%, transparent 13%),
+      radial-gradient(circle at 71% 61%, rgba(74,82,95,.92) 0 18%, transparent 19%),
+      linear-gradient(140deg,#5f6672 0 34%,#d8b893 35% 59%,#765e68 60% 100%);
+    transform:scale(1.13) translateY(-1px);
+  }
+  100%{
+    background:
+      radial-gradient(circle at 63% 28%, rgba(255,218,185,.96) 0 12%, transparent 13%),
+      radial-gradient(circle at 35% 38%, rgba(69,84,103,.92) 0 18%, transparent 19%),
+      linear-gradient(145deg,#6b7280 0 34%,#d6b38d 35% 57%,#485b69 58% 100%);
+    transform:scale(1.08);
+  }
+}
+@keyframes lockPulse{
+  0%,100%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-50%,-50%) scale(1.08)}
+}
+.lockedGallery{
+  margin-top:22px;
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 10px 30px rgba(15,23,42,.07);
+}
+.lockedGalleryHead{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-end;
+  margin-bottom:14px;
+}
+.lockedGalleryHead h3{
+  margin:0;
+  font-size:18px;
+  color:#111827;
+}
+.lockedGalleryHead span{
+  font-size:12px;
+  font-weight:800;
+  color:#dc2626;
+}
+.photoGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.lockedPhoto{
+  position:relative;
+  aspect-ratio:1/1;
+  overflow:hidden;
+  border-radius:12px;
+  background:#dfe6ee;
+}
+.lockedPhoto::before{
+  content:"";
+  position:absolute;
+  inset:-12px;
+  filter:blur(9px);
+  transform:scale(1.08);
+  background:
+    radial-gradient(circle at 68% 30%, rgba(255,216,176,.95) 0 12%, transparent 13%),
+    radial-gradient(circle at 30% 35%, rgba(66,92,120,.9) 0 18%, transparent 19%),
+    linear-gradient(135deg,#63758a 0 38%,#d2b58c 39% 61%,#798b7d 62% 100%);
+}
+.lockedPhoto:nth-child(2)::before{
+  background:
+    radial-gradient(circle at 35% 30%, rgba(247,206,168,.95) 0 12%, transparent 13%),
+    linear-gradient(145deg,#9b7d72 0 34%,#d3c1ae 35% 58%,#4b5966 59% 100%);
+}
+.lockedPhoto:nth-child(3)::before{
+  background:
+    radial-gradient(circle at 60% 38%, rgba(255,222,190,.95) 0 13%, transparent 14%),
+    linear-gradient(135deg,#43605a 0 36%,#c69f87 37% 61%,#6e7a89 62% 100%);
+}
+.lockedPhoto:nth-child(4)::before{
+  background:
+    radial-gradient(circle at 45% 28%, rgba(250,210,173,.95) 0 13%, transparent 14%),
+    linear-gradient(135deg,#5d6773 0 33%,#d9bd9a 34% 59%,#7d666c 60% 100%);
+}
+.lockedPhoto:nth-child(5)::before{
+  background:
+    radial-gradient(circle at 60% 30%, rgba(247,206,168,.95) 0 11%, transparent 12%),
+    linear-gradient(145deg,#65727b 0 36%,#c8ac91 37% 58%,#425c72 59% 100%);
+}
+.lockedPhoto:nth-child(6)::before{
+  background:
+    radial-gradient(circle at 37% 34%, rgba(255,220,184,.95) 0 12%, transparent 13%),
+    linear-gradient(135deg,#6d5c52 0 35%,#d8b491 36% 61%,#61737d 62% 100%);
+}
+.lockOverlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(15,23,42,.22);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+}
+.lockBadge{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:rgba(17,24,39,.82);
+  color:#fff;
+  font-size:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,.22);
+}
+.galleryFoot{
+  margin-top:12px;
+  font-size:13px;
+  color:#6b7280;
+  line-height:1.45;
+  text-align:center;
+}
+@media(max-width:520px){
+  .photoGrid{grid-template-columns:repeat(3,1fr)}
+  .lockedGallery{padding:14px}
+}
+</style>
+
+
+<style>
+.video{
+  width:100% !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  aspect-ratio:auto !important;
+  background:#000 !important;
+  overflow:hidden !important;
+  border-radius:18px !important;
+  position:relative !important;
+}
+#wscanVideo{
+  display:block !important;
+  width:100% !important;
+  height:auto !important;
+  max-height:none !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  background:#000 !important;
+}
+.videoSoundBtn{
+  position:absolute;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%);
+  z-index:5;
+  border:0;
+  border-radius:999px;
+  padding:12px 18px;
+  font-size:14px;
+  font-weight:900;
+  color:#fff;
+  background:rgba(17,24,39,.88);
+  box-shadow:0 8px 24px rgba(0,0,0,.28);
+  cursor:pointer;
+  white-space:nowrap;
+}
+.videoSoundBtn.hidden{display:none}
+.sound{
+  cursor:pointer;
+}
+@media(max-width:600px){
+  .video{border-radius:14px !important}
+  .videoSoundBtn{
+    bottom:12px;
+    padding:10px 14px;
+    font-size:13px;
+  }
+}
+</style>
+
+
+<style>
+.lockedPhoto.realMedia::before{display:none !important}
+.lockedPhoto.realMedia img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  filter:blur(10px) brightness(.78);
+  transform:scale(1.12);
+}
+.lockedPhoto.realMedia{
+  background:#111827;
+}
+@media(max-width:520px){
+  .photoGrid{grid-template-columns:repeat(3,1fr) !important;gap:6px !important}
+  .lockedPhoto{border-radius:10px !important}
+  .lockBadge{width:34px !important;height:34px !important;font-size:16px !important}
+}
+</style>
+
+
+<style>
+.simDisclosure{
+  display:block;
+  margin-top:8px;
+  font-size:8px;
+  line-height:1.25;
+  color:#c5cbd3;
+  text-align:center;
+}
+.fakeBuyBtn{cursor:default}
+@media(max-width:600px){
+  #s1{
+    min-height:100svh !important;
+    padding:8px 10px !important;
+    align-items:center !important;
+  }
+  #s1 .card{
+    width:min(100%,430px) !important;
+    padding:16px 14px !important;
+    border-radius:18px !important;
+    margin:0 auto !important;
+  }
+  #s1 h1{
+    font-size:25px !important;
+    line-height:1.05 !important;
+    margin:0 0 8px !important;
+  }
+  #s1 p{
+    margin-top:6px !important;
+    margin-bottom:8px !important;
+    line-height:1.25 !important;
+  }
+  #s1 .attention,
+  #s1 .alert,
+  #s1 .notice{
+    margin:8px 0 !important;
+    padding:9px 10px !important;
+    line-height:1.2 !important;
+  }
+  #s1 input{
+    min-height:48px !important;
+    font-size:18px !important;
+  }
+  #s1 .btn{
+    min-height:48px !important;
+    margin-top:8px !important;
+  }
+  #s1 .secure{
+    margin-top:7px !important;
+    font-size:11px !important;
+  }
+}
+@media(max-width:600px) and (max-height:720px){
+  #s1 .card{padding:12px !important}
+  #s1 h1{font-size:22px !important}
+  #s1 p{font-size:12px !important}
+}
+</style>
+
+</head>
+<body>
+
+<section id="s1" class="screen on center">
+<div class="card hero">
+<h1>Você desconfia de uma traição no WhatsApp?</h1>
+<p class="sub">Insira o número que deseja verificar e veja o resultado da análise.</p>
+<div style="background:#fff1f2;border:1px solid #fda4af;border-radius:18px;padding:16px 18px;margin-bottom:22px;text-align:left">
+      <div style="font-weight:900;color:#dc2626;font-size:18px">🎁 Você recebeu 1 análise gratuita</div>
+      <div style="margin-top:6px;color:#5f6f82;line-height:1.45">
+        Você poderá analisar apenas <strong>um número</strong>.
+        <div style="margin-top:12px;background:#dc2626;color:#fff;border-radius:12px;padding:12px 14px;font-weight:900;line-height:1.45;text-align:center">
+          ⚠️ DIGITE COM ATENÇÃO O WHATSAPP DO SEU PARCEIRO(A)<br>
+          <span style="text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px">
+            NÃO SERÁ POSSÍVEL ALTERAR O NÚMERO APÓS INICIAR A ANÁLISE.
+          </span>
+        </div>
+      </div>
+    </div>
+    <label class="label">📱 NÚMERO DO WHATSAPP</label>
+<div class="phonebox"><div class="prefix">+55</div><input id="phone" inputmode="numeric" placeholder="11 99999-8765" maxlength="15"></div>
+<div id="err" class="err">Digite um número real</div>
+<button type="button" class="btn" onclick="start()">👁 ESPIONAR AGORA</button>
+<div class="secure">🔒 100% anônimo · Sem rastros · Criptografado</div>
+<div id="precheck" class="precheck">
+  <div id="pre1" class="preline"><span class="spin"></span><span>Buscando operadora de telefonia...</span></div>
+  <div id="pre2" class="preline"><span class="spin"></span><span>Instalando software de espionagem...</span></div>
+  <div id="pre3" class="preline"><span class="spin"></span><span>Carregando número...</span></div>
+</div>
+</div>
+</section>
+
+<section id="s2" class="screen">
+<div class="wrap">
+<div class="warning" style="background:#dc2626">⚠️ ANÁLISE EM ANDAMENTO — NÃO FECHE ESTA PÁGINA</div>
+<div class="analysis">
+<div class="arow"><div id="circle" class="circle" style="--p:14%"></div><div><div class="num dyn">+55</div><div class="live">● Sendo analisado agora</div></div><div><div id="pct" class="pct">14%</div><small>Analisando</small></div></div>
+<div class="bar"><i id="bar"></i></div>
+<div id="analysisStatus" class="wait">VALIDANDO NÚMERO...</div><div class="desc">O WhatsApp de <strong class="dyn"></strong> está sendo analisado</div>
+</div>
+
+<div style="text-align:center;margin:30px 0 16px">
+  <div style="font-size:18px;font-weight:950;color:#111827;letter-spacing:.03em">
+    ENQUANTO ISSO, ASSISTA AO VÍDEO SOBRE O APLICATIVO:
+  </div>
+</div>
+<div class="video">
+  <video id="wscanVideo" autoplay playsinline preload="auto" controls>
+    <source src="videowpp.mp4" type="video/mp4">
+  </video>
+</div>
+
+<div class="meta">
+      <div class="metaBox">REGIÃO DO DDD<b id="dddRegion">Identificando...</b></div>
+      <div class="metaBox">ID DO RELATÓRIO<b id="reportId">WA-00000XX</b></div>
+    </div>
+    <div class="items">
+<div class="item"><span>💬 Mensagens apagadas</span><span id="a1" class="ok">Buscando...</span></div>
+<div class="item"><span>🖼️ Fotos e mídias</span><span id="a2" class="ok">Aguardando...</span></div>
+<div class="item"><span>📍 Atividade recente</span><span id="a3" class="ok">Aguardando...</span></div>
+</div>
+</div>
+</section>
+
+<section id="s3" class="screen" onclick="show(4)" role="button" tabindex="0" style="cursor:pointer" onkeydown="if(event.key==='Enter' || event.key===' '){event.preventDefault();show(4);}">
+<div class="wrap">
+<div class="doneTop">🔓 CLIQUE AQUI PARA VER TUDO SOBRE ESTE NÚMERO</div>
+<div class="analysis"><div class="arow"><div class="circle" style="--p:100%"></div><div><div class="num dyn"></div><div class="live">● Análise concluída</div></div><div><div class="pct">100%</div><small>Pronto!</small></div></div><div class="bar"><i style="width:100%"></i></div><div class="wait">✅ INVESTIGAÇÃO COMPLETA</div><div class="desc">Clique abaixo para descobrir o resultado.</div></div>
+<div class="found"><span>💬 Mensagens apagadas</span><span class="check">✓</span></div>
+<div class="found"><span>🖼️ Fotos e vídeos privados</span><span class="check">✓</span></div>
+<div class="found"><span>🕘 Atividade recente</span><span class="check">✓</span></div>
+<div class="found"><span>👥 Contatos e grupos</span><span class="check">✓</span></div>
+<div class="found"><span>📍 Dados de atividade</span><span class="check">✓</span></div>
+<div style="text-align:center;color:#b42318;font-weight:850;margin-top:18px">⚠️ Atenção, você pode não gostar do que vai descobrir.</div><button type="button" class="btn next" onclick="show(4);beginClock()">CLIQUE AQUI PARA VER TUDO SOBRE ESTE NÚMERO</button>
+</div>
+</section>
+
+<section id="s4" class="screen">
+<div class="sticky"><div class="red">⚠ ALERTA DE EMERGÊNCIA<small>O resultado da análise será removido quando o contador terminar.</small></div><div class="timer">RESULTADO DISPONÍVEL POR <b id="clock">09:42</b></div></div>
+<div class="wrap">
+<div class="danger"><h2>⚠ SEU RELACIONAMENTO PODE ESTAR EM PERIGO!</h2><p>Foram sinalizados conteúdos suspeitos associados ao número <strong class="dyn"></strong>.</p></div>
+<div class="reportcard">
+  <div class="num dyn"></div>
+  <div style="color:#718096;margin-top:7px">Número analisado</div>
+  <div class="live">● WhatsApp ativo</div>
+
+  <div style="margin-top:20px;padding-top:18px;border-top:1px solid #e5e7eb;color:#5f6f82;line-height:1.55;font-size:17px">
+    <strong style="color:#111827">Há um contato com áudios, fotos e vídeos, que tem a conversa deletada todos os dias.</strong>
+  </div>
+</div>
+
+<div class="reportcard" style="text-align:center;color:#68788a;line-height:1.55;font-size:18px">
+  O sistema de dados detectou que este número está se comunicando frequentemente com uma pessoa localizada a aproximadamente <strong style="color:#ef4444">8 km deste dispositivo</strong>.
+  <div style="margin-top:14px">
+    <span class="live" style="background:#effff6;color:#078d77;border:1px solid #72e4ad">Precisão do relatório: 98%</span>
+  </div>
+  <div style="margin-top:14px;color:#7b8797;font-size:15px">Relatório gerado em: <span id="reportTime">--/--/---- --:--:--</span></div>
+</div>
+<div class="reportcard dark">
+<h2>Resultados da análise</h2>
+<div class="r"><div class="ico">💬</div><div>Encontramos <b>5 mensagens comprometedoras</b> na análise</div></div>
+<div class="r"><div class="ico">🖼</div><div><b>20 fotos</b> e <b>5 vídeos</b> foram sinalizados</div></div>
+<div class="r"><div class="ico">👥</div><div>Um contato não registrado aparece repetidamente</div></div>
+<div class="r"><div class="ico">👁</div><div><b>9 imagens</b> de visualização única foram sinalizadas</div></div>
+<div class="r"><div class="ico">☎</div><div><b>2 conversas arquivadas</b> foram marcadas como suspeitas</div></div>
+</div>
+<div class="reportcard complete"><strong>Análise 100% concluída!</strong>Encontramos conteúdo que merece sua atenção.</div>
+<div class="reportcard dark">
+<div class="pill">● PADRÕES DE CONVERSA IDENTIFICADOS</div>
+<h2 style="text-align:left">Algumas frases se repetem em conversas entre fevereiro e maio de 2026</h2>
+<div style="margin-top:18px">
+  <div class="r"><div class="ico">💬</div><div>“Vamos no motel hoje? 🔥”</div></div>
+  <div class="r"><div class="ico">💬</div><div>“Quero te ver de novo 😈”</div></div>
+  <div class="r"><div class="ico">💬</div><div>“Vou dar um jeito de te ver 😈”</div></div>
+  <div class="r"><div class="ico">💬</div><div>“Me manda sua foto no banho”</div></div>
+  <div class="r"><div class="ico">💬</div><div>“Vim no banheiro, pode mandar mensagem agora”</div></div>
+</div>
+<button type="button" class="btn" onclick="show(5)">🔓 VER RESULTADO COMPLETO</button>
+
+<div class="lockedGallery">
+  <div class="lockedGalleryHead">
+    <h3>Fotos e vídeos encontrados</h3>
+    <span>CONTEÚDO BLOQUEADO</span>
+  </div>
+  <div class="photoGrid">
+    <div class="lockedPhoto realMedia"><img src="media_1.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">🔒</div></div></div>
+    <div class="lockedPhoto realMedia"><img src="media_2.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">🔒</div></div></div>
+    <div class="lockedPhoto realMedia"><img src="media_3.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">▶</div></div></div>
+  </div>
+  <div class="galleryFoot">
+    20 fotos e 5 vídeos foram sinalizados durante a análise. O conteúdo permanece oculto até o desbloqueio do relatório.
+  </div>
+</div>
+
+<div style="margin-top:22px;background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:22px 18px;text-align:center;box-shadow:0 10px 30px rgba(15,23,42,.08)">
+  <div style="font-size:13px;font-weight:900;letter-spacing:.08em;color:#16a34a;margin-bottom:7px">WSCAN</div>
+  <div style="font-size:12px;color:#64748b;font-weight:700;margin-bottom:14px">ANÁLISE INTELIGENTE DE ATIVIDADE</div>
+  <h2 style="margin:0 0 12px;font-size:22px;line-height:1.2;color:#111827">
+    Veja o relatório completo no WScan para o número <span class="dyn"></span>
+  </h2>
+  <p style="margin:0 auto 18px;max-width:520px;color:#4b5563;line-height:1.55">
+    Desbloqueie as mensagens, mídias e informações ocultadas nesta análise e receba créditos adicionais para consultar outros números.
+  </p>
+  <div style="font-size:16px;color:#6b7280;margin-bottom:3px">
+    De: <span style="text-decoration:line-through">R$ 99,90</span>
+  </div>
+  <div style="font-size:31px;font-weight:950;color:#16a34a;margin-bottom:15px">R$ 29,90</div>
+  <button type="button" class="btn fakeBuyBtn" aria-disabled="true">DESBLOQUEAR AGORA</button>
+  
+</div>
+
+</div>
+<div class="disclosure"><span class="simDisclosure">WScan é uma experiência demonstrativa desenvolvida pelo Advanced Digital Behavior Research Institute (ADBRI), a partir de estudos conduzidos pelos engenheiros Thomas Aquiles e Frederick Wagner. Esta é uma simulação e não realiza acesso a contas, mensagens ou dados de terceiros. WScan Technologies © 2026. Todos os direitos reservados.</span></div>
+</div>
+</section>
+
+<section id="s5" class="screen center">
+<div class="card reveal"><div class="emoji">😂</div><h1>PEGADINHA!</h1><p>Você caiu. Nenhum WhatsApp foi acessado, nenhuma mensagem foi recuperada e nenhum dado real foi encontrado.</p><button type="button" class="btn" onclick="location.reload()">FAZER DE NOVO</button></div>
+</section>
+
+<script>
+const $=id=>document.getElementById(id);
+let analysisTimer, clockTimer, shown='';
+function digits(v){return v.replace(/\D/g,'')}
+function isObviousFakeNumber(d){
+  if(!d) return true;
+
+  // All digits identical: 00000000000, 99999999999 etc.
+  if(/^(\d)\1+$/.test(d)) return true;
+
+  // Obvious ascending/descending sequences embedded in the number.
+  const seqs = [
+    '0123456789','1234567890','123456789',
+    '9876543210','0987654321','987654321'
+  ];
+  if(seqs.some(function(s){ return d.includes(s); })) return true;
+
+  // Repeated simple blocks, e.g. 1212121212, 34343434343, 898989898.
+  if(/^(\d{1,3})\1{2,}$/.test(d)) return true;
+
+  // Reject long alternating/repeating patterns anywhere in the number,
+  // while allowing normal endings such as 96723-9898.
+  for(let size=2; size<=3; size++){
+    for(let start=0; start<=d.length-(size*3); start++){
+      const block=d.slice(start,start+size);
+      let repeated=block.repeat(3);
+      if(d.slice(start,start+(size*3))===repeated) return true;
+    }
+  }
+
+  // Too many of the same digit (e.g. 99999990123).
+  const counts = {};
+  for(const ch of d) counts[ch] = (counts[ch] || 0) + 1;
+  if(Math.max.apply(null,Object.values(counts)) >= Math.max(7, d.length-3)) return true;
+
+  return false;
+}
+
+function fmt(v){let n=digits(v).slice(0,11);if(n.length<=2)return n;if(n.length<=7)return n.slice(0,2)+' '+n.slice(2);return n.slice(0,2)+' '+n.slice(2,7)+'-'+n.slice(7)}
+$('phone').addEventListener('input',e=>e.target.value=fmt(e.target.value));
+function show(n){
+      const vid=$('wscanVideo');
+      if(vid && n!==2){
+        vid.pause();
+        vid.currentTime=0;
+        vid.muted=true;
+      }
+      document.querySelectorAll('.screen').forEach(function(x){ x.classList.remove('on'); });
+      var target = $('s'+n);
+      if(target){ target.classList.add('on'); }
+      try { window.scrollTo({top:0,left:0,behavior:'auto'}); } catch(e) { window.scrollTo(0,0); }
+    }
+function sync(){document.querySelectorAll('.dyn').forEach(x=>x.textContent=shown)}
+const dddMap={
+  '11':'São Paulo','12':'São Paulo','13':'São Paulo','14':'São Paulo','15':'São Paulo','16':'São Paulo','17':'São Paulo','18':'São Paulo','19':'São Paulo',
+  '21':'Rio de Janeiro','22':'Rio de Janeiro','24':'Rio de Janeiro',
+  '27':'Espírito Santo','28':'Espírito Santo',
+  '31':'Minas Gerais','32':'Minas Gerais','33':'Minas Gerais','34':'Minas Gerais','35':'Minas Gerais','37':'Minas Gerais','38':'Minas Gerais',
+  '41':'Paraná','42':'Paraná','43':'Paraná','44':'Paraná','45':'Paraná','46':'Paraná',
+  '47':'Santa Catarina','48':'Santa Catarina','49':'Santa Catarina',
+  '51':'Rio Grande do Sul','53':'Rio Grande do Sul','54':'Rio Grande do Sul','55':'Rio Grande do Sul',
+  '61':'Distrito Federal','62':'Goiás','64':'Goiás','63':'Tocantins',
+  '65':'Mato Grosso','66':'Mato Grosso','67':'Mato Grosso do Sul',
+  '68':'Acre','69':'Rondônia',
+  '71':'Bahia','73':'Bahia','74':'Bahia','75':'Bahia','77':'Bahia',
+  '79':'Sergipe','81':'Pernambuco','87':'Pernambuco','82':'Alagoas','83':'Paraíba','84':'Rio Grande do Norte','85':'Ceará','88':'Ceará','86':'Piauí','89':'Piauí',
+  '91':'Pará','93':'Pará','94':'Pará','92':'Amazonas','97':'Amazonas','95':'Roraima','96':'Amapá','98':'Maranhão','99':'Maranhão'
+};
+function personalizeLocal(){
+  const d=digits($('phone').value), ddd=d.slice(0,2);
+  const region=dddMap[ddd]||'Região identificada pelo DDD';
+  if($('dddRegion')) $('dddRegion').textContent=region;
+  if($('reportId')){
+    const letters='ABCDEFGHJKLMNPQRSTUVWXYZ';
+    const nums=String(Math.floor(100+Math.random()*900));
+    const code=letters[Math.floor(Math.random()*letters.length)]+letters[Math.floor(Math.random()*letters.length)];
+    $('reportId').textContent='WA-'+ddd+nums+code;
+  }
+  const fake=ddd+' 99034-**23';
+  if($('toastSender')) $('toastSender').textContent='('+ddd+') 99034-**23';
+  if($('toastText')) $('toastText').textContent='viu meu stories? 😏';
+}
+function showToast(){
+  const t=$('toast'); if(!t)return;
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),5200);
+}
+function start(){
+ let d=digits($('phone').value);
+ if((d.length!==10&&d.length!==11) || isObviousFakeNumber(d)){
+   $('err').textContent='Digite um número real';
+   $('err').style.display='block';
+   return;
+ }
+ $('err').style.display='none';
+ shown='+55 '+fmt($('phone').value);
+ sessionStorage.setItem('prank_credit_used','1');
+ sessionStorage.setItem('prank_number',shown);
+ $('phone').disabled=true;
+ sync();
+ personalizeLocal();
+
+ const pre=$('precheck'), p1=$('pre1'), p2=$('pre2'), p3=$('pre3');
+ pre.style.display='block';
+ p1.style.display='flex'; p2.style.display='none'; p3.style.display='none';
+
+ setTimeout(()=>{p1.classList.add('done');p2.style.display='flex'},900);
+ setTimeout(()=>{p2.classList.add('done');p3.style.display='flex'},1800);
+ setTimeout(()=>{
+   p3.classList.add('done');
+   setTimeout(()=>{
+     show(2);
+     runAnalysis();
+   },500);
+ },2700);
+}
+
+function runAnalysis(){
+ let p=14, toastShown=false;
+ const startPct=14, endPct=100, duration=75000, startedAt=Date.now();
+ analysisTimer=setInterval(()=>{
+   const elapsed=Math.min(Date.now()-startedAt,duration);
+   p=Math.min(endPct, Math.floor(startPct + (endPct-startPct)*(elapsed/duration)));
+   $('pct').textContent=p+'%';
+   $('circle').style.setProperty('--p',p+'%');
+   $('bar').style.width=p+'%';
+   const st=$('analysisStatus');
+   if(st){
+     if(p<25) st.textContent='VALIDANDO NÚMERO...';
+     else if(p<38) st.textContent='LENDO CONVERSAS GERAIS...';
+     else if(p<52) st.textContent='BUSCANDO CONVERSAS ARQUIVADAS...';
+     else if(p<67) st.textContent='RECUPERANDO CONVERSAS DELETADAS...';
+     else if(p<80) st.textContent='ANALISANDO ARQUIVOS DE MÍDIA...';
+     else if(p<91) st.textContent='BUSCANDO VÍDEOS OCULTOS...';
+     else st.textContent='CRUZANDO PADRÕES DE CONVERSAS...';
+   }
+   if(p>=35)$('a1').textContent='Analisando';
+   if(p>=58)$('a2').textContent='Analisando';
+   if(p>=78)$('a3').textContent='Analisando';
+   if(p>=50 && !toastShown){ toastShown=true; showToast(); }
+   if(elapsed>=duration){
+     clearInterval(analysisTimer);
+     $('pct').textContent='100%';
+     $('circle').style.setProperty('--p','100%');
+     $('bar').style.width='100%';
+     $('a1').textContent=$('a2').textContent=$('a3').textContent='Concluído';
+     setTimeout(()=>show(3),900);
+   }
+ },250)
+}
+
+function pad2(n){return String(n).padStart(2,'0')}
+function updateDynamicReport(){
+  const now = new Date();
+  const three = new Date(now.getTime() - 3*60*60*1000);
+
+  const h3 = pad2(three.getHours()) + ':' + pad2(three.getMinutes());
+  const stamp =
+    pad2(now.getDate()) + '/' +
+    pad2(now.getMonth()+1) + '/' +
+    now.getFullYear() + ' ' +
+    pad2(now.getHours()) + ':' +
+    pad2(now.getMinutes()) + ':' +
+    pad2(now.getSeconds());
+
+  const a = $('threeHoursAgo');
+  const b = $('reportTime');
+  if(a) a.textContent = h3;
+  if(b) b.textContent = stamp;
+}
+updateDynamicReport();
+(function resetEntryState(){
+  if($('phone')){
+    $('phone').disabled=false;
+    $('phone').value='';
+  }
+  sessionStorage.removeItem('prank_credit_used');
+  sessionStorage.removeItem('prank_number');
+})();
+
+function beginClock(){
+ clearInterval(clockTimer);let t=582;
+ clockTimer=setInterval(()=>{if(t>0)t--;let m=String(Math.floor(t/60)).padStart(2,'0'),s=String(t%60).padStart(2,'0');$('clock').textContent=m+':'+s},1000)
+}
+</script>
+<div id="toast" class="toast">
+      <div class="toastIcon" style="background:#25D366;padding:8px">
+      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+        <path fill="#fff" d="M16 5.2c-5.7 0-10.3 4.4-10.3 9.9 0 1.9.6 3.8 1.6 5.3L6 25.1l4.9-1.3c1.5.8 3.3 1.2 5.1 1.2 5.7 0 10.3-4.4 10.3-9.9S21.7 5.2 16 5.2zm0 17.9c-1.7 0-3.3-.4-4.7-1.3l-.3-.2-2.9.8.8-2.8-.2-.3c-1-1.3-1.5-2.8-1.5-4.4 0-4.4 3.9-8 8.8-8s8.8 3.6 8.8 8-3.9 8.2-8.8 8.2zm4.8-5.9c-.3-.1-1.6-.8-1.8-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.6-.7-2.7-1.4-3.8-3-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.4 1.9.8 2.7.9 3.7.8.6-.1 1.6-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.2-.1-.4-.2-.6-.3z"/>
+      </svg>
+    </div>
+      <div><div class="toastTitle" id="toastSender">WhatsApp</div><div id="toastText" class="toastText">viu meu stories? 😏</div></div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const v = document.getElementById('wscanVideo');
+  if(v){
+    const setSpeed = function(){
+      v.defaultPlaybackRate = 1.5;
+      v.playbackRate = 1.5;
+    };
+    setSpeed();
+    v.addEventListener('loadedmetadata', setSpeed);
+    v.addEventListener('play', setSpeed);
+  }
+});
+</script>
+
+</body></html>
