@@ -4,6 +4,34 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>WhatsApp Check</title>
+
+<!-- Google tag (gtag.js) — mesmo ID dos demais produtos da Alívio -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7SRPE880LX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7SRPE880LX');
+</script>
+
+<!-- Meta Pixel Code — mesmo Pixel dos demais produtos da Alívio -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1734988077420170');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1734988077420170&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
 <style>
 *{box-sizing:border-box} :root{--g:#25d366;--ink:#111827;--muted:#6d7b91;--bg:#f1f4f6;--dark:#1d1e34}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
@@ -456,7 +484,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <div class="found"><span>🕘 Atividade recente</span><span class="check">✓</span></div>
 <div class="found"><span>👥 Contatos e grupos</span><span class="check">✓</span></div>
 <div class="found"><span>📍 Dados de atividade</span><span class="check">✓</span></div>
-<div style="text-align:center;color:#b42318;font-weight:850;margin-top:18px">⚠️ Atenção, você pode não gostar do que vai descobrir.</div><button type="button" class="btn next" onclick="show(4);beginClock()">CLIQUE AQUI PARA VER TUDO SOBRE ESTE NÚMERO</button>
+<div style="text-align:center;color:#b42318;font-weight:850;margin-top:18px">⚠️ Atenção, você pode não gostar do que vai descobrir.</div><button type="button" class="btn next" onclick="show(4)">CLIQUE AQUI PARA VER TUDO SOBRE ESTE NÚMERO</button>
 </div>
 </section>
 
@@ -530,7 +558,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
     De: <span style="text-decoration:line-through">R$ 99,90</span>
   </div>
   <div style="font-size:31px;font-weight:950;color:#16a34a;margin-bottom:15px">R$ 29,90</div>
-  <button type="button" class="btn fakeBuyBtn" aria-disabled="true">DESBLOQUEAR AGORA</button>
+  <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box">DESBLOQUEAR AGORA</a>
   
 </div>
 
@@ -545,7 +573,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <script>
 const $=id=>document.getElementById(id);
-let analysisTimer, clockTimer, shown='';
+let analysisTimer, clockTimer, shown='', clockStarted=false;
 function digits(v){return v.replace(/\D/g,'')}
 function isObviousFakeNumber(d){
   if(!d) return true;
@@ -593,6 +621,7 @@ function show(n){
       document.querySelectorAll('.screen').forEach(function(x){ x.classList.remove('on'); });
       var target = $('s'+n);
       if(target){ target.classList.add('on'); }
+      if(n===4 && !clockStarted){ clockStarted=true; beginClock(); }
       try { window.scrollTo({top:0,left:0,behavior:'auto'}); } catch(e) { window.scrollTo(0,0); }
     }
 function sync(){document.querySelectorAll('.dyn').forEach(x=>x.textContent=shown)}
