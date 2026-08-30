@@ -583,9 +583,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
       <div>✅ Mensagem de Instagram</div>
     </div>
   </div>
-  <div style="text-align:left;max-width:420px;margin:0 auto 18px;background:#eaf8f4;border:1px solid #72e4ad;border-radius:14px;padding:16px 18px">
-    <div style="font-weight:900;color:#078d77;margin-bottom:4px">🎁 Ganhe de Brinde:</div>
-    <div style="color:#0f6b5c;font-weight:700">Câmera espiã para carro</div>
+  <div style="text-align:left;max-width:420px;margin:0 auto 18px;background:#eaf8f4;border:1px solid #72e4ad;border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px">
+    <img src="brindecamera.png" alt="Câmera espiã de brinde" style="width:80px;height:80px;object-fit:cover;object-position:center 65%;border-radius:10px;flex-shrink:0;box-shadow:0 4px 12px rgba(15,23,42,.15)">
+    <div>
+      <div style="font-weight:900;color:#078d77;margin-bottom:4px">🎁 Ganhe de Brinde:</div>
+      <div style="color:#0f6b5c;font-weight:700">Câmera espiã para carro</div>
+    </div>
   </div>
   <div style="font-size:16px;color:#6b7280;margin-bottom:3px">
     De: <span style="text-decoration:line-through">R$ 99,90</span>
@@ -663,25 +666,28 @@ const nearCityMap={
 function normalizeCityName(s){
   return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim();
 }
-// Capital de cada estado — usada como 2º/3º nível de fallback quando a
-// cidade exata do visitante não está no nearCityMap acima, cobrindo o
-// Brasil inteiro em vez de só as ~40 cidades mapeadas manualmente.
-const stateCapitalMap={
-  'acre':'Rio Branco','alagoas':'Maceió','amapa':'Macapá','amazonas':'Manaus',
-  'bahia':'Salvador','ceara':'Fortaleza','distrito federal':'Brasília',
-  'espirito santo':'Vitória','goias':'Goiânia','maranhao':'São Luís',
-  'mato grosso':'Cuiabá','mato grosso do sul':'Campo Grande','minas gerais':'Belo Horizonte',
-  'para':'Belém','paraiba':'João Pessoa','parana':'Curitiba','pernambuco':'Recife',
-  'piaui':'Teresina','rio de janeiro':'Rio de Janeiro','rio grande do norte':'Natal',
-  'rio grande do sul':'Porto Alegre','rondonia':'Porto Velho','roraima':'Boa Vista',
-  'santa catarina':'Florianópolis','sao paulo':'São Paulo','sergipe':'Aracaju','tocantins':'Palmas',
+// Vizinha da CAPITAL de cada estado (nunca a própria capital!) — usada
+// como 2º/3º nível de fallback quando a cidade exata do visitante não
+// está no nearCityMap acima, cobrindo o Brasil inteiro em vez de só as
+// ~40 cidades mapeadas manualmente. Ex.: 'rio de janeiro' aponta pra
+// Niterói, não pra 'Rio de Janeiro' — senão, quem já está no Rio veria
+// "próximo de Rio de Janeiro" (o próprio lugar onde já está).
+const stateNearCityMap={
+  'acre':'Senador Guiomard','alagoas':'Marechal Deodoro','amapa':'Santana','amazonas':'Iranduba',
+  'bahia':'Lauro de Freitas','ceara':'Caucaia','distrito federal':'Taguatinga',
+  'espirito santo':'Vila Velha','goias':'Aparecida de Goiânia','maranhao':'São José de Ribamar',
+  'mato grosso':'Várzea Grande','mato grosso do sul':'Terenos','minas gerais':'Contagem',
+  'para':'Ananindeua','paraiba':'Cabedelo','parana':'São José dos Pinhais','pernambuco':'Olinda',
+  'piaui':'Timon','rio de janeiro':'Niterói','rio grande do norte':'Parnamirim',
+  'rio grande do sul':'Canoas','rondonia':'Candeias do Jamari','roraima':'Cantá',
+  'santa catarina':'São José','sao paulo':'Guarulhos','sergipe':'Nossa Senhora do Socorro','tocantins':'Porto Nacional',
 };
 function fillNearProximity(){
   const el=$('nearProximity');
   if(!el) return;
   const near = nearCityMap[normalizeCityName(visitorCity)]
-    || stateCapitalMap[normalizeCityName(visitorRegion)]
-    || stateCapitalMap[normalizeCityName(lastRegion)];
+    || stateNearCityMap[normalizeCityName(visitorRegion)]
+    || stateNearCityMap[normalizeCityName(lastRegion)];
   el.textContent = near ? ('próximo de '+near) : 'a poucos quilômetros deste dispositivo';
 }
 // Sugere "o próximo período do dia" (manhã→tarde→noite→madrugada, com
