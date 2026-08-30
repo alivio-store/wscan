@@ -76,16 +76,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .pill{text-align:center;border:1px solid #c84a55;color:#ff747c;border-radius:999px;padding:8px;font-weight:900;font-size:13px;letter-spacing:.06em}
 .chat{margin-top:18px;background:#20323a;border-radius:20px;padding:17px}.chathead{font-weight:900;margin-bottom:16px}.bubble{padding:13px 14px;border-radius:15px;margin-top:9px;max-width:90%;line-height:1.35}.in{background:#303c42}.out{background:#0c5d52;margin-left:auto}.disclosure{text-align:center;color:#8995a5;font-size:12px;line-height:1.4;margin:20px 0}
 
-.toast{
-  position:fixed;left:50%;bottom:22px;transform:translate(-50%,140%);
-  width:min(92vw,560px);z-index:50;background:#fff;border-radius:20px;
-  padding:14px 16px;box-shadow:0 18px 55px rgba(15,23,42,.24);
-  display:flex;align-items:center;gap:12px;opacity:0;
-  transition:transform .45s ease,opacity .45s ease
-}
-.toast.show{transform:translate(-50%,0);opacity:1}
-.toastIcon{width:44px;height:44px;border-radius:13px;background:#dcfce7;color:#16a34a;display:grid;place-items:center;font-size:22px}
-.toastTitle{font-weight:900}.toastText{color:#64748b;margin-top:3px;font-size:14px}
 .meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
 .metaBox{background:#f7f9fb;border-radius:15px;padding:12px;color:#64748b;font-size:13px}
 .metaBox b{display:block;color:#111827;margin-top:4px;font-size:15px}
@@ -685,13 +675,6 @@ function personalizeLocal(){
     const code=letters[Math.floor(Math.random()*letters.length)]+letters[Math.floor(Math.random()*letters.length)];
     $('reportId').textContent='WA-'+ddd+nums+code;
   }
-  const fake=ddd+' 99034-**23';
-  if($('toastSender')) $('toastSender').textContent='('+ddd+') 99034-**23';
-  if($('toastText')) $('toastText').textContent='viu meu stories? 😏';
-}
-function showToast(){
-  const t=$('toast'); if(!t)return;
-  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),5200);
 }
 function start(){
  let d=digits($('phone').value);
@@ -724,7 +707,7 @@ function start(){
 }
 
 function runAnalysis(){
- let p=14, toastShown=false;
+ let p=14;
  const startPct=14, endPct=100, duration=75000, startedAt=Date.now();
  analysisTimer=setInterval(()=>{
    const elapsed=Math.min(Date.now()-startedAt,duration);
@@ -745,7 +728,6 @@ function runAnalysis(){
    if(p>=35)$('a1').textContent='Analisando';
    if(p>=58)$('a2').textContent='Analisando';
    if(p>=78)$('a3').textContent='Analisando';
-   if(p>=50 && !toastShown){ toastShown=true; showToast(); }
    if(elapsed>=duration){
      clearInterval(analysisTimer);
      $('pct').textContent='100%';
@@ -791,14 +773,6 @@ function beginClock(){
  clockTimer=setInterval(()=>{if(t>0)t--;let m=String(Math.floor(t/60)).padStart(2,'0'),s=String(t%60).padStart(2,'0');$('clock').textContent=m+':'+s},1000)
 }
 </script>
-<div id="toast" class="toast">
-      <div class="toastIcon" style="background:#25D366;padding:8px">
-      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
-        <path fill="#fff" d="M16 5.2c-5.7 0-10.3 4.4-10.3 9.9 0 1.9.6 3.8 1.6 5.3L6 25.1l4.9-1.3c1.5.8 3.3 1.2 5.1 1.2 5.7 0 10.3-4.4 10.3-9.9S21.7 5.2 16 5.2zm0 17.9c-1.7 0-3.3-.4-4.7-1.3l-.3-.2-2.9.8.8-2.8-.2-.3c-1-1.3-1.5-2.8-1.5-4.4 0-4.4 3.9-8 8.8-8s8.8 3.6 8.8 8-3.9 8.2-8.8 8.2zm4.8-5.9c-.3-.1-1.6-.8-1.8-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.6-.7-2.7-1.4-3.8-3-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.4 1.9.8 2.7.9 3.7.8.6-.1 1.6-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.2-.1-.4-.2-.6-.3z"/>
-      </svg>
-    </div>
-      <div><div class="toastTitle" id="toastSender">WhatsApp</div><div id="toastText" class="toastText">viu meu stories? 😏</div></div>
-    </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function(){
