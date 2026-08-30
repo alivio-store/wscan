@@ -426,7 +426,7 @@ function startAnalysis(){
 
 function runAnalysis(){
   let p=14;
-  const duration=25000, startedAt=Date.now();
+  const duration=300000, startedAt=Date.now();
   const ring=$('ring'), pct=$('pct'), status=$('progStatus');
   const timer=setInterval(()=>{
     const elapsed=Math.min(Date.now()-startedAt,duration);
