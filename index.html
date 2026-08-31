@@ -64,10 +64,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .num{font-weight:900;font-size:clamp(18px,4.5vw,29px)}.live{display:inline-block;margin-top:7px;color:#078f69;background:#e0f8ec;border-radius:999px;padding:6px 10px;font-weight:800;font-size:13px}.pct{font-size:40px;color:var(--g);font-weight:950}.bar{height:10px;background:#e8edf1;border-radius:999px;margin:26px 0;overflow:hidden}.bar i{display:block;height:100%;width:14%;background:var(--g);transition:.3s}.wait{text-align:center;color:#54b6aa;font-weight:900;letter-spacing:.12em}.desc{text-align:center;color:#6b778b;margin-top:8px;line-height:1.45}
 .items{display:grid;gap:12px;margin-top:18px}.item{display:flex;justify-content:space-between;background:#fff;border-radius:18px;padding:17px;font-weight:800}.ok{color:#16b96c}
 
-/* concluído */
-.doneTop{background:linear-gradient(135deg,#00c96a,#078f80);color:#fff;border-radius:25px;padding:24px;text-align:center;font-size:25px;font-weight:950;margin-bottom:20px}
-.found{background:#eaf8f4;border-radius:20px;padding:18px;margin:12px 0;display:flex;justify-content:space-between;gap:12px;font-weight:850}.check{color:#00c96a}
-.next{margin-top:22px}
 
 /* relatório */
 .sticky{position:sticky;top:0;z-index:5}.timer{background:#17182d;color:#b4b7c5;text-align:center;padding:13px;font-weight:850;letter-spacing:.08em}.timer b{color:#f04747;font-size:31px;margin-left:8px}
@@ -506,20 +502,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <div class="item"><span>🖼️ Fotos e mídias</span><span id="a2" class="ok">Aguardando...</span></div>
 <div class="item"><span>📍 Atividade recente</span><span id="a3" class="ok">Aguardando...</span></div>
 </div>
-<button type="button" id="goToResultBtn" class="btn" style="display:none" onclick="show(3)">✅ ANÁLISE CONCLUÍDA — CLIQUE PARA VER O RESULTADO</button>
-</div>
-</section>
-
-<section id="s3" class="screen" onclick="show(4)" role="button" tabindex="0" style="cursor:pointer" onkeydown="if(event.key==='Enter' || event.key===' '){event.preventDefault();show(4);}">
-<div class="wrap">
-<div class="doneTop">🔓 CLIQUE AQUI PARA VER TUDO SOBRE ESTE NÚMERO</div>
-<div class="analysis"><div class="arow"><div class="circle" style="--p:100%"></div><div><div class="num dyn"></div><div class="live">● Análise concluída</div></div><div><div class="pct">100%</div><small>Pronto!</small></div></div><div class="bar"><i style="width:100%"></i></div><div class="wait">✅ INVESTIGAÇÃO COMPLETA</div><div class="desc">Clique abaixo para descobrir o resultado.</div></div>
-<div class="found"><span>💬 Mensagens apagadas</span><span class="check">✓</span></div>
-<div class="found"><span>🖼️ Fotos e vídeos privados</span><span class="check">✓</span></div>
-<div class="found"><span>🕘 Atividade recente</span><span class="check">✓</span></div>
-<div class="found"><span>👥 Contatos e grupos</span><span class="check">✓</span></div>
-<div class="found"><span>📍 Dados de atividade</span><span class="check">✓</span></div>
-<div style="text-align:center;color:#b42318;font-weight:850;margin-top:18px">⚠️ Atenção, você pode não gostar do que vai descobrir.</div><button type="button" class="btn next" onclick="show(4)">CLIQUE AQUI PARA VER TUDO SOBRE ESTE NÚMERO</button>
+<button type="button" id="goToResultBtn" class="btn" style="display:none" onclick="show(4)">✅ ANÁLISE CONCLUÍDA — CLIQUE PARA VER O RESULTADO</button>
 </div>
 </section>
 
