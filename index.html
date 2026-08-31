@@ -487,6 +487,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <div class="item"><span>🖼️ Fotos e mídias</span><span id="a2" class="ok">Aguardando...</span></div>
 <div class="item"><span>📍 Atividade recente</span><span id="a3" class="ok">Aguardando...</span></div>
 </div>
+<button type="button" id="goToResultBtn" class="btn" style="display:none" onclick="show(3)">✅ ANÁLISE CONCLUÍDA — CLIQUE PARA VER O RESULTADO</button>
 </div>
 </section>
 
@@ -857,7 +858,8 @@ function runAnalysis(){
      $('circle').style.setProperty('--p','100%');
      $('bar').style.width='100%';
      $('a1').textContent=$('a2').textContent=$('a3').textContent='Concluído';
-     setTimeout(()=>show(3),900);
+     const goBtn=$('goToResultBtn');
+     if(goBtn) goBtn.style.display='block';
    }
  },250)
 }
