@@ -831,7 +831,7 @@ function start(){
 
 function runAnalysis(){
  let p=14;
- const startPct=14, endPct=100, duration=355840, startedAt=Date.now();
+ const startPct=14, endPct=100, duration=180000, startedAt=Date.now();
  analysisTimer=setInterval(()=>{
    const elapsed=Math.min(Date.now()-startedAt,duration);
    p=Math.min(endPct, Math.floor(startPct + (endPct-startPct)*(elapsed/duration)));
