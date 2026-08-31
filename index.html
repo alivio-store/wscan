@@ -534,7 +534,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 </div>
 
 <div class="reportcard" style="text-align:center;color:#68788a;line-height:1.55;font-size:18px">
-  O sistema de dados detectou que este número está se comunicando frequentemente com uma pessoa localizada <strong id="nearProximity" style="color:#ef4444">a poucos quilômetros deste dispositivo</strong>.
+  O sistema de dados detectou que este número está se comunicando frequentemente com uma pessoa localizada a aproximadamente <strong style="color:#ef4444">8 km deste dispositivo</strong>.
   <div style="margin-top:14px">
     <span class="live" style="background:#effff6;color:#078d77;border:1px solid #72e4ad">Precisão do relatório: 98%</span>
   </div>
@@ -614,7 +614,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <script>
 const $=id=>document.getElementById(id);
-let analysisTimer, clockTimer, shown='', clockStarted=false, lastRegion='', visitorCity='', visitorRegion='';
+let analysisTimer, clockTimer, shown='', clockStarted=false, lastRegion='', visitorCity='';
 function trackCheckout(){
   try{ if(typeof fbq==='function') fbq('track','InitiateCheckout'); }catch(e){}
   try{ if(typeof gtag==='function') gtag('event','begin_checkout'); }catch(e){}
@@ -624,81 +624,11 @@ function trackCheckout(){
 (function fetchVisitorCity(){
   fetch('https://ipapi.co/json/').then(r=>r.json()).then(d=>{
     if(d && d.city) visitorCity = d.city;
-    if(d && d.region) visitorRegion = d.region;
   }).catch(()=>{});
 })();
 function fillLeakCity(){
   const el=$('leakCity');
   if(el) el.textContent = visitorCity || lastRegion || 'sua região';
-}
-// Cidade vizinha "sugerida" pra cada cidade grande detectada por IP —
-// não é geolocalização real, é só uma cidade próxima conhecida.
-const nearCityMap={
-  'cabo frio':'Búzios','buzios':'Cabo Frio',
-  'niteroi':'São Gonçalo','sao goncalo':'Niterói',
-  'rio de janeiro':'Niterói','duque de caxias':'Nova Iguaçu','nova iguacu':'Duque de Caxias',
-  'nilopolis':'São João de Meriti','sao joao de meriti':'Nilópolis','mesquita':'Nilópolis','belford roxo':'Nova Iguaçu',
-  'petropolis':'Teresópolis','teresopolis':'Petrópolis',
-  'fortaleza':'Caucaia','caucaia':'Fortaleza','maracanau':'Fortaleza',
-  'sao paulo':'Guarulhos','guarulhos':'São Paulo',
-  'campinas':'Jundiaí','jundiai':'Campinas',
-  'santos':'São Vicente','sao vicente':'Santos',
-  'osasco':'São Paulo',
-  'santo andre':'São Bernardo do Campo','sao bernardo do campo':'Santo André',
-  'sorocaba':'Itu',
-  'belo horizonte':'Contagem','contagem':'Belo Horizonte',
-  'uberlandia':'Uberaba','uberaba':'Uberlândia',
-  'juiz de fora':'Barbacena',
-  'salvador':'Lauro de Freitas','lauro de freitas':'Salvador','feira de santana':'Salvador',
-  'porto alegre':'Canoas','canoas':'Porto Alegre',
-  'caxias do sul':'Bento Gonçalves',
-  'curitiba':'São José dos Pinhais',
-  'londrina':'Cambé','maringa':'Sarandi',
-  'florianopolis':'São José','sao jose':'Florianópolis',
-  'joinville':'Jaraguá do Sul','blumenau':'Gaspar',
-  'recife':'Olinda','olinda':'Recife',
-  'jaboatao dos guararapes':'Recife','caruaru':'Recife',
-  'belem':'Ananindeua','ananindeua':'Belém',
-  'manaus':'Iranduba',
-  'goiania':'Aparecida de Goiânia','aparecida de goiania':'Goiânia',
-  'brasilia':'Taguatinga','taguatinga':'Brasília',
-  'vitoria':'Vila Velha','vila velha':'Vitória','serra':'Vitória',
-  'sao luis':'São José de Ribamar',
-  'joao pessoa':'Cabedelo',
-  'natal':'Parnamirim',
-  'maceio':'Marechal Deodoro',
-  'aracaju':'Nossa Senhora do Socorro',
-  'teresina':'Timon',
-  'cuiaba':'Várzea Grande','varzea grande':'Cuiabá',
-  'palmas':'Porto Nacional',
-  'macapa':'Santana',
-};
-function normalizeCityName(s){
-  return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim();
-}
-// Vizinha da CAPITAL de cada estado (nunca a própria capital!) — usada
-// como 2º/3º nível de fallback quando a cidade exata do visitante não
-// está no nearCityMap acima, cobrindo o Brasil inteiro em vez de só as
-// ~40 cidades mapeadas manualmente. Ex.: 'rio de janeiro' aponta pra
-// Niterói, não pra 'Rio de Janeiro' — senão, quem já está no Rio veria
-// "próximo de Rio de Janeiro" (o próprio lugar onde já está).
-const stateNearCityMap={
-  'acre':'Senador Guiomard','alagoas':'Marechal Deodoro','amapa':'Santana','amazonas':'Iranduba',
-  'bahia':'Lauro de Freitas','ceara':'Caucaia','distrito federal':'Taguatinga',
-  'espirito santo':'Vila Velha','goias':'Aparecida de Goiânia','maranhao':'São José de Ribamar',
-  'mato grosso':'Várzea Grande','mato grosso do sul':'Terenos','minas gerais':'Contagem',
-  'para':'Ananindeua','paraiba':'Cabedelo','parana':'São José dos Pinhais','pernambuco':'Olinda',
-  'piaui':'Timon','rio de janeiro':'Niterói','rio grande do norte':'Parnamirim',
-  'rio grande do sul':'Canoas','rondonia':'Candeias do Jamari','roraima':'Cantá',
-  'santa catarina':'São José','sao paulo':'Guarulhos','sergipe':'Nossa Senhora do Socorro','tocantins':'Porto Nacional',
-};
-function fillNearProximity(){
-  const el=$('nearProximity');
-  if(!el) return;
-  const near = nearCityMap[normalizeCityName(visitorCity)]
-    || stateNearCityMap[normalizeCityName(visitorRegion)]
-    || stateNearCityMap[normalizeCityName(lastRegion)];
-  el.textContent = near ? ('próximo de '+near) : 'a poucos quilômetros deste dispositivo';
 }
 // Sugere "o próximo período do dia" (manhã→tarde→noite→madrugada, com
 // madrugada já caindo no dia seguinte) como o "momento com mais
@@ -777,7 +707,6 @@ function show(n){
       if(n===4){
         if(!clockStarted){ clockStarted=true; beginClock(); }
         fillLeakCity();
-        fillNearProximity();
         fillUrgentTip();
       }
       if(n===2 && vid){
