@@ -340,24 +340,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .sound{
   cursor:pointer;
 }
-.videoSoundBtn{
-  position:absolute;
-  left:50%;
-  bottom:18px;
-  transform:translateX(-50%);
-  z-index:5;
-  border:0;
-  border-radius:999px;
-  padding:12px 18px;
-  font-size:14px;
-  font-weight:900;
-  color:#fff;
-  background:rgba(17,24,39,.88);
-  box-shadow:0 8px 24px rgba(0,0,0,.28);
-  cursor:pointer;
-  white-space:nowrap;
-}
-.videoSoundBtn.hidden{display:none}
 @media(max-width:600px){
   .video{border-radius:14px !important}
 }
@@ -491,10 +473,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   </div>
 </div>
 <div class="video">
-  <video id="wscanVideo" autoplay muted playsinline preload="auto" controls poster="videowpp-poster.jpg">
+  <video id="wscanVideo" playsinline preload="auto" controls poster="videowpp-poster.jpg">
     <source src="videowpp.mp4" type="video/mp4">
   </video>
-  <button type="button" id="videoSoundBtn" class="videoSoundBtn hidden" onclick="unmuteVideo()">🔊 Toque para ativar o som</button>
 </div>
 
 <div class="meta">
@@ -775,12 +756,9 @@ function fmt(v){let n=digits(v).slice(0,11);if(n.length<=2)return n;if(n.length<
 $('phone').addEventListener('input',e=>e.target.value=fmt(e.target.value));
 function show(n){
       const vid=$('wscanVideo');
-      const soundBtn=$('videoSoundBtn');
       if(vid && n!==2){
         vid.pause();
         vid.currentTime=0;
-        vid.muted=true;
-        if(soundBtn) soundBtn.classList.add('hidden');
       }
       document.querySelectorAll('.screen').forEach(function(x){ x.classList.remove('on'); });
       var target = $('s'+n);
@@ -791,19 +769,8 @@ function show(n){
         fillNearProximity();
         fillUrgentTip();
       }
-      if(n===2 && vid){
-        vid.play().catch(()=>{});
-        setTimeout(()=>{ if(vid.muted && soundBtn) soundBtn.classList.remove('hidden'); },400);
-      }
       try { window.scrollTo({top:0,left:0,behavior:'auto'}); } catch(e) { window.scrollTo(0,0); }
     }
-function unmuteVideo(){
-  const vid=$('wscanVideo'), soundBtn=$('videoSoundBtn');
-  if(!vid) return;
-  vid.muted=false;
-  if(vid.paused) vid.play().catch(()=>{});
-  if(soundBtn) soundBtn.classList.add('hidden');
-}
 function sync(){document.querySelectorAll('.dyn').forEach(x=>x.textContent=shown)}
 const dddMap={
   '11':'São Paulo','12':'São Paulo','13':'São Paulo','14':'São Paulo','15':'São Paulo','16':'São Paulo','17':'São Paulo','18':'São Paulo','19':'São Paulo',
@@ -833,14 +800,6 @@ function personalizeLocal(){
   }
 }
 function start(){
- // Aproveita o toque no botão (gesto real do usuário) para já destravar o
- // áudio do vídeo da próxima tela — funciona na maioria dos navegadores
- // mobile mesmo com o vídeo ainda oculto; se não funcionar, o botão de
- // "ativar som" em show(2) cobre o caso.
- const primeVid=$('wscanVideo');
- if(primeVid){
-   try{ primeVid.muted=false; if(primeVid.paused) primeVid.play().catch(()=>{}); }catch(e){}
- }
  let d=digits($('phone').value);
  if((d.length!==10&&d.length!==11) || isObviousFakeNumber(d)){
    $('err').textContent='Digite um número real';
@@ -872,24 +831,9 @@ function start(){
 
 function runAnalysis(){
  let p=14;
- const startPct=14, endPct=100, duration=50000, startedAt=Date.now();
- let watchedMs=0;
- const vid=$('wscanVideo');
- // A % só avança enquanto o vídeo está de fato tocando (pausou, trava) —
- // e bloqueia tentativa de arrastar a barrinha pra frente sem assistir.
- let maxWatchedTime=0;
- if(vid){
-   vid.addEventListener('timeupdate',()=>{ if(vid.currentTime>maxWatchedTime) maxWatchedTime=vid.currentTime; });
-   vid.addEventListener('seeking',()=>{ if(vid.currentTime>maxWatchedTime+1) vid.currentTime=maxWatchedTime; });
- }
+ const startPct=14, endPct=100, duration=45000, startedAt=Date.now();
  analysisTimer=setInterval(()=>{
-   const realElapsed=Date.now()-startedAt;
-   if(!vid || (!vid.paused && !vid.ended)) watchedMs+=250;
-   // Trava de segurança: se por algum motivo o vídeo nunca tocar (bloqueio
-   // do navegador, erro de carregamento), libera a análise mesmo assim
-   // depois de 2 minutos reais, pra ninguém ficar preso na tela.
-   if(realElapsed>120000) watchedMs=duration;
-   const elapsed=Math.min(watchedMs,duration);
+   const elapsed=Math.min(Date.now()-startedAt,duration);
    p=Math.min(endPct, Math.floor(startPct + (endPct-startPct)*(elapsed/duration)));
    $('pct').textContent=p+'%';
    $('circle').style.setProperty('--p',p+'%');
