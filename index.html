@@ -475,15 +475,11 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <section id="s2" class="screen">
 <div class="wrap">
 <div class="warning" style="background:#dc2626">⚠️ ANÁLISE EM ANDAMENTO — NÃO FECHE ESTA PÁGINA</div>
-<div class="analysis">
-<div class="arow"><div id="circle" class="circle" style="--p:14%"></div><div><div class="num dyn">+55</div><div class="live">● Sendo analisado agora</div></div><div><div id="pct" class="pct">14%</div><small>Analisando</small></div></div>
-<div class="bar"><i id="bar"></i></div>
-<div id="analysisStatus" class="wait">VALIDANDO NÚMERO...</div><div class="desc">O WhatsApp de <strong class="dyn"></strong> está sendo analisado</div>
-</div>
 
-<div style="text-align:center;margin:30px 0 16px">
-  <div style="font-size:18px;font-weight:950;color:#111827;letter-spacing:.03em">
-    ENQUANTO ISSO, ASSISTA AO VÍDEO SOBRE O APLICATIVO:
+<div style="text-align:center;margin:24px 0 16px">
+  <button type="button" onclick="unmuteVideo()" style="display:inline-block;background:var(--g);color:#fff;border:0;border-radius:999px;padding:11px 22px;font-size:14px;font-weight:900;cursor:pointer;margin-bottom:16px">▶ ASSISTA AGORA</button>
+  <div style="font-size:18px;font-weight:950;color:#111827;letter-spacing:.03em;line-height:1.35">
+    Assista a este vídeo enquanto finalizamos a investigação do número que você nos enviou.
   </div>
 </div>
 <div class="video">
@@ -491,6 +487,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
     <source src="videowpp.mp4" type="video/mp4">
   </video>
   <button type="button" id="videoSoundBtn" class="videoSoundBtn hidden" onclick="unmuteVideo()">🔊 Toque para ativar o som</button>
+</div>
+
+<div class="analysis" style="margin-top:26px">
+<div class="arow"><div id="circle" class="circle" style="--p:14%"></div><div><div class="num dyn">+55</div><div class="live">● Sendo analisado agora</div></div><div><div id="pct" class="pct">14%</div><small>Analisando</small></div></div>
+<div class="bar"><i id="bar"></i></div>
+<div id="analysisStatus" class="wait">VALIDANDO NÚMERO...</div><div class="desc">O WhatsApp de <strong class="dyn"></strong> está sendo analisado</div>
 </div>
 
 <div class="meta">
