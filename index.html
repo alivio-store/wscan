@@ -602,8 +602,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   <div style="font-size:16px;color:#6b7280;margin-bottom:3px">
     De: <span style="text-decoration:line-through">R$ 149,90</span>
   </div>
-  <div style="font-size:31px;font-weight:950;color:#16a34a;margin-bottom:6px">R$ 49,90</div>
-  <div style="text-align:center;color:#5f6f82;font-weight:800;font-size:13px;margin-bottom:15px">🔥 <span id="unlockCount">187</span> pessoas desbloquearam o relatório hoje</div>
+  <div style="font-size:31px;font-weight:950;color:#16a34a;margin-bottom:15px">R$ 49,90</div>
   <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="trackCheckout()">DESBLOQUEAR AGORA</a>
   <div style="text-align:center;color:#078d77;font-weight:800;font-size:13px;margin-top:14px">🛡️ Garantia de 7 dias — reembolso garantido</div>
 </div>
@@ -620,12 +619,6 @@ function trackCheckout(){
   try{ if(typeof fbq==='function') fbq('track','InitiateCheckout'); }catch(e){}
   try{ if(typeof gtag==='function') gtag('event','begin_checkout'); }catch(e){}
 }
-// Prova social: número aproximado, só pra dar a sensação de atividade —
-// não vem de dados reais de uso.
-(function socialProof(){
-  const unlockEl=$('unlockCount');
-  if(unlockEl) unlockEl.textContent=Math.floor(140+Math.random()*90); // 140–229
-})();
 // Detecta a cidade do visitante pelo IP assim que a página carrega, para já
 // estar pronta quando a tela do relatório (s4) for exibida mais tarde.
 (function fetchVisitorCity(){
