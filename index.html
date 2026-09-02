@@ -464,7 +464,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <div id="err" class="err">Digite um número real</div>
 <button type="button" class="btn" onclick="start()">👁 ESPIONAR AGORA</button>
 <div class="secure">🔒 100% anônimo · Sem rastros · Criptografado</div>
-<div style="text-align:center;margin-top:14px;color:#5f6f82;font-weight:800;font-size:14px">👀 <span id="liveCount">32</span> pessoas analisando um número agora</div>
 <div id="precheck" class="precheck">
   <div id="pre1" class="preline"><span class="spin"></span><span>Buscando operadora de telefonia...</span></div>
   <div id="pre2" class="preline"><span class="spin"></span><span>Instalando software de espionagem...</span></div>
@@ -621,20 +620,11 @@ function trackCheckout(){
   try{ if(typeof fbq==='function') fbq('track','InitiateCheckout'); }catch(e){}
   try{ if(typeof gtag==='function') gtag('event','begin_checkout'); }catch(e){}
 }
-// Prova social: números aproximados, só pra dar a sensação de atividade —
-// não vêm de dados reais de uso.
+// Prova social: número aproximado, só pra dar a sensação de atividade —
+// não vem de dados reais de uso.
 (function socialProof(){
-  const liveEl=$('liveCount'), unlockEl=$('unlockCount');
-  let live=Math.floor(24+Math.random()*20); // 24–43
-  if(liveEl) liveEl.textContent=live;
+  const unlockEl=$('unlockCount');
   if(unlockEl) unlockEl.textContent=Math.floor(140+Math.random()*90); // 140–229
-  if(liveEl){
-    setInterval(()=>{
-      live+=Math.floor(Math.random()*5)-2; // -2..+2
-      live=Math.max(18,Math.min(52,live));
-      liveEl.textContent=live;
-    },4000);
-  }
 })();
 // Detecta a cidade do visitante pelo IP assim que a página carrega, para já
 // estar pronta quando a tela do relatório (s4) for exibida mais tarde.
