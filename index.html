@@ -542,7 +542,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   <div class="r"><div class="ico">💬</div><div>“Tá marcado! Mesmo lugar de sempre 😍”</div></div>
 </div>
 <div class="urgentTip">⚠️ <strong>IMPORTANTE:</strong> Se quiser flagrar a conversa, <strong id="tipWhen" style="color:#dc2626">carregando...</strong> é o momento com mais conversas suspeitas. Hoje é a chance perfeita para você entender o que está acontecendo.</div>
-<a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="trackCheckout()">🔓 VER RESULTADO COMPLETO</a>
+<a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn checkoutLink" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="trackCheckout()">🔓 VER RESULTADO COMPLETO</a>
 
 <div class="lockedGallery">
   <div class="lockedGalleryHead">
@@ -588,7 +588,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
     De: <span style="text-decoration:line-through">R$ 149,90</span>
   </div>
   <div style="font-size:31px;font-weight:950;color:#16a34a;margin-bottom:15px">R$ 49,90</div>
-  <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="trackCheckout()">DESBLOQUEAR AGORA</a>
+  <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn checkoutLink" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="trackCheckout()">DESBLOQUEAR AGORA</a>
   <div style="text-align:center;color:#078d77;font-weight:800;font-size:13px;margin-top:14px">🛡️ Garantia de 7 dias — reembolso garantido</div>
 </div>
 
@@ -600,6 +600,17 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <script>
 const $=id=>document.getElementById(id);
 let analysisTimer, clockTimer, shown='', clockStarted=false, lastRegion='', visitorCity='';
+// Repassa os parâmetros de rastreamento do anúncio (utm_source, utm_campaign,
+// src, click_id, fbclid etc.) da URL da página para os links de checkout da
+// PerfectPay, para que a origem do clique apareça no painel deles.
+(function forwardTrackingParams(){
+  const qs=window.location.search;
+  if(!qs) return;
+  document.querySelectorAll('.checkoutLink').forEach(a=>{
+    const sep=a.href.indexOf('?')>-1?'&':'?';
+    a.href += sep + qs.slice(1);
+  });
+})();
 function trackCheckout(){
   try{ if(typeof fbq==='function') fbq('track','InitiateCheckout'); }catch(e){}
   try{ if(typeof gtag==='function') gtag('event','begin_checkout'); }catch(e){}
