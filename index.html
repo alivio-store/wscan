@@ -464,8 +464,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <div class="wrap">
 <div class="warning" style="background:#dc2626">⚠️ ANÁLISE EM ANDAMENTO — NÃO FECHE ESTA PÁGINA</div>
 
-<button type="button" id="goToResultBtnTop" class="btn" style="display:none;margin-top:20px" onclick="show(4)">✅ ANÁLISE CONCLUÍDA — CLIQUE PARA VER O RESULTADO</button>
-
 <div style="text-align:center;margin:24px 0 16px">
   <button type="button" onclick="unmuteVideo()" style="display:inline-block;background:var(--g);color:#fff;border:0;border-radius:999px;padding:11px 22px;font-size:14px;font-weight:900;cursor:pointer;margin-bottom:16px">▶ ASSISTA AGORA</button>
   <div style="font-size:18px;font-weight:950;color:#111827;letter-spacing:.03em;line-height:1.35">
@@ -494,7 +492,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <div class="item"><span>🖼️ Fotos e mídias</span><span id="a2" class="ok">Aguardando...</span></div>
 <div class="item"><span>📍 Atividade recente</span><span id="a3" class="ok">Aguardando...</span></div>
 </div>
-<button type="button" id="goToResultBtn" class="btn" style="display:none" onclick="show(4)">✅ ANÁLISE CONCLUÍDA — CLIQUE PARA VER O RESULTADO</button>
 </div>
 </section>
 
@@ -778,7 +775,7 @@ function start(){
 
 function runAnalysis(){
  let p=14;
- const startPct=14, endPct=100, duration=180000, startedAt=Date.now();
+ const startPct=14, endPct=100, duration=45000, startedAt=Date.now();
  analysisTimer=setInterval(()=>{
    const elapsed=Math.min(Date.now()-startedAt,duration);
    p=Math.min(endPct, Math.floor(startPct + (endPct-startPct)*(elapsed/duration)));
@@ -804,9 +801,7 @@ function runAnalysis(){
      $('circle').style.setProperty('--p','100%');
      $('bar').style.width='100%';
      $('a1').textContent=$('a2').textContent=$('a3').textContent='Concluído';
-     const goBtn=$('goToResultBtn'), goBtnTop=$('goToResultBtnTop');
-     if(goBtn) goBtn.style.display='block';
-     if(goBtnTop) goBtnTop.style.display='block';
+     setTimeout(()=>show(4),900);
    }
  },250)
 }
