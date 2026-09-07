@@ -495,6 +495,22 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   </div>
 </div>
 
+<div class="lockedGallery">
+  <div class="lockedGalleryHead">
+    <h3>Áudios encontrados</h3>
+    <span>CONTEÚDO BLOQUEADO</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div class="printBubble out audioMsg" style="max-width:100%"><span class="audioPlay">▶</span><span class="audioWave">▂▅▇▃▆▂▇▄▅▂▆▃▇▄▂▅▇</span><span class="msgTime">4:21</span></div>
+    <div class="printBubble in audioMsg" style="max-width:100%"><span class="audioPlay">▶</span><span class="audioWave">▁▃▅▂▄▇▃▅▂▆▃▅▂▇▃▅▂</span><span class="msgTime">0:35</span></div>
+    <div class="printBubble out audioMsg" style="max-width:100%"><span class="audioPlay">▶</span><span class="audioWave">▂▇▄▅▂▆▃▇▄▅▂▆▃▇▄▂▇</span><span class="msgTime">1:47</span></div>
+    <div class="printBubble in audioMsg" style="max-width:100%"><span class="audioPlay">▶</span><span class="audioWave">▃▅▂▇▄▁▃▅▂▆▃▇▄▅▂▆▃</span><span class="msgTime">2:29</span></div>
+  </div>
+  <div class="galleryFoot">
+    Desbloquear estes áudios gravados em uma conversa suspeita do dia <strong id="audioLeakDate">carregando...</strong>.
+  </div>
+</div>
+
 <div style="margin-top:22px;background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:22px 18px;text-align:center;box-shadow:0 10px 30px rgba(15,23,42,.08)">
   <div style="font-size:13px;font-weight:900;letter-spacing:.08em;color:#16a34a;margin-bottom:7px">WSCAN</div>
   <div style="font-size:12px;color:#64748b;font-weight:700;margin-bottom:14px">ANÁLISE INTELIGENTE DE ATIVIDADE</div>
@@ -528,6 +544,14 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn checkoutLink" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="trackCheckout()">DESBLOQUEAR AGORA</a>
   <div style="text-align:center;color:#078d77;font-weight:800;font-size:13px;margin-top:14px">🛡️ Garantia de 7 dias — reembolso garantido</div>
   <div style="text-align:center;color:#078d77;font-weight:800;font-size:13px;margin-top:6px">🔒 Compra anônima: Não aparece o nome na fatura do cartão nem no extrato do Pix.</div>
+</div>
+
+<div style="margin-top:22px;background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:22px 18px;text-align:center;box-shadow:0 10px 30px rgba(15,23,42,.08)">
+  <div style="font-size:13px;font-weight:900;letter-spacing:.08em;color:#16a34a;margin-bottom:10px">FAÇA O TESTE POR 7 DIAS</div>
+  <p style="margin:0 auto 18px;max-width:480px;color:#4b5563;line-height:1.55">
+    Desbloqueie agora a Análise do WhatsApp <strong class="dyn"></strong> e use como quiser até o dia <strong id="trialEndDate">carregando...</strong>. Caso não goste ou não queira mais usar, receba o valor de R$ 67,90 de volta na sua conta.
+  </p>
+  <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn checkoutLink" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box;max-width:420px;margin:0 auto" onclick="trackCheckout()">COMEÇAR O TESTE</a>
 </div>
 
 </div>
@@ -580,14 +604,24 @@ function nextPeriod(p){
   if(p==='tarde') return {period:'noite',addDay:0};
   return {period:'madrugada',addDay:1};
 }
-function fillYesterdayDate(){
-  const el=$('yesterdayDate');
-  if(!el) return;
+function dateOffset(days){
   const d=new Date();
-  d.setDate(d.getDate()-1);
+  d.setDate(d.getDate()+days);
   const dd=String(d.getDate()).padStart(2,'0');
   const mm=String(d.getMonth()+1).padStart(2,'0');
-  el.textContent = dd+'/'+mm+'/'+d.getFullYear();
+  return dd+'/'+mm+'/'+d.getFullYear();
+}
+function fillYesterdayDate(){
+  const el=$('yesterdayDate');
+  if(el) el.textContent=dateOffset(-1);
+}
+function fillAudioLeakDate(){
+  const el=$('audioLeakDate');
+  if(el) el.textContent=dateOffset(-4);
+}
+function fillTrialEndDate(){
+  const el=$('trialEndDate');
+  if(el) el.textContent=dateOffset(7);
 }
 function fillUrgentTip(){
   const el=$('tipWhen');
@@ -644,6 +678,8 @@ function show(n){
         fillLeakCity();
         fillUrgentTip();
         fillYesterdayDate();
+        fillAudioLeakDate();
+        fillTrialEndDate();
       }
       try { window.scrollTo({top:0,left:0,behavior:'auto'}); } catch(e) { window.scrollTo(0,0); }
     }
