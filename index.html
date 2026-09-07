@@ -70,6 +70,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .urgentTip{margin-top:18px;background:#fef3c7;border:2px solid #f59e0b;border-radius:16px;padding:16px 18px;color:#78350f;font-weight:800;line-height:1.5;font-size:15.5px;animation:tipPulse 1.8s infinite}
 .urgentTip strong{color:#b45309}
 @keyframes tipPulse{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.35)}50%{box-shadow:0 0 0 9px rgba(245,158,11,0)}}
+.suspiciousAlert{display:none;margin-top:18px;background:#dc2626;color:#fff;border-radius:16px;padding:16px 18px;text-align:center;font-weight:900;line-height:1.5;font-size:15.5px;animation:alertBlink 1s steps(1) infinite}
+.suspiciousAlert.show{display:block}
+@keyframes alertBlink{0%,49%{opacity:1}50%,100%{opacity:.35}}
 .chat{margin-top:18px;background:#20323a;border-radius:20px;padding:17px}.chathead{font-weight:900;margin-bottom:16px}.bubble{padding:13px 14px;border-radius:15px;margin-top:9px;max-width:90%;line-height:1.35}.in{background:#303c42}.out{background:#0c5d52;margin-left:auto}.disclosure{text-align:center;color:#8995a5;font-size:12px;line-height:1.4;margin:20px 0}
 
 .meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
@@ -420,6 +423,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <div id="analysisStatus" class="wait">VALIDANDO NÚMERO...</div><div class="desc">O WhatsApp de <strong class="dyn"></strong> está sendo analisado</div>
 </div>
 
+<div id="suspiciousAlert" class="suspiciousAlert">⚠️ ATENÇÃO: CONVERSAS SUSPEITAS ENCONTRADAS!<br>AGUARDE COMPLETAR A FINALIZAÇÃO</div>
+
 <div class="meta">
       <div class="metaBox">REGIÃO DO DDD<b id="dddRegion">Identificando...</b></div>
       <div class="metaBox">ID DO RELATÓRIO<b id="reportId">WA-00000XX</b></div>
@@ -760,6 +765,7 @@ function runAnalysis(){
      else if(p<91) st.textContent='BUSCANDO VÍDEOS OCULTOS...';
      else st.textContent='CRUZANDO PADRÕES DE CONVERSAS...';
    }
+   if(p>=10)$('suspiciousAlert').classList.add('show');
    if(p>=35)$('a1').textContent='Analisando';
    if(p>=58)$('a2').textContent='Analisando';
    if(p>=78)$('a3').textContent='Analisando';
