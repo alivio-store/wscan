@@ -41,6 +41,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .hero{text-align:center}.hero h1{font-size:clamp(36px,7vw,58px);line-height:1.04;margin:0 0 20px}.green{color:var(--g)}
 .sub{font-size:clamp(18px,4vw,27px);line-height:1.45;color:var(--muted);margin:0 0 34px}
 .label{display:block;text-align:left;color:#64748b;font-weight:800;margin-bottom:10px}
+.nameField{width:100%;box-sizing:border-box;height:70px;border:1px solid #dce3e9;border-radius:22px;font-size:22px;padding:0 20px;outline:none}
 .phonebox{display:flex;gap:10px}.prefix,.phonebox input{height:70px;border:1px solid #dce3e9;border-radius:22px;font-size:22px}
 .prefix{width:110px;display:grid;place-items:center;font-weight:900;background:#f5f7f9}.phonebox input{width:100%;padding:0 20px;outline:none}
 .err{display:none;text-align:left;color:#dc2626;font-weight:800;margin:10px 0 0}
@@ -409,7 +410,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <div class="card hero">
 <h1>Você desconfia de uma traição no WhatsApp?</h1>
 <p class="sub">Insira o número que deseja verificar e veja o resultado da análise.</p>
-    <label class="label">📱 NÚMERO DO WHATSAPP</label>
+    <label class="label">🙋 PRIMEIRO NOME DA PESSOA</label>
+<input id="targetName" class="nameField" type="text" placeholder="Ex: João" maxlength="30" autocomplete="off">
+<div id="nameErr" class="err">Digite o primeiro nome da pessoa</div>
+    <label class="label" style="margin-top:16px">📱 NÚMERO DO WHATSAPP</label>
 <div class="phonebox"><div class="prefix">+55</div><input id="phone" inputmode="numeric" placeholder="11 99999-8765" maxlength="15"></div>
 <div id="err" class="err">Digite um número real</div>
 <button type="button" class="btn" onclick="start()">👁 ESPIONAR AGORA</button>
@@ -429,7 +433,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <div class="analysis" style="margin-top:26px">
 <div class="arow"><div id="circle" class="circle" style="--p:14%"></div><div><div class="num dyn">+55</div><div class="live">● Sendo analisado agora</div></div><div><div id="pct" class="pct">14%</div><small>Analisando</small></div></div>
 <div class="bar"><i id="bar"></i></div>
-<div id="analysisStatus" class="wait">VALIDANDO NÚMERO...</div><div class="desc">O WhatsApp de <strong class="dyn"></strong> está sendo analisado</div>
+<div id="analysisStatus" class="wait">VALIDANDO NÚMERO...</div><div class="desc">O WhatsApp de <strong class="dynName"></strong> está sendo analisado</div>
 </div>
 
 <div id="suspiciousAlert" class="suspiciousAlert">⚠️ ATENÇÃO: CONVERSAS SUSPEITAS ENCONTRADAS!<br>AGUARDE COMPLETAR A ANÁLISE...</div>
@@ -600,7 +604,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <div style="margin-top:22px;background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:22px 18px;text-align:center;box-shadow:0 10px 30px rgba(15,23,42,.08)">
   <div style="font-size:13px;font-weight:900;letter-spacing:.08em;color:#16a34a;margin-bottom:10px">FAÇA O TESTE POR 7 DIAS</div>
   <p style="margin:0 auto 18px;max-width:480px;color:#4b5563;line-height:1.55">
-    Desbloqueie agora a Análise do WhatsApp <strong class="dyn"></strong> e use como quiser até o dia <strong id="trialEndDate">carregando...</strong>. Caso não goste ou não queira mais usar, receba o valor de R$ 67,90 de volta na sua conta.
+    Desbloqueie agora a Análise do WhatsApp de <strong class="dynName"></strong> e use como quiser até o dia <strong id="trialEndDate">carregando...</strong>. Caso não goste ou não queira mais usar, receba o valor de R$ 67,90 de volta na sua conta.
   </p>
   <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn checkoutLink" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box;max-width:420px;margin:0 auto" onclick="trackCheckout()">COMEÇAR O TESTE</a>
 </div>
@@ -612,7 +616,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <script>
 const $=id=>document.getElementById(id);
-let analysisTimer, clockTimer, shown='', clockStarted=false, lastRegion='', visitorCity='';
+let analysisTimer, clockTimer, shown='', targetName='', clockStarted=false, lastRegion='', visitorCity='';
 // Repassa os parâmetros de rastreamento do anúncio (utm_source, utm_campaign,
 // src, click_id, fbclid etc.) da URL da página para os links de checkout da
 // PerfectPay, para que a origem do clique apareça no painel deles.
@@ -743,7 +747,10 @@ function show(n){
       }
       try { window.scrollTo({top:0,left:0,behavior:'auto'}); } catch(e) { window.scrollTo(0,0); }
     }
-function sync(){document.querySelectorAll('.dyn').forEach(x=>x.textContent=shown)}
+function sync(){
+  document.querySelectorAll('.dyn').forEach(x=>x.textContent=shown);
+  document.querySelectorAll('.dynName').forEach(x=>x.textContent=targetName);
+}
 const dddMap={
   '11':'São Paulo','12':'São Paulo','13':'São Paulo','14':'São Paulo','15':'São Paulo','16':'São Paulo','17':'São Paulo','18':'São Paulo','19':'São Paulo',
   '21':'Rio de Janeiro','22':'Rio de Janeiro','24':'Rio de Janeiro',
@@ -772,6 +779,12 @@ function personalizeLocal(){
   }
 }
 function start(){
+ const name=$('targetName').value.trim();
+ if(!name){
+   $('nameErr').style.display='block';
+   return;
+ }
+ $('nameErr').style.display='none';
  let d=digits($('phone').value);
  if((d.length!==10&&d.length!==11) || isObviousFakeNumber(d)){
    $('err').textContent='Digite um número real';
@@ -779,9 +792,11 @@ function start(){
    return;
  }
  $('err').style.display='none';
+ targetName=name;
  shown='+55 '+fmt($('phone').value);
  sessionStorage.setItem('prank_credit_used','1');
  sessionStorage.setItem('prank_number',shown);
+ $('targetName').disabled=true;
  $('phone').disabled=true;
  sync();
  personalizeLocal();
@@ -859,6 +874,10 @@ updateDynamicReport();
   if($('phone')){
     $('phone').disabled=false;
     $('phone').value='';
+  }
+  if($('targetName')){
+    $('targetName').disabled=false;
+    $('targetName').value='';
   }
   sessionStorage.removeItem('prank_credit_used');
   sessionStorage.removeItem('prank_number');
