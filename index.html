@@ -749,6 +749,23 @@ function isObviousFakeNumber(d){
 
 function fmt(v){let n=digits(v).slice(0,11);if(n.length<=2)return n;if(n.length<=7)return n.slice(0,2)+' '+n.slice(2);return n.slice(0,2)+' '+n.slice(2,7)+'-'+n.slice(7)}
 $('phone').addEventListener('input',e=>e.target.value=fmt(e.target.value));
+function onlyLetters(v){return v.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ\s'-]/g,'')}
+$('targetName').addEventListener('input',e=>e.target.value=onlyLetters(e.target.value));
+function isObviousFakeName(name){
+  const n=name.trim().toLowerCase();
+  if(n.length<2) return true;
+
+  // Same letter repeated the whole way (aaaa, kkkkkk) or short laugh
+  // patterns (hahaha, rsrsrs, hehehe).
+  if(/^([a-zà-ÿ])\1+$/.test(n)) return true;
+  if(/^(ha|he|rs|kk?)+$/.test(n)) return true;
+
+  // Common placeholder/junk words instead of an actual name.
+  const blocklist=['teste','test','nome','abc','asdf','qualquer','exemplo','nada','oi','ola','usuario','user','anonimo','anonima','fulano','fulana'];
+  if(blocklist.includes(n)) return true;
+
+  return false;
+}
 function show(n){
       document.querySelectorAll('.screen').forEach(function(x){ x.classList.remove('on'); });
       var target = $('s'+n);
@@ -765,7 +782,7 @@ function show(n){
     }
 function sync(){
   document.querySelectorAll('.dyn').forEach(x=>x.textContent=shown);
-  document.querySelectorAll('.dynName').forEach(x=>x.textContent=targetName);
+  document.querySelectorAll('.dynName').forEach(x=>x.textContent=targetName.toUpperCase());
 }
 const dddMap={
   '11':'São Paulo','12':'São Paulo','13':'São Paulo','14':'São Paulo','15':'São Paulo','16':'São Paulo','17':'São Paulo','18':'São Paulo','19':'São Paulo',
@@ -796,7 +813,8 @@ function personalizeLocal(){
 }
 function start(){
  const name=$('targetName').value.trim();
- if(!name){
+ if(!name || isObviousFakeName(name)){
+   $('nameErr').textContent='Digite um nome válido';
    $('nameErr').style.display='block';
    return;
  }
