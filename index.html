@@ -456,11 +456,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <div class="danger"><h2>⚠ SEU RELACIONAMENTO PODE ESTAR EM PERIGO!</h2><p>Foram sinalizados conteúdos suspeitos associados ao número <strong class="dyn"></strong>.</p></div>
 <div class="reportcard">
   <div class="num dyn"></div>
-  <div style="color:#718096;margin-top:7px">Número analisado</div>
+  <div style="font-weight:800;color:#111827;margin-top:5px" class="dynName"></div>
+  <div style="color:#718096;margin-top:2px">Número analisado</div>
   <div class="live">● WhatsApp ativo</div>
 
   <div style="margin-top:20px;padding-top:18px;border-top:1px solid #e5e7eb;color:#5f6f82;line-height:1.55;font-size:17px">
-    <strong style="color:#111827">Existe um contato salvo como A*****e O******s, de <span id="leakCity">sua região</span> que tem conversas apagadas todos os dias.</strong>
+    <strong style="color:#111827">Existe um contato salvo como A*****e Oliveira, de <span id="leakCity">sua região</span> que tem conversas apagadas todos os dias.</strong>
   </div>
   <div style="margin-top:16px;color:#5f6f82;font-weight:800;font-size:15px">Conseguimos recuperar um print:</div>
   <div class="printLeak">
@@ -493,7 +494,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <h2 style="text-align:left">Algumas mensagens íntimas em uma conversa do dia <strong id="yesterdayDate">carregando...</strong> <strong style="color:#ff6969">são suspeitas:</strong></h2>
 <div style="margin-top:18px">
   <div class="r"><div class="ico">💬</div><div>“Tem alguém perto agora? Posso te ligar?”</div></div>
-  <div class="r"><div class="ico">💬</div><div>“Tá marcado! Mesmo lugar de sempre 😍”</div></div>
+  <div class="r"><div class="ico">💬</div><div>“Oi meu amor! Quero te ver essa semana”</div></div>
 </div>
 <div class="urgentTip">⚠️ <strong>IMPORTANTE:</strong> Se quiser flagrar a conversa, <strong id="tipWhen" style="color:#dc2626">carregando...</strong> é o momento com mais conversas suspeitas. Hoje é a chance perfeita para você entender o que está acontecendo.</div>
 <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn checkoutLink" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="trackCheckout()">🔓 VER RESULTADO COMPLETO</a>
@@ -519,17 +520,21 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
     <span>CONTEÚDO BLOQUEADO</span>
   </div>
   <img src="imagem_audios_whatsapp.png" alt="Áudios encontrados na conversa" style="width:100%;height:auto;border-radius:14px;display:block">
-  <div class="galleryFoot">
-    Desbloquear estes áudios gravados em uma conversa suspeita do dia <strong id="audioLeakDate">carregando...</strong>.
+  <div class="galleryFoot" style="color:#374151;font-weight:700;font-size:14px">
+    Desbloquear estes áudios gravados em uma conversa suspeita do dia <strong id="audioLeakDate" style="color:#dc2626">carregando...</strong>.
   </div>
 </div>
 
 <div style="margin-top:22px;background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:22px 18px;text-align:center;box-shadow:0 10px 30px rgba(15,23,42,.08)">
   <div style="font-size:13px;font-weight:900;letter-spacing:.08em;color:#16a34a;margin-bottom:7px">WSCAN</div>
   <div style="font-size:12px;color:#64748b;font-weight:700;margin-bottom:14px">ANÁLISE INTELIGENTE DE ATIVIDADE</div>
-  <img src="wscanapp.png" alt="App WScan — telas de análise, relatório e mídias identificadas" style="width:100%;height:auto;border-radius:14px;margin-bottom:16px">
+  <div style="position:relative;margin-bottom:6px">
+    <img src="wscanapp.png" alt="App WScan — telas de análise, relatório e mídias identificadas" style="width:100%;height:auto;border-radius:14px;display:block">
+    <div class="dynName" style="position:absolute;left:31.3%;top:19.2%;width:46.5%;height:4%;display:flex;align-items:center;font-weight:900;color:#111827;font-size:clamp(12px,4.2vw,19px);overflow:hidden;white-space:nowrap;text-align:left"></div>
+  </div>
+  <div style="font-size:13px;color:#6b7280;font-weight:700;margin-bottom:16px">Número analisado: <span class="dyn" style="color:#111827"></span></div>
   <h2 style="margin:0 0 12px;font-size:22px;line-height:1.2;color:#111827">
-    Veja o relatório completo no WScan para o número <span class="dyn"></span>
+    Veja o relatório completo no WScan para <span class="dynName"></span>
   </h2>
   <p style="margin:0 auto 18px;max-width:520px;color:#4b5563;line-height:1.55">
     Desbloqueie as mensagens, mídias e informações ocultadas nesta análise e receba créditos adicionais para consultar outros números.
@@ -694,7 +699,7 @@ function fillUrgentTip(){
   const nxt=nextPeriod(periodOfHour(now.getHours()));
   const d=new Date(now);
   d.setDate(d.getDate()+nxt.addDay);
-  el.textContent = WEEKDAYS[d.getDay()]+' de '+nxt.period;
+  el.textContent = (WEEKDAYS[d.getDay()]+' de '+nxt.period).toUpperCase();
 }
 function digits(v){return v.replace(/\D/g,'')}
 function isObviousFakeNumber(d){
