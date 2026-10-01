@@ -457,7 +457,7 @@ body.theme-m .photos-m{display:block}
 
 <section id="s2" class="screen">
 <div class="wrap">
-<div class="warning" style="background:#dc2626">⚠️ ANÁLISE EM ANDAMENTO — NÃO FECHE ESTA PÁGINA</div>
+<div id="analysisWarning" class="warning" style="background:#dc2626">⚠️ ANÁLISE EM ANDAMENTO — NÃO FECHE ESTA PÁGINA</div>
 
 <div id="suspiciousAlert" class="suspiciousAlert" style="margin-top:18px">⚠️ ATENÇÃO: CONVERSAS SUSPEITAS ENCONTRADAS!<br>AGUARDE COMPLETAR A ANÁLISE...</div>
 
@@ -617,6 +617,7 @@ body.theme-m .photos-m{display:block}
   <h2 style="margin:0 0 12px;font-size:22px;line-height:1.2;color:#111827">
     Veja o relatório completo no WScan para <span class="dynName"></span>
   </h2>
+  <p id="cheatedQuestion" style="margin:0 0 14px;font-size:17px;font-weight:900;color:#dc2626;line-height:1.3"></p>
   <p style="margin:0 auto 18px;max-width:520px;color:#4b5563;line-height:1.55">
     Desbloqueie as mensagens, mídias e informações ocultadas nesta análise e receba créditos adicionais para consultar outros números.
   </p>
@@ -890,6 +891,12 @@ function fillPartnerSuspicion(){
   el.innerHTML = phrase+' <strong class="dynName"></strong>, mesmo estando com você há <strong>'+time+'</strong>, está com conversas suspeitas.';
   sync();
 }
+function fillCheatedQuestion(){
+  const el=$('cheatedQuestion');
+  if(!el) return;
+  const time = relationshipDuration || 'algum tempo';
+  el.textContent = 'SERÁ QUE VOCÊ ESTÁ SENDO ENGANADO(A) HÁ '+time.toUpperCase()+'?';
+}
 // Duas variações de tom para as frases "suspeitas", dependendo do gênero
 // percebido do nome digitado — só muda o texto, não o conteúdo factual.
 const PHRASES_F=['“Tá sozinho aí? Posso te ligar?”','“Oi gata, com saudades! Quero te ver essa semana”'];
@@ -911,6 +918,7 @@ function show(n){
         fillUrgentTip();
         fillRelationshipHeadline();
         fillPartnerSuspicion();
+        fillCheatedQuestion();
         fillConversationPhrases();
         fillYesterdayDate();
         fillAudioLeakDate();
@@ -1036,7 +1044,10 @@ function start(){
 function runAnalysis(){
  let p=14;
  const startPct=14, endPct=100, duration=130000, startedAt=Date.now();
- setTimeout(()=>{ const al=$('suspiciousAlert'); if(al) al.classList.add('show'); },30000);
+ setTimeout(()=>{
+   const al=$('suspiciousAlert'); if(al) al.classList.add('show');
+   const w=$('analysisWarning'); if(w) w.style.display='none';
+ },30000);
  analysisTimer=setInterval(()=>{
    const elapsed=Math.min(Date.now()-startedAt,duration);
    p=Math.min(endPct, Math.floor(startPct + (endPct-startPct)*(elapsed/duration)));
