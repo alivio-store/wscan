@@ -96,6 +96,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .engageQ{margin-top:18px;background:#eef2ff;border:2px solid #818cf8;border-radius:16px;padding:16px 18px;text-align:center}
 .engageQLabel{font-size:12px;font-weight:800;letter-spacing:.06em;color:#4338ca;text-transform:uppercase;margin-bottom:6px}
 .engageQText{font-size:16px;font-weight:800;color:#312e81;line-height:1.4}
+.engageQOpts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.engageQOpt{border:1.5px solid #a5b4fc;background:#fff;color:#4338ca;font-weight:800;font-size:13.5px;padding:10px 6px;border-radius:12px;cursor:pointer}
+.engageQOpt.picked{background:#4338ca;border-color:#4338ca;color:#fff}
+.engageQOpt:disabled{cursor:default;opacity:.65}
 .chat{margin-top:18px;background:#20323a;border-radius:20px;padding:17px}.chathead{font-weight:900;margin-bottom:16px}.bubble{padding:13px 14px;border-radius:15px;margin-top:9px;max-width:90%;line-height:1.35}.in{background:#303c42}.out{background:#0c5d52;margin-left:auto}.disclosure{text-align:center;color:#8995a5;font-size:12px;line-height:1.4;margin:20px 0}
 
 .meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
@@ -455,6 +459,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <div class="engageQ">
   <div class="engageQLabel">Enquanto está carregando...</div>
   <div class="engageQText"><strong class="dynName"></strong> é <span id="partnerWord">seu parceiro</span> há quanto tempo?</div>
+  <div class="engageQOpts">
+    <button type="button" class="engageQOpt" onclick="pickDuration('menos de 1 ano',this)">Menos de 1 ano</button>
+    <button type="button" class="engageQOpt" onclick="pickDuration('1 a 3 anos',this)">1 a 3 anos</button>
+    <button type="button" class="engageQOpt" onclick="pickDuration('3 a 5 anos',this)">3 a 5 anos</button>
+    <button type="button" class="engageQOpt" onclick="pickDuration('mais de 5 anos',this)">Mais de 5 anos</button>
+  </div>
 </div>
 
 <div class="meta">
@@ -472,7 +482,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <section id="s4" class="screen">
 <div class="sticky"><div class="timer">ANÁLISE DE <span class="dyn"></span> SERÁ DELETADA EM <b id="clock">09:42</b></div></div>
 <div class="wrap">
-<div class="danger"><h2>⚠ SEU RELACIONAMENTO PODE ESTAR EM PERIGO!</h2><p>Foram sinalizados conteúdos suspeitos associados ao número <strong class="dyn"></strong>.</p></div>
+<div class="danger"><h2 id="relDanger">⚠ SEU RELACIONAMENTO PODE ESTAR EM PERIGO!</h2><p>Foram sinalizados conteúdos suspeitos associados ao número <strong class="dyn"></strong>.</p></div>
 <div class="reportcard">
   <div class="num dyn"></div>
   <div style="font-weight:800;color:#111827;margin-top:5px" class="dynName"></div>
@@ -675,7 +685,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <script>
 const $=id=>document.getElementById(id);
-let analysisTimer, clockTimer, shown='', targetName='', clockStarted=false, lastRegion='', visitorCity='';
+let analysisTimer, clockTimer, shown='', targetName='', clockStarted=false, lastRegion='', visitorCity='', relationshipDuration='';
 // Repassa os parâmetros de rastreamento do anúncio (utm_source, utm_campaign,
 // src, click_id, fbclid etc.) da URL da página para os links de checkout da
 // PerfectPay, para que a origem do clique apareça no painel deles.
@@ -831,6 +841,20 @@ function fillPartnerWord(){
   if(!el) return;
   el.textContent = guessGender(targetName)==='f' ? 'sua parceira' : 'seu parceiro';
 }
+function pickDuration(value,btn){
+  relationshipDuration=value;
+  document.querySelectorAll('.engageQOpt').forEach(b=>{
+    b.classList.toggle('picked', b===btn);
+    b.disabled=true;
+  });
+}
+function fillRelationshipHeadline(){
+  const el=$('relDanger');
+  if(!el) return;
+  el.textContent = relationshipDuration
+    ? '⚠ SEU RELACIONAMENTO DE '+relationshipDuration.toUpperCase()+' ESTÁ EM RISCO!'
+    : '⚠ SEU RELACIONAMENTO PODE ESTAR EM PERIGO!';
+}
 function show(n){
       document.querySelectorAll('.screen').forEach(function(x){ x.classList.remove('on'); });
       var target = $('s'+n);
@@ -839,6 +863,7 @@ function show(n){
         if(!clockStarted){ clockStarted=true; beginClock(); }
         fillLeakCity();
         fillUrgentTip();
+        fillRelationshipHeadline();
         fillYesterdayDate();
         fillAudioLeakDate();
         fillTrialEndDate();
