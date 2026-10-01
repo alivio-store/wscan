@@ -493,7 +493,7 @@ body.theme-m .photos-m{display:block}
 <section id="s4" class="screen">
 <div class="sticky"><div class="timer">ANÁLISE DE <span class="dyn"></span> SERÁ DELETADA EM <b id="clock">09:42</b></div></div>
 <div class="wrap">
-<div class="danger"><h2 id="relDanger">⚠ SEU RELACIONAMENTO PODE ESTAR EM PERIGO!</h2><p>Foram sinalizados conteúdos suspeitos associados ao número <strong class="dyn"></strong>.</p></div>
+<div class="danger"><h2 id="relDanger">⚠ SEU RELACIONAMENTO PODE ESTAR EM PERIGO!</h2><p>Foram sinalizados conteúdos suspeitos associados ao número <strong class="dyn"></strong>.</p><p id="partnerSuspicion" style="margin-top:8px"></p></div>
 <div class="reportcard">
   <div class="num dyn"></div>
   <div style="font-weight:800;color:#111827;margin-top:5px" class="dynName"></div>
@@ -866,6 +866,15 @@ function fillRelationshipHeadline(){
     ? '⚠ SEU RELACIONAMENTO DE '+relationshipDuration.toUpperCase()+' ESTÁ EM RISCO!'
     : '⚠ SEU RELACIONAMENTO PODE ESTAR EM PERIGO!';
 }
+function fillPartnerSuspicion(){
+  const el=$('partnerSuspicion');
+  if(!el) return;
+  const isF = guessGender(targetName)==='f';
+  const phrase = isF ? 'Sua parceira' : 'Seu parceiro';
+  const time = relationshipDuration || 'algum tempo';
+  el.innerHTML = phrase+' <strong class="dynName"></strong>, mesmo estando com você há <strong>'+time+'</strong>, está com conversas suspeitas.';
+  sync();
+}
 // Duas variações de tom para as frases "suspeitas", dependendo do gênero
 // percebido do nome digitado — só muda o texto, não o conteúdo factual.
 const PHRASES_F=['“Tá sozinho aí? Posso te ligar?”','“Oi gata, com saudades! Quero te ver essa semana”'];
@@ -886,6 +895,7 @@ function show(n){
         fillLeakCity();
         fillUrgentTip();
         fillRelationshipHeadline();
+        fillPartnerSuspicion();
         fillConversationPhrases();
         fillYesterdayDate();
         fillAudioLeakDate();
