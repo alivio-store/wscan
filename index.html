@@ -73,6 +73,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .num{font-weight:900;font-size:clamp(18px,4.5vw,29px)}.live{display:inline-block;margin-top:7px;color:#078f69;background:#e0f8ec;border-radius:999px;padding:6px 10px;font-weight:800;font-size:13px}.pct{font-size:40px;color:var(--g);font-weight:950}.bar{height:10px;background:#e8edf1;border-radius:999px;margin:26px 0;overflow:hidden}.bar i{display:block;height:100%;width:14%;background:var(--g);transition:.3s}.wait{text-align:center;color:#54b6aa;font-weight:900;letter-spacing:.12em}.desc{text-align:center;color:#6b778b;margin-top:8px;line-height:1.45}
 .video{width:100%;height:auto;min-height:0;max-height:none;aspect-ratio:auto;background:#000;overflow:hidden;border-radius:18px;position:relative}
 .video video{display:block;width:100%;height:auto;max-height:none;object-fit:contain;object-position:center;background:#000}
+.videoSoundBtn{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:5;border:0;border-radius:999px;padding:12px 18px;font-size:14px;font-weight:900;color:#fff;background:rgba(17,24,39,.88);box-shadow:0 8px 24px rgba(0,0,0,.28);cursor:pointer;white-space:nowrap}
+.videoSoundBtn.hidden{display:none}
 .items{display:grid;gap:12px;margin-top:18px}.item{display:flex;justify-content:space-between;background:#fff;border-radius:18px;padding:17px;font-weight:800}.ok{color:#16b96c}
 
 
@@ -457,6 +459,8 @@ body.theme-m .photos-m{display:block}
 <div class="wrap">
 <div class="warning" style="background:#dc2626">⚠️ ANÁLISE EM ANDAMENTO — NÃO FECHE ESTA PÁGINA</div>
 
+<div id="suspiciousAlert" class="suspiciousAlert" style="margin-top:18px">⚠️ ATENÇÃO: CONVERSAS SUSPEITAS ENCONTRADAS!<br>AGUARDE COMPLETAR A ANÁLISE...</div>
+
 <div style="text-align:center;margin:24px 0 16px">
   <div style="font-size:18px;font-weight:950;color:#111827;letter-spacing:.03em;line-height:1.35">ASSISTA O VÍDEO ENQUANTO</div>
   <div style="font-size:15px;font-weight:700;color:#6b7280;margin-top:2px">enquanto preparamos a sua prévia demonstrativa</div>
@@ -465,6 +469,7 @@ body.theme-m .photos-m{display:block}
   <video id="wscanVideo" autoplay muted playsinline preload="auto" controls poster="analysis_video_poster.jpg">
     <source src="analysis_video.mp4" type="video/mp4">
   </video>
+  <button type="button" id="videoSoundBtn" class="videoSoundBtn hidden" onclick="unmuteVideo()">🔊 Toque para ativar o som</button>
 </div>
 
 <div class="engageQ">
@@ -479,8 +484,6 @@ body.theme-m .photos-m{display:block}
 <div class="bar"><i id="bar"></i></div>
 <div id="analysisStatus" class="wait">VALIDANDO NÚMERO...</div><div class="desc">O WhatsApp de <strong class="dynName"></strong> está sendo analisado</div>
 </div>
-
-<div id="suspiciousAlert" class="suspiciousAlert">⚠️ ATENÇÃO: CONVERSAS SUSPEITAS ENCONTRADAS!<br>AGUARDE COMPLETAR A ANÁLISE...</div>
 
 <div class="meta">
       <div class="metaBox">REGIÃO DO DDD<b id="dddRegion">Identificando...</b></div>
@@ -1033,6 +1036,7 @@ function start(){
 function runAnalysis(){
  let p=14;
  const startPct=14, endPct=100, duration=130000, startedAt=Date.now();
+ setTimeout(()=>{ const al=$('suspiciousAlert'); if(al) al.classList.add('show'); },30000);
  analysisTimer=setInterval(()=>{
    const elapsed=Math.min(Date.now()-startedAt,duration);
    p=Math.min(endPct, Math.floor(startPct + (endPct-startPct)*(elapsed/duration)));
@@ -1049,7 +1053,6 @@ function runAnalysis(){
      else if(p<91) st.textContent='BUSCANDO VÍDEOS OCULTOS...';
      else st.textContent='CRUZANDO PADRÕES DE CONVERSAS...';
    }
-   if(p>=30)$('suspiciousAlert').classList.add('show');
    if(p>=35)$('a1').textContent='Analisando';
    if(p>=58)$('a2').textContent='Analisando';
    if(p>=78)$('a3').textContent='Analisando';
@@ -1101,6 +1104,32 @@ function beginClock(){
  clearInterval(clockTimer);let t=582;
  clockTimer=setInterval(()=>{if(t>0)t--;let m=String(Math.floor(t/60)).padStart(2,'0'),s=String(t%60).padStart(2,'0');$('clock').textContent=m+':'+s},1000)
 }
+function unmuteVideo(){
+  const vid=$('wscanVideo'), soundBtn=$('videoSoundBtn');
+  if(!vid) return;
+  vid.muted=false;
+  if(vid.paused) vid.play().catch(()=>{});
+  if(soundBtn) soundBtn.classList.add('hidden');
+}
+// Tenta começar o vídeo já com som, só que bem baixinho (5%), em vez de
+// mudo — se o navegador bloquear autoplay com som (comum em mobile sem
+// gesto do usuário), cai de volta pro mudo e mostra o botão de ativar.
+(function primeVideoVolume(){
+  const vid=$('wscanVideo'), soundBtn=$('videoSoundBtn');
+  if(!vid) return;
+  vid.volume=0.05;
+  vid.addEventListener('loadedmetadata', ()=>{
+    vid.muted=false;
+    const p=vid.play();
+    if(p && p.catch){
+      p.catch(()=>{
+        vid.muted=true;
+        vid.play().catch(()=>{});
+        if(soundBtn) soundBtn.classList.remove('hidden');
+      });
+    }
+  }, { once:true });
+})();
 </script>
 
 
