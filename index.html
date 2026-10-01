@@ -99,19 +99,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 body.theme-f .engageQ{background:#fdf2f8;border-color:#f472b6}
 body.theme-f .engageQLabel{color:#be185d}
 body.theme-f .engageQText{color:#831843}
-body.theme-f .engageQOpt{border-color:#f9a8d4;color:#be185d}
-body.theme-f .engageQOpt.picked{background:#db2777;border-color:#db2777}
 .engageQLabel{font-size:12px;font-weight:800;letter-spacing:.06em;color:#4338ca;text-transform:uppercase;margin-bottom:6px}
 .engageQText{font-size:16px;font-weight:800;color:#312e81;line-height:1.4}
-.engageQOpts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
-.engageQOpt{border:1.5px solid #a5b4fc;background:#fff;color:#4338ca;font-weight:800;font-size:13.5px;padding:10px 6px;border-radius:12px;cursor:pointer}
-.engageQOpt.picked{background:#4338ca;border-color:#4338ca;color:#fff}
-.engageQOpt:disabled{cursor:default;opacity:.65}
-.engageQOther{display:flex;align-items:center;gap:8px;margin-top:10px}
-.engageQOther span{font-weight:800;color:#6366f1;font-size:13px}
-.engageQOther input{flex:1;border:1.5px solid #a5b4fc;border-radius:12px;padding:10px 12px;font-size:14px;color:#312e81;font-weight:700;outline:none}
-body.theme-f .engageQOther span{color:#db2777}
-body.theme-f .engageQOther input{border-color:#f9a8d4;color:#831843}
+.engageQInput{width:100%;box-sizing:border-box;margin-top:14px;border:1.5px solid #a5b4fc;border-radius:12px;padding:12px;font-size:14px;color:#312e81;font-weight:700;outline:none}
+body.theme-f .engageQInput{border-color:#f9a8d4;color:#831843}
 .genderPhotos{display:none}
 body.theme-f .photos-f{display:block}
 body.theme-m .photos-m{display:block}
@@ -474,16 +465,7 @@ body.theme-m .photos-m{display:block}
 <div class="engageQ">
   <div class="engageQLabel">Enquanto está carregando...</div>
   <div class="engageQText"><strong class="dynName"></strong> é <span id="partnerWord">seu parceiro</span> há quanto tempo?</div>
-  <div class="engageQOpts">
-    <button type="button" class="engageQOpt" onclick="pickDuration('menos de 1 ano',this)">Menos de 1 ano</button>
-    <button type="button" class="engageQOpt" onclick="pickDuration('1 a 3 anos',this)">1 a 3 anos</button>
-    <button type="button" class="engageQOpt" onclick="pickDuration('3 a 5 anos',this)">3 a 5 anos</button>
-    <button type="button" class="engageQOpt" onclick="pickDuration('mais de 5 anos',this)">Mais de 5 anos</button>
-  </div>
-  <div class="engageQOther">
-    <span>ou</span>
-    <input type="text" id="engageQCustom" placeholder="digite aqui..." maxlength="30" oninput="typeDuration(this.value)">
-  </div>
+  <input type="text" id="engageQCustom" class="engageQInput" placeholder="Digite aqui sua resposta..." maxlength="30" oninput="typeDuration(this.value)">
 </div>
 
 <div class="meta">
@@ -862,23 +844,10 @@ function fillPartnerWord(){
   if(!el) return;
   el.textContent = isF ? 'sua parceira' : 'seu parceiro';
 }
-function pickDuration(value,btn){
-  relationshipDuration=value;
-  document.querySelectorAll('.engageQOpt').forEach(b=>{
-    b.classList.toggle('picked', b===btn);
-    b.disabled=true;
-  });
-  const custom=$('engageQCustom');
-  if(custom) custom.value='';
-}
 function typeDuration(value){
   const v=value.trim();
   if(!v) return;
   relationshipDuration=v;
-  document.querySelectorAll('.engageQOpt').forEach(b=>{
-    b.classList.remove('picked');
-    b.disabled=false;
-  });
 }
 function fillRelationshipHeadline(){
   const el=$('relDanger');
