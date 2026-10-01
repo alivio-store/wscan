@@ -103,6 +103,9 @@ body.theme-f .engageQText{color:#831843}
 .engageQText{font-size:16px;font-weight:800;color:#312e81;line-height:1.4}
 .engageQInput{width:100%;box-sizing:border-box;margin-top:14px;border:1.5px solid #a5b4fc;border-radius:12px;padding:12px;font-size:14px;color:#312e81;font-weight:700;outline:none}
 body.theme-f .engageQInput{border-color:#f9a8d4;color:#831843}
+.engageQSubmit{width:100%;box-sizing:border-box;margin-top:10px;border:0;border-radius:12px;padding:12px;font-size:14px;font-weight:900;color:#fff;background:#4338ca;cursor:pointer}
+.engageQSubmit:disabled{opacity:.65;cursor:default}
+body.theme-f .engageQSubmit{background:#db2777}
 .genderPhotos{display:none}
 body.theme-f .photos-f{display:block}
 body.theme-m .photos-m{display:block}
@@ -476,6 +479,7 @@ body.theme-m .photos-m{display:block}
   <div class="engageQLabel">Enquanto está carregando...</div>
   <div class="engageQText"><strong class="dynName"></strong> é <span id="partnerWord">seu parceiro</span> há quanto tempo?</div>
   <input type="text" id="engageQCustom" class="engageQInput" placeholder="Digite aqui sua resposta..." maxlength="30" oninput="typeDuration(this.value)">
+  <button type="button" id="engageQSubmit" class="engageQSubmit" onclick="confirmDuration()">Confirmar resposta</button>
 </div>
 
 <div class="meta">
@@ -858,6 +862,14 @@ function typeDuration(value){
   const v=value.trim();
   if(!v) return;
   relationshipDuration=v;
+}
+function confirmDuration(){
+  const input=$('engageQCustom'), btn=$('engageQSubmit');
+  const v=input ? input.value.trim() : '';
+  if(!v) return;
+  relationshipDuration=v;
+  if(input) input.disabled=true;
+  if(btn){ btn.disabled=true; btn.textContent='✓ Resposta enviada'; }
 }
 function fillRelationshipHeadline(){
   const el=$('relDanger');
