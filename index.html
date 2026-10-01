@@ -912,7 +912,9 @@ function fillCheatedQuestion(){
   const el=$('cheatedQuestion');
   if(!el) return;
   const time = relationshipDuration || 'algum tempo';
-  el.textContent = 'SERÁ QUE VOCÊ ESTÁ SENDO ENGANADO(A) HÁ '+time.toUpperCase()+'?';
+  const partnerIsF = guessGender(targetName)==='f';
+  const word = partnerIsF ? 'ENGANADO' : 'ENGANADA';
+  el.textContent = 'SERÁ QUE VOCÊ ESTÁ SENDO '+word+' HÁ '+time.toUpperCase()+'?';
 }
 // Duas variações de tom para as frases "suspeitas", dependendo do gênero
 // percebido do nome digitado — só muda o texto, não o conteúdo factual.
