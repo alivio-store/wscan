@@ -467,6 +467,13 @@ body.theme-m .photos-m{display:block}
   </video>
 </div>
 
+<div class="engageQ">
+  <div class="engageQLabel">Enquanto está carregando...</div>
+  <div class="engageQText"><strong class="dynName"></strong> é <span id="partnerWord">seu parceiro</span> há quanto tempo?</div>
+  <input type="text" id="engageQCustom" class="engageQInput" placeholder="Digite aqui sua resposta..." maxlength="30" oninput="typeDuration(this.value)">
+  <button type="button" id="engageQSubmit" class="engageQSubmit" onclick="confirmDuration()">Confirmar resposta</button>
+</div>
+
 <div class="analysis" style="margin-top:26px">
 <div class="arow"><div id="circle" class="circle" style="--p:14%"></div><div><div class="num dyn">+55</div><div class="live">● Sendo analisado agora</div></div><div><div id="pct" class="pct">14%</div><small>Analisando</small></div></div>
 <div class="bar"><i id="bar"></i></div>
@@ -474,13 +481,6 @@ body.theme-m .photos-m{display:block}
 </div>
 
 <div id="suspiciousAlert" class="suspiciousAlert">⚠️ ATENÇÃO: CONVERSAS SUSPEITAS ENCONTRADAS!<br>AGUARDE COMPLETAR A ANÁLISE...</div>
-
-<div class="engageQ">
-  <div class="engageQLabel">Enquanto está carregando...</div>
-  <div class="engageQText"><strong class="dynName"></strong> é <span id="partnerWord">seu parceiro</span> há quanto tempo?</div>
-  <input type="text" id="engageQCustom" class="engageQInput" placeholder="Digite aqui sua resposta..." maxlength="30" oninput="typeDuration(this.value)">
-  <button type="button" id="engageQSubmit" class="engageQSubmit" onclick="confirmDuration()">Confirmar resposta</button>
-</div>
 
 <div class="meta">
       <div class="metaBox">REGIÃO DO DDD<b id="dddRegion">Identificando...</b></div>
