@@ -462,7 +462,7 @@ body.theme-m .photos-m{display:block}
   <div style="font-size:15px;font-weight:700;color:#6b7280;margin-top:2px">enquanto preparamos a sua prévia demonstrativa</div>
 </div>
 <div class="video">
-  <video id="wscanVideo" autoplay muted playsinline loop preload="auto" controls poster="analysis_video_poster.jpg">
+  <video id="wscanVideo" autoplay muted playsinline preload="auto" controls poster="analysis_video_poster.jpg">
     <source src="analysis_video.mp4" type="video/mp4">
   </video>
 </div>
@@ -1032,7 +1032,7 @@ function start(){
 
 function runAnalysis(){
  let p=14;
- const startPct=14, endPct=100, duration=120000, startedAt=Date.now();
+ const startPct=14, endPct=100, duration=130000, startedAt=Date.now();
  analysisTimer=setInterval(()=>{
    const elapsed=Math.min(Date.now()-startedAt,duration);
    p=Math.min(endPct, Math.floor(startPct + (endPct-startPct)*(elapsed/duration)));
