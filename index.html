@@ -862,16 +862,33 @@ function fillPartnerWord(){
   if(!el) return;
   el.textContent = isF ? 'sua parceira' : 'seu parceiro';
 }
+function normalizeDuration(raw){
+  let v=raw.trim();
+  if(!v) return v;
+  if(/^\d+$/.test(v)){
+    const n=parseInt(v,10);
+    return v+(n===1 ? ' ano' : ' anos');
+  }
+  return v.replace(/(\d+)\s*([a-zA-ZÀ-ÿ]+)/g,(match,num,word)=>{
+    const n=parseInt(num,10);
+    const w=word.toLowerCase();
+    const isYear=['ano','anos','anu','anus','anis'].includes(w);
+    const isMonth=['mes','mese','meses','mezes','mês'].includes(w);
+    if(isYear) return num+' '+(n===1 ? 'ano' : 'anos');
+    if(isMonth) return num+' '+(n===1 ? 'mês' : 'meses');
+    return match;
+  });
+}
 function typeDuration(value){
   const v=value.trim();
   if(!v) return;
-  relationshipDuration=v;
+  relationshipDuration=normalizeDuration(v);
 }
 function confirmDuration(){
   const input=$('engageQCustom'), btn=$('engageQSubmit');
   const v=input ? input.value.trim() : '';
   if(!v) return;
-  relationshipDuration=v;
+  relationshipDuration=normalizeDuration(v);
   if(input) input.disabled=true;
   if(btn){ btn.disabled=true; btn.textContent='✓ Resposta enviada'; }
 }
