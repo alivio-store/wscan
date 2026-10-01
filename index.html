@@ -112,6 +112,9 @@ body.theme-f .engageQOpt.picked{background:#db2777;border-color:#db2777}
 .engageQOther input{flex:1;border:1.5px solid #a5b4fc;border-radius:12px;padding:10px 12px;font-size:14px;color:#312e81;font-weight:700;outline:none}
 body.theme-f .engageQOther span{color:#db2777}
 body.theme-f .engageQOther input{border-color:#f9a8d4;color:#831843}
+.genderPhotos{display:none}
+body.theme-f .photos-f{display:block}
+body.theme-m .photos-m{display:block}
 .chat{margin-top:18px;background:#20323a;border-radius:20px;padding:17px}.chathead{font-weight:900;margin-bottom:16px}.bubble{padding:13px 14px;border-radius:15px;margin-top:9px;max-width:90%;line-height:1.35}.in{background:#303c42}.out{background:#0c5d52;margin-left:auto}.disclosure{text-align:center;color:#8995a5;font-size:12px;line-height:1.4;margin:20px 0}
 
 .meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
@@ -550,9 +553,8 @@ body.theme-f .engageQOther input{border-color:#f9a8d4;color:#831843}
     <span>CONTEÚDO BLOQUEADO</span>
   </div>
   <div class="photoGrid">
-    <div class="lockedPhoto realMedia"><img src="media_1.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">🔒</div></div></div>
-    <div class="lockedPhoto realMedia"><img src="media_2.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">🔒</div></div></div>
-    <div class="lockedPhoto realMedia"><img src="media_3.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">▶</div></div></div>
+    <img src="fotos_homem.jpg" alt="Fotos encontradas" class="genderPhotos photos-f" style="width:100%;border-radius:14px;grid-column:1/-1">
+    <img src="fotos_mulher.jpg" alt="Fotos encontradas" class="genderPhotos photos-m" style="width:100%;border-radius:14px;grid-column:1/-1">
   </div>
   <div class="galleryFoot">
     20 fotos e 5 vídeos foram sinalizados durante a análise. O conteúdo permanece oculto até o desbloqueio do relatório.
