@@ -822,6 +822,20 @@ function fillPartnerWord(){
   if(!el) return;
   el.textContent = guessGender(targetName)==='f' ? 'sua parceira' : 'seu parceiro';
 }
+const NUMBER_WORDS={um:1,uma:1,dois:2,duas:2,tres:3,quatro:4,cinco:5,seis:6,sete:7,oito:8,nove:9,
+  dez:10,onze:11,doze:12,treze:13,quatorze:14,catorze:14,quinze:15,dezesseis:16,dezessete:17,dezoito:18,dezenove:19,
+  vinte:20,trinta:30,quarenta:40,cinquenta:50,sessenta:60,setenta:70,oitenta:80,noventa:90};
+function wordsToNumber(tokens,i){
+  const w=tokens[i];
+  if(/^\d+$/.test(w)) return {value:parseInt(w,10),next:i+1};
+  if(!(w in NUMBER_WORDS)) return null;
+  let value=NUMBER_WORDS[w], next=i+1;
+  if(value>=20 && value%10===0 && tokens[next]==='e' && (tokens[next+1] in NUMBER_WORDS) && NUMBER_WORDS[tokens[next+1]]<10){
+    value+=NUMBER_WORDS[tokens[next+1]];
+    next+=2;
+  }
+  return {value,next};
+}
 function normalizeDuration(raw){
   let v=raw.trim();
   if(!v) return v;
@@ -829,18 +843,21 @@ function normalizeDuration(raw){
     const n=parseInt(v,10);
     return v+(n===1 ? ' ano' : ' anos');
   }
-  const re=/(\d+)\s*([a-zA-ZÀ-ÿ]+)/g;
+  const stripAccents=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'');
+  const tokens=stripAccents(v.toLowerCase()).match(/[a-z]+|\d+/g) || [];
+  const isYear=w=>['ano','anos','anu','anus','anis','anno','annos'].includes(w);
+  const isMonth=w=>['mes','mese','meses','mezes'].includes(w);
+  const isDay=w=>['dia','dias','diaa','diax','dya','dyas'].includes(w);
   const parts=[];
-  let m;
-  while((m=re.exec(v))){
-    const n=parseInt(m[1],10);
-    const w=m[2].toLowerCase();
-    const isYear=['ano','anos','anu','anus','anis','anno','annos'].includes(w);
-    const isMonth=['mes','mese','meses','mezes','mês'].includes(w);
-    const isDay=['dia','dias','diaa','diax','dya','dyas'].includes(w);
-    if(isYear) parts.push(m[1]+' '+(n===1 ? 'ano' : 'anos'));
-    else if(isMonth) parts.push(m[1]+' '+(n===1 ? 'mês' : 'meses'));
-    else if(isDay) parts.push(m[1]+' '+(n===1 ? 'dia' : 'dias'));
+  for(let i=0;i<tokens.length;i++){
+    const num=wordsToNumber(tokens,i);
+    if(!num) continue;
+    const unit=tokens[num.next];
+    if(isYear(unit)) parts.push(num.value+' '+(num.value===1 ? 'ano' : 'anos'));
+    else if(isMonth(unit)) parts.push(num.value+' '+(num.value===1 ? 'mês' : 'meses'));
+    else if(isDay(unit)) parts.push(num.value+' '+(num.value===1 ? 'dia' : 'dias'));
+    else continue;
+    i=num.next;
   }
   return parts.length ? parts.join(' e ') : v;
 }
