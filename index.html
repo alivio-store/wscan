@@ -826,15 +826,20 @@ function normalizeDuration(raw){
     const n=parseInt(v,10);
     return v+(n===1 ? ' ano' : ' anos');
   }
-  return v.replace(/(\d+)\s*([a-zA-ZÀ-ÿ]+)/g,(match,num,word)=>{
-    const n=parseInt(num,10);
-    const w=word.toLowerCase();
-    const isYear=['ano','anos','anu','anus','anis'].includes(w);
+  const re=/(\d+)\s*([a-zA-ZÀ-ÿ]+)/g;
+  const parts=[];
+  let m;
+  while((m=re.exec(v))){
+    const n=parseInt(m[1],10);
+    const w=m[2].toLowerCase();
+    const isYear=['ano','anos','anu','anus','anis','anno','annos'].includes(w);
     const isMonth=['mes','mese','meses','mezes','mês'].includes(w);
-    if(isYear) return num+' '+(n===1 ? 'ano' : 'anos');
-    if(isMonth) return num+' '+(n===1 ? 'mês' : 'meses');
-    return match;
-  });
+    const isDay=['dia','dias','diaa','diax','dya','dyas'].includes(w);
+    if(isYear) parts.push(m[1]+' '+(n===1 ? 'ano' : 'anos'));
+    else if(isMonth) parts.push(m[1]+' '+(n===1 ? 'mês' : 'meses'));
+    else if(isDay) parts.push(m[1]+' '+(n===1 ? 'dia' : 'dias'));
+  }
+  return parts.length ? parts.join(' e ') : v;
 }
 function typeDuration(value){
   const v=value.trim();
