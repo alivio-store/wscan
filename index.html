@@ -517,7 +517,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   <div class="r"><div class="ico">💬</div><div id="phrase1">“carregando...”</div></div>
   <div class="r"><div class="ico">💬</div><div id="phrase2">“carregando...”</div></div>
 </div>
-<div class="urgentTip">⚠️ <strong>IMPORTANTE:</strong> Entre <strong id="tipWhen" style="color:#dc2626">carregando...</strong> costuma ter mais conversas suspeitas com um contato que <strong class="dynName"></strong> está sempre apagando.</div>
+<div class="urgentTip">⚠️ <strong>IMPORTANTE:</strong> Entre <strong id="tipWhen" style="color:#dc2626">carregando...</strong> costuma ter mais conversas suspeitas com um contato que <strong class="dynName"></strong> está sempre apagando. HOJE, <strong id="tipDay" style="color:#dc2626">carregando...</strong> é uma boa oportunidade para pegar no flagra.</div>
 <a href="#priceBlock" class="btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="event.preventDefault();document.getElementById('priceBlock').scrollIntoView({behavior:'smooth',block:'center'})">🔓 VER RESULTADO COMPLETO</a>
 
 <div class="lockedGallery">
@@ -699,23 +699,10 @@ function fillLeakCity(){
   const el=$('leakCity');
   if(el) el.textContent = visitorCity || lastRegion || 'sua região';
 }
-// Sugere uma faixa de horário (dentro do período atual do dia, ou do
-// próximo período se a faixa de hoje já passou) como o "momento com mais
-// conversas suspeitas" — sempre calculado a partir da hora real de agora.
-function periodOfHour(h){
-  if(h<6) return 'madrugada';
-  if(h<12) return 'manhã';
-  if(h<18) return 'tarde';
-  return 'noite';
-}
-function nextPeriod(p){
-  if(p==='madrugada') return 'manhã';
-  if(p==='manhã') return 'tarde';
-  if(p==='tarde') return 'noite';
-  return 'madrugada';
-}
-const PERIOD_WINDOWS={madrugada:'00h00 e 03h00',manhã:'08h00 e 11h00',tarde:'14h00 e 17h00',noite:'20h00 e 23h00'};
-const PERIOD_END_HOUR={madrugada:3,manhã:11,tarde:17,noite:23};
+// Sugere uma faixa de horário relativa a agora (de 2h à frente a 3h à
+// frente) como o "momento com mais conversas suspeitas" — sempre
+// calculado a partir da hora real de agora.
+const WEEKDAYS=['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
 function dateOffset(days){
   const d=new Date();
   d.setDate(d.getDate()+days);
@@ -736,12 +723,15 @@ function fillTrialEndDate(){
   if(el) el.textContent=dateOffset(7);
 }
 function fillUrgentTip(){
-  const el=$('tipWhen');
-  if(!el) return;
+  const el=$('tipWhen'), dayEl=$('tipDay');
   const now=new Date();
-  let p=periodOfHour(now.getHours());
-  if(now.getHours()>=PERIOD_END_HOUR[p]) p=nextPeriod(p);
-  el.textContent = PERIOD_WINDOWS[p];
+  if(el){
+    const start=new Date(now.getTime()+2*3600000);
+    const end=new Date(now.getTime()+3*3600000);
+    const fmt=d=>String(d.getHours()).padStart(2,'0')+'h00';
+    el.textContent = fmt(start)+' e '+fmt(end);
+  }
+  if(dayEl) dayEl.textContent = WEEKDAYS[now.getDay()].toUpperCase();
 }
 function digits(v){return v.replace(/\D/g,'')}
 function isObviousFakeNumber(d){
