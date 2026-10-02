@@ -104,8 +104,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
 .metaBox{background:#f7f9fb;border-radius:15px;padding:12px;color:#64748b;font-size:13px}
 .metaBox b{display:block;color:#111827;margin-top:4px;font-size:15px}
-.giftImg{width:80px;height:80px}
-@media(max-width:520px){.card{padding:34px 20px}.arow{grid-template-columns:72px 1fr auto}.circle{width:70px;height:70px}.pct{font-size:34px}.giftImg{width:112px;height:112px}}
+.giftImg{width:108px;height:108px}
+.giftBox{animation:giftPulse 1.8s infinite}
+@keyframes giftPulse{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.35)}50%{box-shadow:0 0 0 9px rgba(37,211,102,0)}}
+@media(max-width:520px){.card{padding:34px 20px}.arow{grid-template-columns:72px 1fr auto}.circle{width:70px;height:70px}.pct{font-size:34px}.giftImg{width:130px;height:130px}}
 </style>
 
 <style>
@@ -589,11 +591,15 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
       <div>✅ Mensagem de Instagram</div>
     </div>
   </div>
-  <div style="text-align:left;max-width:420px;margin:0 auto 18px;background:#eaf8f4;border:1px solid #72e4ad;border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px">
-    <img src="brindecamera.png" alt="Câmera espiã de brinde" class="giftImg" style="object-fit:cover;object-position:center 65%;border-radius:10px;flex-shrink:0;box-shadow:0 4px 12px rgba(15,23,42,.15)">
+  <div style="text-align:center;font-weight:900;color:#111827;margin:4px 0 10px;font-size:15px;line-height:1.35">
+    PARA TE AJUDAR AINDA MAIS!<br>
+    APENAS HOJE, <span id="giftDate" style="color:#dc2626">carregando...</span> RECEBA UM BRINDE GRÁTIS
+  </div>
+  <div class="giftBox" style="text-align:left;max-width:420px;margin:0 auto 18px;background:#eaf8f4;border:2px solid #25d366;border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:16px">
+    <img src="brindecamera.png" alt="Câmera espiã de brinde" class="giftImg" style="object-fit:cover;object-position:center 65%;border-radius:12px;flex-shrink:0;box-shadow:0 4px 12px rgba(15,23,42,.15)">
     <div>
-      <div style="font-weight:900;color:#078d77;margin-bottom:4px">🎁 Ganhe de Brinde:</div>
-      <div style="color:#0f6b5c;font-weight:700">Câmera espiã para carro</div>
+      <div style="font-weight:900;color:#078d77;margin-bottom:5px;font-size:17px">🎁 Ganhe de Brinde:</div>
+      <div style="color:#0f6b5c;font-weight:800;font-size:17px">Câmera espiã para carro</div>
     </div>
   </div>
   <div id="priceBlock" style="font-size:16px;color:#6b7280;margin-bottom:3px">
@@ -721,6 +727,10 @@ function fillAudioLeakDate(){
 function fillTrialEndDate(){
   const el=$('trialEndDate');
   if(el) el.textContent=dateOffset(7);
+}
+function fillGiftDate(){
+  const el=$('giftDate');
+  if(el) el.textContent=dateOffset(0);
 }
 function fillUrgentTip(){
   const el=$('tipWhen'), dayEl=$('tipDay');
@@ -894,6 +904,7 @@ function show(n){
         fillYesterdayDate();
         fillAudioLeakDate();
         fillTrialEndDate();
+        fillGiftDate();
       }
       try { window.scrollTo({top:0,left:0,behavior:'auto'}); } catch(e) { window.scrollTo(0,0); }
     }
