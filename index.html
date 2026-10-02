@@ -93,20 +93,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .suspiciousAlert{display:none;margin-top:18px;background:#dc2626;color:#fff;border-radius:16px;padding:16px 18px;text-align:center;font-weight:900;line-height:1.5;font-size:15.5px;animation:alertBlink 1s steps(1) infinite}
 .suspiciousAlert.show{display:block}
 @keyframes alertBlink{0%,49%{opacity:1}50%,100%{opacity:.35}}
-.engageQ{margin-top:18px;background:#eef2ff;border:2px solid #818cf8;border-radius:16px;padding:16px 18px;text-align:center}
-body.theme-f .engageQ{background:#fdf2f8;border-color:#f472b6}
-body.theme-f .engageQLabel{color:#be185d}
-body.theme-f .engageQText{color:#831843}
-.engageQLabel{font-size:12px;font-weight:800;letter-spacing:.06em;color:#4338ca;text-transform:uppercase;margin-bottom:6px}
-.engageQText{font-size:16px;font-weight:800;color:#312e81;line-height:1.4}
-.engageQInput{width:100%;box-sizing:border-box;margin-top:14px;border:1.5px solid #a5b4fc;border-radius:12px;padding:12px;font-size:14px;color:#312e81;font-weight:700;outline:none}
-body.theme-f .engageQInput{border-color:#f9a8d4;color:#831843}
-.engageQSubmit{width:100%;box-sizing:border-box;margin-top:10px;border:0;border-radius:12px;padding:12px;font-size:14px;font-weight:900;color:#fff;background:#4338ca;cursor:pointer}
+.engageQ{margin-top:18px;background:#e6f9ee;border:2px solid var(--g);border-radius:16px;padding:16px 18px;text-align:center}
+.engageQLabel{font-size:12px;font-weight:800;letter-spacing:.06em;color:#0f6b4d;text-transform:uppercase;margin-bottom:6px}
+.engageQText{font-size:16px;font-weight:800;color:#0b4a37;line-height:1.4}
+.engageQInput{width:100%;box-sizing:border-box;margin-top:14px;border:1.5px solid #86d9ab;border-radius:12px;padding:12px;font-size:14px;color:#0b4a37;font-weight:700;outline:none}
+.engageQSubmit{width:100%;box-sizing:border-box;margin-top:10px;border:0;border-radius:12px;padding:12px;font-size:14px;font-weight:900;color:#fff;background:var(--g);cursor:pointer}
 .engageQSubmit:disabled{opacity:.65;cursor:default}
-body.theme-f .engageQSubmit{background:#db2777}
-.genderPhotos{display:none}
-body.theme-f .photos-f{display:block}
-body.theme-m .photos-m{display:block}
 .chat{margin-top:18px;background:#20323a;border-radius:20px;padding:17px}.chathead{font-weight:900;margin-bottom:16px}.bubble{padding:13px 14px;border-radius:15px;margin-top:9px;max-width:90%;line-height:1.35}.in{background:#303c42}.out{background:#0c5d52;margin-left:auto}.disclosure{text-align:center;color:#8995a5;font-size:12px;line-height:1.4;margin:20px 0}
 
 .meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
@@ -268,7 +260,6 @@ body.theme-m .photos-m{display:block}
   font-weight:800;
   color:#dc2626;
 }
-.photoGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .lockedPhoto{
   position:relative;
   aspect-ratio:1/1;
@@ -341,7 +332,6 @@ body.theme-m .photos-m{display:block}
   text-align:center;
 }
 @media(max-width:520px){
-  .photoGrid{grid-template-columns:repeat(3,1fr)}
   .lockedGallery{padding:14px}
 }
 </style>
@@ -361,7 +351,6 @@ body.theme-m .photos-m{display:block}
   background:#111827;
 }
 @media(max-width:520px){
-  .photoGrid{grid-template-columns:repeat(3,1fr) !important;gap:6px !important}
   .lockedPhoto{border-radius:10px !important}
   .lockBadge{width:34px !important;height:34px !important;font-size:16px !important}
 }
@@ -457,17 +446,17 @@ body.theme-m .photos-m{display:block}
 
 <div id="suspiciousAlert" class="suspiciousAlert" style="margin-top:18px">⚠️ ATENÇÃO: CONVERSAS SUSPEITAS ENCONTRADAS!<br>AGUARDE COMPLETAR A ANÁLISE...</div>
 
+<div class="analysis" style="margin-top:26px">
+<div class="arow"><div id="circle" class="circle" style="--p:14%"></div><div><div class="num dyn">+55</div><div class="live">● Sendo analisado agora</div></div><div><div id="pct" class="pct">14%</div><small>Analisando</small></div></div>
+<div class="bar"><i id="bar"></i></div>
+<div id="analysisStatus" class="wait">VALIDANDO NÚMERO...</div><div class="desc">O WhatsApp de <strong class="dynName"></strong> está sendo analisado</div>
+</div>
+
 <div class="engageQ">
   <div class="engageQLabel">Enquanto está carregando...</div>
   <div class="engageQText"><strong class="dynName"></strong> é <span id="partnerWord">seu parceiro</span> há quanto tempo?</div>
   <input type="text" id="engageQCustom" class="engageQInput" placeholder="Digite aqui... exemplo: 3 meses ou 5 anos" maxlength="30" oninput="typeDuration(this.value)">
   <button type="button" id="engageQSubmit" class="engageQSubmit" onclick="confirmDuration()">Confirmar resposta</button>
-</div>
-
-<div class="analysis" style="margin-top:26px">
-<div class="arow"><div id="circle" class="circle" style="--p:14%"></div><div><div class="num dyn">+55</div><div class="live">● Sendo analisado agora</div></div><div><div id="pct" class="pct">14%</div><small>Analisando</small></div></div>
-<div class="bar"><i id="bar"></i></div>
-<div id="analysisStatus" class="wait">VALIDANDO NÚMERO...</div><div class="desc">O WhatsApp de <strong class="dynName"></strong> está sendo analisado</div>
 </div>
 
 <div class="meta">
@@ -528,22 +517,8 @@ body.theme-m .photos-m{display:block}
   <div class="r"><div class="ico">💬</div><div id="phrase1">“carregando...”</div></div>
   <div class="r"><div class="ico">💬</div><div id="phrase2">“carregando...”</div></div>
 </div>
-<div class="urgentTip">⚠️ <strong>IMPORTANTE:</strong> Se quiser flagrar a conversa, <strong id="tipWhen" style="color:#dc2626">carregando...</strong> é o momento com mais conversas suspeitas. Hoje é a chance perfeita para você entender o que está acontecendo.</div>
+<div class="urgentTip">⚠️ <strong>IMPORTANTE:</strong> Entre <strong id="tipWhen" style="color:#dc2626">carregando...</strong> costuma ter mais conversas suspeitas com um contato que <strong class="dynName"></strong> está sempre apagando.</div>
 <a href="#priceBlock" class="btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="event.preventDefault();document.getElementById('priceBlock').scrollIntoView({behavior:'smooth',block:'center'})">🔓 VER RESULTADO COMPLETO</a>
-
-<div class="lockedGallery">
-  <div class="lockedGalleryHead">
-    <h3>Fotos e vídeos encontrados</h3>
-    <span>CONTEÚDO BLOQUEADO</span>
-  </div>
-  <div class="photoGrid">
-    <img src="fotos_homem.jpg" alt="Fotos encontradas" class="genderPhotos photos-f" style="width:100%;border-radius:14px;grid-column:1/-1">
-    <img src="fotos_mulher.jpg" alt="Fotos encontradas" class="genderPhotos photos-m" style="width:100%;border-radius:14px;grid-column:1/-1">
-  </div>
-  <div class="galleryFoot">
-    20 fotos e 5 vídeos foram sinalizados durante a análise. O conteúdo permanece oculto até o desbloqueio do relatório.
-  </div>
-</div>
 
 <div class="lockedGallery">
   <div class="lockedGalleryHead">
@@ -622,10 +597,10 @@ body.theme-m .photos-m{display:block}
     </div>
   </div>
   <div id="priceBlock" style="font-size:16px;color:#6b7280;margin-bottom:3px">
-    De: <span style="text-decoration:line-through">R$ 199,00</span>
+    De: <span style="text-decoration:line-through">R$ 199,90</span>
   </div>
-  <div style="font-size:31px;font-weight:950;color:#16a34a;margin-bottom:2px">R$ 97,90</div>
-  <div style="font-size:15px;color:#4b5563;font-weight:700;margin-bottom:15px">ou 12x de R$ 9,83 no cartão</div>
+  <div style="font-size:31px;font-weight:950;color:#16a34a;margin-bottom:2px">R$ 9,83 em 12x</div>
+  <div style="font-size:15px;color:#4b5563;font-weight:700;margin-bottom:15px">ou 97,90 à vista</div>
   <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn checkoutLink btnPulseYellow" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="trackCheckout()">DESBLOQUEAR AGORA</a>
   <div style="text-align:center;color:#078d77;font-weight:800;font-size:13px;margin-top:14px">🛡️ Garantia de 7 dias — reembolso garantido</div>
   <div style="text-align:center;color:#078d77;font-weight:800;font-size:13px;margin-top:6px">🔒 Compra anônima: Não aparece o nome na fatura do cartão nem no extrato do Pix.</div>
@@ -724,10 +699,9 @@ function fillLeakCity(){
   const el=$('leakCity');
   if(el) el.textContent = visitorCity || lastRegion || 'sua região';
 }
-// Sugere "o próximo período do dia" (manhã→tarde→noite→madrugada, com
-// madrugada já caindo no dia seguinte) como o "momento com mais
+// Sugere uma faixa de horário (dentro do período atual do dia, ou do
+// próximo período se a faixa de hoje já passou) como o "momento com mais
 // conversas suspeitas" — sempre calculado a partir da hora real de agora.
-const WEEKDAYS=['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
 function periodOfHour(h){
   if(h<6) return 'madrugada';
   if(h<12) return 'manhã';
@@ -735,11 +709,13 @@ function periodOfHour(h){
   return 'noite';
 }
 function nextPeriod(p){
-  if(p==='madrugada') return {period:'manhã',addDay:0};
-  if(p==='manhã') return {period:'tarde',addDay:0};
-  if(p==='tarde') return {period:'noite',addDay:0};
-  return {period:'madrugada',addDay:1};
+  if(p==='madrugada') return 'manhã';
+  if(p==='manhã') return 'tarde';
+  if(p==='tarde') return 'noite';
+  return 'madrugada';
 }
+const PERIOD_WINDOWS={madrugada:'00h00 e 03h00',manhã:'08h00 e 11h00',tarde:'14h00 e 17h00',noite:'20h00 e 23h00'};
+const PERIOD_END_HOUR={madrugada:3,manhã:11,tarde:17,noite:23};
 function dateOffset(days){
   const d=new Date();
   d.setDate(d.getDate()+days);
@@ -763,10 +739,9 @@ function fillUrgentTip(){
   const el=$('tipWhen');
   if(!el) return;
   const now=new Date();
-  const nxt=nextPeriod(periodOfHour(now.getHours()));
-  const d=new Date(now);
-  d.setDate(d.getDate()+nxt.addDay);
-  el.textContent = (WEEKDAYS[d.getDay()]+' de '+nxt.period).toUpperCase();
+  let p=periodOfHour(now.getHours());
+  if(now.getHours()>=PERIOD_END_HOUR[p]) p=nextPeriod(p);
+  el.textContent = PERIOD_WINDOWS[p];
 }
 function digits(v){return v.replace(/\D/g,'')}
 function isObviousFakeNumber(d){
@@ -841,11 +816,8 @@ function guessGender(name){
 }
 function fillPartnerWord(){
   const el=$('partnerWord');
-  const isF=guessGender(targetName)==='f';
-  document.body.classList.toggle('theme-f', isF);
-  document.body.classList.toggle('theme-m', !isF);
   if(!el) return;
-  el.textContent = isF ? 'sua parceira' : 'seu parceiro';
+  el.textContent = guessGender(targetName)==='f' ? 'sua parceira' : 'seu parceiro';
 }
 function normalizeDuration(raw){
   let v=raw.trim();
