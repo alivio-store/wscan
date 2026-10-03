@@ -923,7 +923,8 @@ function fillUrgentTip(){
   const el=$('tipWhen'), dayEl=$('tipDay');
   const now=new Date();
   if(el){
-    if(now.getHours()<9){
+    const hour=now.getHours();
+    if(hour<9){
       el.textContent='11h e 14h';
     }else{
       const start=new Date(now.getTime()+2*3600000);
