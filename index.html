@@ -1152,6 +1152,11 @@ function start(){
    $('err').style.display='block';
    return;
  }
+ if(!dddMap[d.slice(0,2)]){
+   $('err').textContent='Esse DDD não existe';
+   $('err').style.display='block';
+   return;
+ }
  $('err').style.display='none';
  targetName=name;
  shown='+55 '+fmt($('phone').value);
