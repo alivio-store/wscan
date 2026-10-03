@@ -239,7 +239,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .audioWave{flex:1;letter-spacing:1px;font-size:15px;line-height:1;opacity:.85;white-space:nowrap;overflow:hidden}
 .printBubble.imgMsg{flex-direction:column;align-items:flex-end;gap:4px;padding:4px}
 .imgThumb{width:170px;height:120px;border-radius:10px;background:linear-gradient(135deg,#4a5a62,#1f2f36)}
-.waScan{margin-top:18px;background:#0b141a;border-radius:20px;padding:14px;overflow:hidden}
+.waScan{display:none;margin-top:18px;background:#0b141a;border-radius:20px;padding:14px;overflow:hidden}
+.waScan.show{display:block}
 .waScanHead{display:flex;align-items:center;gap:8px;color:#8696a0;font-weight:800;font-size:13px;margin-bottom:10px}
 .waScanDot{width:8px;height:8px;border-radius:50%;background:#25d366;flex-shrink:0;animation:waScanBlink 1.2s infinite}
 @keyframes waScanBlink{0%,100%{opacity:1}50%{opacity:.3}}
@@ -695,8 +696,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
     </div>
   </div>
   <div style="text-align:center;font-weight:900;color:#111827;margin:4px 0 10px;font-size:15px;line-height:1.35">
-    ALÉM DO APLICATIVO, PARA TE AJUDAR AINDA MAIS!<br>
-    APENAS HOJE, <span id="giftDate" style="color:#dc2626">carregando...</span> RECEBA UM BRINDE GRÁTIS
+    ÚLTIMO DIA - <span id="giftDate" style="color:#dc2626">carregando...</span> PARA GANHAR UM BRINDE GRÁTIS
   </div>
   <div class="giftBox" style="text-align:left;max-width:420px;margin:0 auto 18px;background:#eaf8f4;border:2px solid #25d366;border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:16px">
     <img src="brindecamera.png" alt="Câmera espiã de brinde" class="giftImg" style="object-fit:cover;object-position:center 65%;border-radius:12px;flex-shrink:0;box-shadow:0 4px 12px rgba(15,23,42,.15)">
@@ -710,8 +710,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   <div id="priceBlock" style="font-size:16px;color:#6b7280;margin-bottom:3px">
     De: <span style="text-decoration:line-through">R$ 199,90</span>
   </div>
-  <div style="font-size:31px;font-weight:950;color:#16a34a;margin-bottom:2px">R$ 9,83 em 12x</div>
-  <div style="font-size:15px;color:#4b5563;font-weight:700;margin-bottom:15px">ou 97,90 à vista</div>
+  <div style="font-size:31px;font-weight:950;color:#16a34a;margin-bottom:2px">R$ 97,90</div>
+  <div style="font-size:15px;color:#4b5563;font-weight:700;margin-bottom:15px">ou 12x de R$ 9,83 no cartão</div>
   <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn checkoutLink btnPulseYellow" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="trackCheckout()">DESBLOQUEAR AGORA</a>
   <div style="text-align:center;color:#078d77;font-weight:800;font-size:13px;margin-top:14px">🛡️ Garantia de 7 dias — reembolso garantido</div>
   <div style="text-align:center;color:#078d77;font-weight:800;font-size:13px;margin-top:6px">🔒 Compra anônima: Não aparece o nome na fatura do cartão nem no extrato do Pix.</div>
@@ -1247,6 +1247,7 @@ function runAnalysis(){
  let p=14;
  const startPct=14, endPct=100, duration=60000, startedAt=Date.now();
  const engageQ=document.querySelector('.engageQ');
+ const waScan=document.querySelector('.waScan');
  setTimeout(()=>{
    const al=$('suspiciousAlert'); if(al) al.classList.add('show');
    const w=$('analysisWarning'); if(w) w.style.display='none';
@@ -1257,6 +1258,8 @@ function runAnalysis(){
    $('pct').textContent=p+'%';
    $('circle').style.setProperty('--p',p+'%');
    $('bar').style.width=p+'%';
+   if(p>=20 && p<80 && waScan) waScan.classList.add('show');
+   if(p>=80 && waScan) waScan.classList.remove('show');
    if(p>=30 && engageQ && !engageQ.dataset.dismissed) engageQ.classList.add('show');
    const st=$('analysisStatus');
    if(st){
