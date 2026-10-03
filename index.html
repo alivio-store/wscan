@@ -926,6 +926,8 @@ function fillUrgentTip(){
     const hour=now.getHours();
     if(hour<9){
       el.textContent='11h e 14h';
+    }else if(hour>=20){
+      el.textContent='21h e meia-noite';
     }else{
       const start=new Date(now.getTime()+2*3600000);
       const end=new Date(now.getTime()+3*3600000);
