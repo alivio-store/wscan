@@ -543,42 +543,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
     <div class="waScanFeed">
     <div class="waChatBar"><span class="waBack">‹</span><div class="waChatAvatar"><div class="waAvatarPhoto"></div></div><div class="waChatInfo"><span class="waChatName blur">Contato</span><span class="waChatStatus">online</span></div><span class="waIcons">⌕ ⋮</span></div>
     <div class="waScanBody">
-    <div class="waScanTrack">
-      <div class="printBubble in blur"><span class="msgText">Oi, tudo bem?</span><span class="msgTime">08:12</span></div>
-      <div class="printBubble out blur"><span class="msgText">Vamos nos falar depois</span><span class="msgTime">08:13</span></div>
-      <div class="printBubble in blur"><span class="msgText">Hoje à noite?</span><span class="msgTime">09:40</span></div>
-      <div class="printBubble out blur"><span class="msgText">Pode ser 😉</span><span class="msgTime">09:41</span></div>
-      <div class="printBubble in blur imgMsg"><div class="imgThumb"></div><span class="msgTime">10:15</span></div>
-      <div class="printBubble out blur"><span class="msgText">Apaga isso depois</span><span class="msgTime">10:16</span></div>
-      <div class="printBubble in blur"><span class="msgText">Kkkkk verdade</span><span class="msgTime">11:02</span></div>
-      <div class="printBubble out blur audioMsg"><span class="audioPlay">▶</span><span class="audioWave">▂▅▇▃▆▂▇▄▅▂▆▃▇▄</span><span class="msgTime">0:28</span></div>
-      <div class="printBubble in blur"><span class="msgText">Combinado então</span><span class="msgTime">12:30</span></div>
-      <div class="printBubble out blur"><span class="msgText">❤️</span><span class="msgTime">12:31</span></div>
-      <div class="printBubble in blur imgMsg"><div class="imgThumb"></div><span class="msgTime">13:47</span></div>
-      <div class="printBubble out blur"><span class="msgText">Não fala pra ninguém</span><span class="msgTime">13:48</span></div>
-      <div class="printBubble in blur audioMsg"><span class="audioPlay">▶</span><span class="audioWave">▃▆▂▇▅▃▆▄▇▂▅▃▆</span><span class="msgTime">0:15</span></div>
-      <div class="printBubble out blur"><span class="msgText">To chegando aí</span><span class="msgTime">15:21</span></div>
-      <div class="printBubble in blur"><span class="msgText">Separado, não contei nada</span><span class="msgTime">17:05</span></div>
-      <div class="printBubble in typingBubble"><span class="typingDot"></span><span class="typingDot"></span><span class="typingDot"></span></div>
-      <div class="printBubble out blur"><span class="msgText">Te ligo mais tarde</span><span class="msgTime">21:16</span></div>
-      <div class="printBubble in blur"><span class="msgText">Oi, tudo bem?</span><span class="msgTime">08:12</span></div>
-      <div class="printBubble out blur"><span class="msgText">Vamos nos falar depois</span><span class="msgTime">08:13</span></div>
-      <div class="printBubble in blur"><span class="msgText">Hoje à noite?</span><span class="msgTime">09:40</span></div>
-      <div class="printBubble out blur"><span class="msgText">Pode ser 😉</span><span class="msgTime">09:41</span></div>
-      <div class="printBubble in blur imgMsg"><div class="imgThumb"></div><span class="msgTime">10:15</span></div>
-      <div class="printBubble out blur"><span class="msgText">Apaga isso depois</span><span class="msgTime">10:16</span></div>
-      <div class="printBubble in blur"><span class="msgText">Kkkkk verdade</span><span class="msgTime">11:02</span></div>
-      <div class="printBubble out blur audioMsg"><span class="audioPlay">▶</span><span class="audioWave">▂▅▇▃▆▂▇▄▅▂▆▃▇▄</span><span class="msgTime">0:28</span></div>
-      <div class="printBubble in blur"><span class="msgText">Combinado então</span><span class="msgTime">12:30</span></div>
-      <div class="printBubble out blur"><span class="msgText">❤️</span><span class="msgTime">12:31</span></div>
-      <div class="printBubble in blur imgMsg"><div class="imgThumb"></div><span class="msgTime">13:47</span></div>
-      <div class="printBubble out blur"><span class="msgText">Não fala pra ninguém</span><span class="msgTime">13:48</span></div>
-      <div class="printBubble in blur audioMsg"><span class="audioPlay">▶</span><span class="audioWave">▃▆▂▇▅▃▆▄▇▂▅▃▆</span><span class="msgTime">0:15</span></div>
-      <div class="printBubble out blur"><span class="msgText">To chegando aí</span><span class="msgTime">15:21</span></div>
-      <div class="printBubble in blur"><span class="msgText">Separado, não contei nada</span><span class="msgTime">17:05</span></div>
-      <div class="printBubble in typingBubble"><span class="typingDot"></span><span class="typingDot"></span><span class="typingDot"></span></div>
-      <div class="printBubble out blur"><span class="msgText">Te ligo mais tarde</span><span class="msgTime">21:16</span></div>
-    </div>
+    <div class="waScanTrack"></div>
     </div>
     </div>
   </div>
@@ -809,7 +774,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <script>
 const $=id=>document.getElementById(id);
-let analysisTimer, clockTimer, shown='', targetName='', clockStarted=false, lastRegion='', visitorCity='', relationshipDuration='';
+let analysisTimer, clockTimer, waFeedTimer, shown='', targetName='', clockStarted=false, lastRegion='', visitorCity='', relationshipDuration='';
 // Repassa os parâmetros de rastreamento do anúncio (utm_source, utm_campaign,
 // src, click_id, fbclid etc.) da URL da página para os links de checkout da
 // PerfectPay, para que a origem do clique apareça no painel deles.
@@ -844,6 +809,54 @@ function playTestimonial(id){
 function fillLeakCity(){
   const el=$('leakCity');
   if(el) el.textContent = visitorCity || lastRegion || 'sua região';
+}
+// Gera o feed de mensagens "escaneadas" do WhatsApp (s2) com conteúdo
+// aleatório a cada ciclo, pra nunca repetir sempre o mesmo texto quando
+// o chat simulado "abre".
+const WA_EMOJI=['😈','💋','❤️','😍','🔥','😏','🙈','😘','🥵','😉'];
+const WA_TEXTS_IN=['Oi, tudo bem?','Hoje à noite?','Kkkkk verdade','Saudades suas','Vem aqui rapidinho',
+  'Hoje deu tudo certo','Ninguém vai saber','Olha essa foto','Só pensando em você',
+  'Posso te ligar?','Ainda tá pensando em mim?','Que hora te pego?','Manda um áudio pra mim',
+  'Com saudade de você','Isso fica entre nós','Me liga quando puder','Vamos nos ver essa semana',
+  'Tava com saudade','Hoje não consigo parar de pensar em você','Vi sua call perdida'];
+const WA_TEXTS_OUT=['Vamos nos falar depois','Pode ser','Apaga isso depois','Te ligo mais tarde',
+  'Não fala pra ninguém','To chegando aí','Também morrendo de saudade','Combinado, só nós dois',
+  'Isso fica entre a gente','Beijo grande','Mal posso esperar','Ninguém vai desconfiar',
+  'To contando as horas','Depois eu te explico','Hoje não dá, amanhã sim','Vou dar um jeito',
+  'Finge que não foi nada','Ainda bem que ninguém viu','Combinamos então'];
+function waRandomTime(){
+  const r=Math.random();
+  if(r<0.7){ return String(Math.floor(Math.random()*24)).padStart(2,'0')+':'+String(Math.floor(Math.random()*60)).padStart(2,'0'); }
+  if(r<0.82) return 'Ontem';
+  if(r<0.91) return 'há 2 dias';
+  return 'há 3 dias';
+}
+function waRandomBubble(dir){
+  const kind=Math.random(), time=waRandomTime();
+  if(kind<0.15) return '<div class="printBubble '+dir+' blur imgMsg"><div class="imgThumb"></div><span class="msgTime">'+time+'</span></div>';
+  if(kind<0.28){
+    const dur=String(Math.floor(Math.random()*50)+8).padStart(2,'0');
+    const frames='▂▅▇▃▆▂▇▄▅▂▆▃▇▄▅▇▂▆';
+    let wave=''; for(let i=0;i<14;i++) wave+=frames[Math.floor(Math.random()*frames.length)];
+    return '<div class="printBubble '+dir+' blur audioMsg"><span class="audioPlay">▶</span><span class="audioWave">'+wave+'</span><span class="msgTime">0:'+dur+'</span></div>';
+  }
+  const pool=dir==='in' ? WA_TEXTS_IN : WA_TEXTS_OUT;
+  let text=pool[Math.floor(Math.random()*pool.length)];
+  if(Math.random()<0.45) text+=' '+WA_EMOJI[Math.floor(Math.random()*WA_EMOJI.length)];
+  return '<div class="printBubble '+dir+' blur"><span class="msgText">'+text+'</span><span class="msgTime">'+time+'</span></div>';
+}
+function renderWaFeed(){
+  const track=document.querySelector('.waScanTrack');
+  if(!track) return;
+  const items=[];
+  let dir='in';
+  for(let i=0;i<49;i++){
+    items.push(waRandomBubble(dir));
+    dir = dir==='in' ? 'out' : 'in';
+  }
+  items.splice(items.length-2,0,'<div class="printBubble in typingBubble"><span class="typingDot"></span><span class="typingDot"></span><span class="typingDot"></span></div>');
+  const html=items.join('');
+  track.innerHTML=html+html;
 }
 // Sugere uma faixa de horário relativa a agora (de 2h à frente a 3h à
 // frente) como o "momento com mais conversas suspeitas" — sempre
@@ -1168,6 +1181,9 @@ function start(){
  personalizeLocal();
  fillPartnerWord();
  flyDddMap(lastRegion);
+ renderWaFeed();
+ clearInterval(waFeedTimer);
+ waFeedTimer=setInterval(renderWaFeed,10000);
 
  const pre=$('precheck'), p1=$('pre1'), p2=$('pre2'), p3=$('pre3');
  pre.style.display='block';
@@ -1215,6 +1231,7 @@ function runAnalysis(){
    if(p>=78)$('a3').textContent='Analisando';
    if(elapsed>=duration){
      clearInterval(analysisTimer);
+     clearInterval(waFeedTimer);
      $('pct').textContent='100%';
      $('circle').style.setProperty('--p','100%');
      $('bar').style.width='100%';
