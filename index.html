@@ -340,6 +340,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   font-weight:800;
   color:#dc2626;
 }
+.photoGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .lockedPhoto{
   position:relative;
   aspect-ratio:1/1;
@@ -412,6 +413,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   text-align:center;
 }
 @media(max-width:520px){
+  .photoGrid{grid-template-columns:repeat(3,1fr)}
   .lockedGallery{padding:14px}
 }
 </style>
@@ -431,6 +433,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   background:#111827;
 }
 @media(max-width:520px){
+  .photoGrid{grid-template-columns:repeat(3,1fr) !important;gap:6px !important}
   .lockedPhoto{border-radius:10px !important}
   .lockBadge{width:34px !important;height:34px !important;font-size:16px !important}
 }
@@ -573,7 +576,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <div class="engageQ">
   <div class="engageQLabel">Enquanto está carregando...</div>
-  <div class="engageQText"><strong class="dynName"></strong> é <span id="partnerWord">seu parceiro</span> há quanto tempo?</div>
+  <div class="engageQText"><span id="partnerArticle">O</span> <strong class="dynNameCased"></strong> é <span id="partnerWord">seu parceiro</span> há quanto tempo?</div>
   <input type="text" id="engageQCustom" class="engageQInput" placeholder="Digite aqui... exemplo: 3 meses ou 5 anos" maxlength="30" oninput="typeDuration(this.value)">
   <button type="button" id="engageQSubmit" class="engageQSubmit" onclick="confirmDuration()">Confirmar resposta</button>
 </div>
@@ -638,6 +641,21 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 </div>
 <div class="urgentTip">⚠️ <strong>IMPORTANTE:</strong> Entre <strong id="tipWhen" style="color:#dc2626">carregando...</strong> costuma ter mais conversas suspeitas com um contato que <strong class="dynName"></strong> está sempre apagando. HOJE, <strong id="tipDay" style="color:#dc2626">carregando...</strong> é uma boa oportunidade para pegar no flagra.</div>
 <a href="#priceBlock" class="btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="event.preventDefault();document.getElementById('priceBlock').scrollIntoView({behavior:'smooth',block:'center'})">🔓 VER RESULTADO COMPLETO</a>
+
+<div class="lockedGallery">
+  <div class="lockedGalleryHead">
+    <h3>Fotos e vídeos encontrados</h3>
+    <span>CONTEÚDO BLOQUEADO</span>
+  </div>
+  <div class="photoGrid">
+    <div class="lockedPhoto realMedia"><img src="media_1.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">🔒</div></div></div>
+    <div class="lockedPhoto realMedia"><img src="media_2.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">🔒</div></div></div>
+    <div class="lockedPhoto realMedia"><img src="media_3.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">▶</div></div></div>
+  </div>
+  <div class="galleryFoot">
+    20 fotos e 5 vídeos foram sinalizados durante a análise. O conteúdo permanece oculto até o desbloqueio do relatório.
+  </div>
+</div>
 
 <div class="lockedGallery">
   <div class="lockedGalleryHead">
@@ -1024,9 +1042,10 @@ function guessGender(name){
   return n.endsWith('a') ? 'f' : 'm';
 }
 function fillPartnerWord(){
-  const el=$('partnerWord');
-  if(!el) return;
-  el.textContent = guessGender(targetName)==='f' ? 'sua parceira' : 'seu parceiro';
+  const el=$('partnerWord'), artEl=$('partnerArticle');
+  const isF=guessGender(targetName)==='f';
+  if(el) el.textContent = isF ? 'sua parceira' : 'seu parceiro';
+  if(artEl) artEl.textContent = isF ? 'A' : 'O';
 }
 const NUMBER_WORDS={um:1,uma:1,dois:2,duas:2,tres:3,quatro:4,cinco:5,seis:6,sete:7,oito:8,nove:9,
   dez:10,onze:11,doze:12,treze:13,quatorze:14,catorze:14,quinze:15,dezesseis:16,dezessete:17,dezoito:18,dezenove:19,
@@ -1134,9 +1153,13 @@ function show(n){
       }
       try { window.scrollTo({top:0,left:0,behavior:'auto'}); } catch(e) { window.scrollTo(0,0); }
     }
+function titleCase(s){
+  return s.trim().toLowerCase().replace(/(^|\s)\S/g, c=>c.toUpperCase());
+}
 function sync(){
   document.querySelectorAll('.dyn').forEach(x=>x.textContent=shown);
   document.querySelectorAll('.dynName').forEach(x=>x.textContent=targetName.toUpperCase());
+  document.querySelectorAll('.dynNameCased').forEach(x=>x.textContent=titleCase(targetName));
 }
 const dddMap={
   '11':'São Paulo','12':'São Paulo','13':'São Paulo','14':'São Paulo','15':'São Paulo','16':'São Paulo','17':'São Paulo','18':'São Paulo','19':'São Paulo',
