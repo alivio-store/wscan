@@ -263,20 +263,23 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .waScanAvatar{position:relative;width:38px;height:38px;border-radius:50%;flex-shrink:0;overflow:hidden}
 .waAvatarPhoto{
   width:100%;height:100%;border-radius:50%;
-  --ac1:#f97316;--ac2:#c2410c;
+  --skin:#c68a5b;--hair:#2b1a12;--shirt:#1e3a5f;--bg1:#7a8894;--bg2:#3a4652;
   background:
-    radial-gradient(circle at 50% 36%, rgba(255,255,255,.5) 0%, rgba(255,255,255,.5) 20%, transparent 21%),
-    radial-gradient(circle at 50% 80%, rgba(0,0,0,.25) 0%, rgba(0,0,0,.25) 36%, transparent 37%),
-    linear-gradient(135deg,var(--ac1),var(--ac2));
-  filter:blur(2.5px);
-  transform:scale(1.15);
+    radial-gradient(circle at 50% 22%, var(--hair) 0%, var(--hair) 21%, transparent 22%),
+    radial-gradient(circle at 50% 33%, var(--skin) 0%, var(--skin) 17%, transparent 18%),
+    radial-gradient(ellipse 34% 26% at 50% 86%, var(--shirt) 0%, var(--shirt) 100%, transparent 100%),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+  filter:blur(3.5px);
+  transform:scale(1.25);
 }
-.waScanRow:nth-child(2) .waAvatarPhoto{--ac1:#8b5cf6;--ac2:#5b21b6}
-.waScanRow:nth-child(3) .waAvatarPhoto{--ac1:#ec4899;--ac2:#9d174d}
-.waScanRow:nth-child(4) .waAvatarPhoto{--ac1:#06b6d4;--ac2:#0e7490}
-.waScanRow:nth-child(5) .waAvatarPhoto{--ac1:#eab308;--ac2:#92400e}
-.waScanRow:nth-child(6) .waAvatarPhoto{--ac1:#22c55e;--ac2:#15803d}
-.waChatAvatar .waAvatarPhoto{--ac1:#4a5a62;--ac2:#1f2f36}
+.waScanRow:nth-child(8n+2) .waAvatarPhoto{--skin:#8d5a3c;--hair:#140d08;--shirt:#7c2d12;--bg1:#8a8580;--bg2:#44403c}
+.waScanRow:nth-child(8n+3) .waAvatarPhoto{--skin:#e8b48c;--hair:#4a2a12;--shirt:#581c4a;--bg1:#8c8992;--bg2:#3f3f46}
+.waScanRow:nth-child(8n+4) .waAvatarPhoto{--skin:#a16b43;--hair:#1a1206;--shirt:#14532d;--bg1:#837c73;--bg2:#292524}
+.waScanRow:nth-child(8n+5) .waAvatarPhoto{--skin:#f0c9a0;--hair:#5c3a1e;--shirt:#1e40af;--bg1:#8a909c;--bg2:#374151}
+.waScanRow:nth-child(8n+6) .waAvatarPhoto{--skin:#6b4226;--hair:#0d0906;--shirt:#854d0e;--bg1:#817c7c;--bg2:#27272a}
+.waScanRow:nth-child(8n+7) .waAvatarPhoto{--skin:#d9a066;--hair:#3a2414;--shirt:#0f766e;--bg1:#8b8680;--bg2:#3d3833}
+.waScanRow:nth-child(8n) .waAvatarPhoto{--skin:#7a4a2c;--hair:#120b06;--shirt:#9d174d;--bg1:#857f78;--bg2:#2e2a26}
+.waChatAvatar .waAvatarPhoto{--skin:#c68a5b;--hair:#2b1a12;--shirt:#374151;--bg1:#7a8894;--bg2:#3a4652}
 .waScanOnline::after{content:"";position:absolute;right:-1px;bottom:-1px;width:10px;height:10px;border-radius:50%;background:#25d366;border:2px solid #0b141a}
 .waScanRowText{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
 .waScanRowName{color:#e9edef;font-weight:700;font-size:13.5px}
@@ -291,7 +294,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .typingDot:nth-child(2){animation-delay:.2s}
 .typingDot:nth-child(3){animation-delay:.4s}
 @keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
-.waScanTrack{display:flex;flex-direction:column;gap:8px;animation:waScanScroll 6s linear infinite}
+.waScanTrack{display:flex;flex-direction:column;gap:8px;animation:waScanScroll 8s linear infinite}
+.waScanListTrack{display:flex;flex-direction:column;animation:waScanScroll 9s linear infinite}
 @keyframes waScanScroll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
 .lockedGallery{
   margin-top:22px;
@@ -516,12 +520,24 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
     <div class="waScanList">
       <div class="waListBar"><span class="waListTitle">WhatsApp</span><span class="waIcons">⌕ ⋮</span></div>
       <div class="waScanBody">
+      <div class="waScanListTrack">
       <div class="waScanRow"><div class="waScanAvatar waScanOnline"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 1</span><span class="waScanRowMsg blur">última mensagem recebida aqui</span></div><div class="waScanRowMeta"><span class="waScanRowTime">08:13</span><span class="waScanRowBadge">3</span></div></div>
       <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 2</span><span class="waScanRowMsg blur">ok, combinado então</span></div><div class="waScanRowMeta"><span class="waScanRowTime">12:05</span></div></div>
       <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 3</span><span class="waScanRowMsg blur">áudio de 0:41</span></div><div class="waScanRowMeta"><span class="waScanRowTime">14:28</span><span class="waScanRowBadge">1</span></div></div>
       <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 4</span><span class="waScanRowMsg blur">kkkk verdade, pode ser</span></div><div class="waScanRowMeta"><span class="waScanRowTime">16:52</span></div></div>
       <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 5</span><span class="waScanRowMsg blur">te ligo mais tarde ❤️</span></div><div class="waScanRowMeta"><span class="waScanRowTime">19:04</span><span class="waScanRowBadge">5</span></div></div>
       <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 6</span><span class="waScanRowMsg blur">vi sua call, depois falamos</span></div><div class="waScanRowMeta"><span class="waScanRowTime">21:16</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 7</span><span class="waScanRowMsg blur">foto enviada</span></div><div class="waScanRowMeta"><span class="waScanRowTime">22:03</span><span class="waScanRowBadge">2</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 8</span><span class="waScanRowMsg blur">separado, pode falar</span></div><div class="waScanRowMeta"><span class="waScanRowTime">23:11</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar waScanOnline"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 1</span><span class="waScanRowMsg blur">última mensagem recebida aqui</span></div><div class="waScanRowMeta"><span class="waScanRowTime">08:13</span><span class="waScanRowBadge">3</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 2</span><span class="waScanRowMsg blur">ok, combinado então</span></div><div class="waScanRowMeta"><span class="waScanRowTime">12:05</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 3</span><span class="waScanRowMsg blur">áudio de 0:41</span></div><div class="waScanRowMeta"><span class="waScanRowTime">14:28</span><span class="waScanRowBadge">1</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 4</span><span class="waScanRowMsg blur">kkkk verdade, pode ser</span></div><div class="waScanRowMeta"><span class="waScanRowTime">16:52</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 5</span><span class="waScanRowMsg blur">te ligo mais tarde ❤️</span></div><div class="waScanRowMeta"><span class="waScanRowTime">19:04</span><span class="waScanRowBadge">5</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 6</span><span class="waScanRowMsg blur">vi sua call, depois falamos</span></div><div class="waScanRowMeta"><span class="waScanRowTime">21:16</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 7</span><span class="waScanRowMsg blur">foto enviada</span></div><div class="waScanRowMeta"><span class="waScanRowTime">22:03</span><span class="waScanRowBadge">2</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 8</span><span class="waScanRowMsg blur">separado, pode falar</span></div><div class="waScanRowMeta"><span class="waScanRowTime">23:11</span></div></div>
+      </div>
       </div>
     </div>
     <div class="waScanFeed">
@@ -530,28 +546,36 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
     <div class="waScanTrack">
       <div class="printBubble in blur"><span class="msgText">Oi, tudo bem?</span><span class="msgTime">08:12</span></div>
       <div class="printBubble out blur"><span class="msgText">Vamos nos falar depois</span><span class="msgTime">08:13</span></div>
-      <div class="printBubble in blur"><span class="msgText">Hoje à noite?</span><span class="msgTime">12:04</span></div>
-      <div class="printBubble out blur"><span class="msgText">Pode ser 😉</span><span class="msgTime">12:05</span></div>
-      <div class="printBubble in blur imgMsg"><div class="imgThumb"></div><span class="msgTime">14:27</span></div>
-      <div class="printBubble out blur"><span class="msgText">Apaga isso depois</span><span class="msgTime">14:28</span></div>
-      <div class="printBubble in blur"><span class="msgText">Kkkkk verdade</span><span class="msgTime">16:51</span></div>
+      <div class="printBubble in blur"><span class="msgText">Hoje à noite?</span><span class="msgTime">09:40</span></div>
+      <div class="printBubble out blur"><span class="msgText">Pode ser 😉</span><span class="msgTime">09:41</span></div>
+      <div class="printBubble in blur imgMsg"><div class="imgThumb"></div><span class="msgTime">10:15</span></div>
+      <div class="printBubble out blur"><span class="msgText">Apaga isso depois</span><span class="msgTime">10:16</span></div>
+      <div class="printBubble in blur"><span class="msgText">Kkkkk verdade</span><span class="msgTime">11:02</span></div>
       <div class="printBubble out blur audioMsg"><span class="audioPlay">▶</span><span class="audioWave">▂▅▇▃▆▂▇▄▅▂▆▃▇▄</span><span class="msgTime">0:28</span></div>
-      <div class="printBubble in blur"><span class="msgText">Combinado então</span><span class="msgTime">19:03</span></div>
-      <div class="printBubble out blur"><span class="msgText">❤️</span><span class="msgTime">19:04</span></div>
-      <div class="printBubble in blur imgMsg"><div class="imgThumb"></div><span class="msgTime">21:15</span></div>
+      <div class="printBubble in blur"><span class="msgText">Combinado então</span><span class="msgTime">12:30</span></div>
+      <div class="printBubble out blur"><span class="msgText">❤️</span><span class="msgTime">12:31</span></div>
+      <div class="printBubble in blur imgMsg"><div class="imgThumb"></div><span class="msgTime">13:47</span></div>
+      <div class="printBubble out blur"><span class="msgText">Não fala pra ninguém</span><span class="msgTime">13:48</span></div>
+      <div class="printBubble in blur audioMsg"><span class="audioPlay">▶</span><span class="audioWave">▃▆▂▇▅▃▆▄▇▂▅▃▆</span><span class="msgTime">0:15</span></div>
+      <div class="printBubble out blur"><span class="msgText">To chegando aí</span><span class="msgTime">15:21</span></div>
+      <div class="printBubble in blur"><span class="msgText">Separado, não contei nada</span><span class="msgTime">17:05</span></div>
       <div class="printBubble in typingBubble"><span class="typingDot"></span><span class="typingDot"></span><span class="typingDot"></span></div>
       <div class="printBubble out blur"><span class="msgText">Te ligo mais tarde</span><span class="msgTime">21:16</span></div>
       <div class="printBubble in blur"><span class="msgText">Oi, tudo bem?</span><span class="msgTime">08:12</span></div>
       <div class="printBubble out blur"><span class="msgText">Vamos nos falar depois</span><span class="msgTime">08:13</span></div>
-      <div class="printBubble in blur"><span class="msgText">Hoje à noite?</span><span class="msgTime">12:04</span></div>
-      <div class="printBubble out blur"><span class="msgText">Pode ser 😉</span><span class="msgTime">12:05</span></div>
-      <div class="printBubble in blur imgMsg"><div class="imgThumb"></div><span class="msgTime">14:27</span></div>
-      <div class="printBubble out blur"><span class="msgText">Apaga isso depois</span><span class="msgTime">14:28</span></div>
-      <div class="printBubble in blur"><span class="msgText">Kkkkk verdade</span><span class="msgTime">16:51</span></div>
+      <div class="printBubble in blur"><span class="msgText">Hoje à noite?</span><span class="msgTime">09:40</span></div>
+      <div class="printBubble out blur"><span class="msgText">Pode ser 😉</span><span class="msgTime">09:41</span></div>
+      <div class="printBubble in blur imgMsg"><div class="imgThumb"></div><span class="msgTime">10:15</span></div>
+      <div class="printBubble out blur"><span class="msgText">Apaga isso depois</span><span class="msgTime">10:16</span></div>
+      <div class="printBubble in blur"><span class="msgText">Kkkkk verdade</span><span class="msgTime">11:02</span></div>
       <div class="printBubble out blur audioMsg"><span class="audioPlay">▶</span><span class="audioWave">▂▅▇▃▆▂▇▄▅▂▆▃▇▄</span><span class="msgTime">0:28</span></div>
-      <div class="printBubble in blur"><span class="msgText">Combinado então</span><span class="msgTime">19:03</span></div>
-      <div class="printBubble out blur"><span class="msgText">❤️</span><span class="msgTime">19:04</span></div>
-      <div class="printBubble in blur imgMsg"><div class="imgThumb"></div><span class="msgTime">21:15</span></div>
+      <div class="printBubble in blur"><span class="msgText">Combinado então</span><span class="msgTime">12:30</span></div>
+      <div class="printBubble out blur"><span class="msgText">❤️</span><span class="msgTime">12:31</span></div>
+      <div class="printBubble in blur imgMsg"><div class="imgThumb"></div><span class="msgTime">13:47</span></div>
+      <div class="printBubble out blur"><span class="msgText">Não fala pra ninguém</span><span class="msgTime">13:48</span></div>
+      <div class="printBubble in blur audioMsg"><span class="audioPlay">▶</span><span class="audioWave">▃▆▂▇▅▃▆▄▇▂▅▃▆</span><span class="msgTime">0:15</span></div>
+      <div class="printBubble out blur"><span class="msgText">To chegando aí</span><span class="msgTime">15:21</span></div>
+      <div class="printBubble in blur"><span class="msgText">Separado, não contei nada</span><span class="msgTime">17:05</span></div>
       <div class="printBubble in typingBubble"><span class="typingDot"></span><span class="typingDot"></span><span class="typingDot"></span></div>
       <div class="printBubble out blur"><span class="msgText">Te ligo mais tarde</span><span class="msgTime">21:16</span></div>
     </div>
