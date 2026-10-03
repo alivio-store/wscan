@@ -243,15 +243,30 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .waScanHead{display:flex;align-items:center;gap:8px;color:#8696a0;font-weight:800;font-size:13px;margin-bottom:10px}
 .waScanDot{width:8px;height:8px;border-radius:50%;background:#25d366;flex-shrink:0;animation:waScanBlink 1.2s infinite}
 @keyframes waScanBlink{0%,100%{opacity:1}50%{opacity:.3}}
-.waScanPanels{height:230px;position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 88%,transparent)}
-.waScanList,.waScanFeed{position:absolute;inset:0}
+.waScanPanels{height:260px;position:relative;overflow:hidden}
+.waScanList,.waScanFeed{position:absolute;inset:0;display:flex;flex-direction:column}
 .waScanList{animation:waScanListFade 12s ease-in-out infinite}
 .waScanFeed{animation:waScanFeedFade 12s ease-in-out infinite}
 @keyframes waScanListFade{0%,28%{opacity:1;transform:scale(1)}35%,88%{opacity:0;transform:scale(1.03)}95%,100%{opacity:1;transform:scale(1)}}
 @keyframes waScanFeedFade{0%,28%{opacity:0;transform:scale(.97)}38%,82%{opacity:1;transform:scale(1)}90%,100%{opacity:0;transform:scale(.97)}}
+.waListBar,.waChatBar{display:flex;align-items:center;gap:10px;padding-bottom:10px;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.waListTitle{font-weight:800;font-size:15px;color:#e9edef;flex:1}
+.waIcons{color:#8696a0;font-size:13px;letter-spacing:8px;margin-left:auto}
+.waBack{font-size:20px;color:#8696a0;line-height:1}
+.waChatAvatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#4a5a62,#1f2f36);flex-shrink:0}
+.waChatInfo{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.waChatName{font-weight:700;font-size:13.5px;color:#e9edef}
+.waChatStatus{color:#25d366;font-size:11px}
+.waScanBody{flex:1;position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,#000 92%,transparent);mask-image:linear-gradient(to bottom,#000 92%,transparent)}
 .waScanRow{display:flex;align-items:center;gap:10px;padding:9px 2px}
 .waScanRow+.waScanRow{border-top:1px solid rgba(255,255,255,.06)}
-.waScanAvatar{width:38px;height:38px;border-radius:50%;background:#2a3942;flex-shrink:0}
+.waScanAvatar{position:relative;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#f97316,#c2410c);flex-shrink:0}
+.waScanRow:nth-child(2) .waScanAvatar{background:linear-gradient(135deg,#8b5cf6,#5b21b6)}
+.waScanRow:nth-child(3) .waScanAvatar{background:linear-gradient(135deg,#ec4899,#9d174d)}
+.waScanRow:nth-child(4) .waScanAvatar{background:linear-gradient(135deg,#06b6d4,#0e7490)}
+.waScanRow:nth-child(5) .waScanAvatar{background:linear-gradient(135deg,#eab308,#92400e)}
+.waScanRow:nth-child(6) .waScanAvatar{background:linear-gradient(135deg,#22c55e,#15803d)}
+.waScanOnline::after{content:"";position:absolute;right:-1px;bottom:-1px;width:10px;height:10px;border-radius:50%;background:#25d366;border:2px solid #0b141a}
 .waScanRowText{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
 .waScanRowName{color:#e9edef;font-weight:700;font-size:13.5px}
 .waScanRowMsg{color:#8696a0;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -259,6 +274,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .waScanRowTime{color:#8696a0;font-size:11px}
 .waScanRowBadge{background:#25d366;color:#0b141a;font-weight:800;font-size:10.5px;min-width:17px;height:17px;border-radius:999px;display:grid;place-items:center;padding:0 4px}
 .blur{filter:blur(4px);user-select:none}
+.printBubble.out .msgTime::after{content:" ✓✓";color:#53bdeb}
+.typingBubble{display:flex;gap:5px;padding:13px 16px;align-items:center}
+.typingDot{width:7px;height:7px;border-radius:50%;background:#8696a0;animation:typingBounce 1.2s infinite}
+.typingDot:nth-child(2){animation-delay:.2s}
+.typingDot:nth-child(3){animation-delay:.4s}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
 .waScanTrack{display:flex;flex-direction:column;gap:8px;animation:waScanScroll 14s linear infinite}
 @keyframes waScanScroll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
 .lockedGallery{
@@ -482,14 +503,19 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   <div class="waScanHead"><span class="waScanDot"></span> Analisando conversas do WhatsApp...</div>
   <div class="waScanPanels">
     <div class="waScanList">
-      <div class="waScanRow"><div class="waScanAvatar"></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 1</span><span class="waScanRowMsg blur">última mensagem recebida aqui</span></div><div class="waScanRowMeta"><span class="waScanRowTime">08:13</span><span class="waScanRowBadge">3</span></div></div>
+      <div class="waListBar"><span class="waListTitle">WhatsApp</span><span class="waIcons">⌕ ⋮</span></div>
+      <div class="waScanBody">
+      <div class="waScanRow"><div class="waScanAvatar waScanOnline"></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 1</span><span class="waScanRowMsg blur">última mensagem recebida aqui</span></div><div class="waScanRowMeta"><span class="waScanRowTime">08:13</span><span class="waScanRowBadge">3</span></div></div>
       <div class="waScanRow"><div class="waScanAvatar"></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 2</span><span class="waScanRowMsg blur">ok, combinado então</span></div><div class="waScanRowMeta"><span class="waScanRowTime">12:05</span></div></div>
       <div class="waScanRow"><div class="waScanAvatar"></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 3</span><span class="waScanRowMsg blur">áudio de 0:41</span></div><div class="waScanRowMeta"><span class="waScanRowTime">14:28</span><span class="waScanRowBadge">1</span></div></div>
       <div class="waScanRow"><div class="waScanAvatar"></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 4</span><span class="waScanRowMsg blur">kkkk verdade, pode ser</span></div><div class="waScanRowMeta"><span class="waScanRowTime">16:52</span></div></div>
       <div class="waScanRow"><div class="waScanAvatar"></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 5</span><span class="waScanRowMsg blur">te ligo mais tarde ❤️</span></div><div class="waScanRowMeta"><span class="waScanRowTime">19:04</span><span class="waScanRowBadge">5</span></div></div>
       <div class="waScanRow"><div class="waScanAvatar"></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 6</span><span class="waScanRowMsg blur">vi sua call, depois falamos</span></div><div class="waScanRowMeta"><span class="waScanRowTime">21:16</span></div></div>
+      </div>
     </div>
     <div class="waScanFeed">
+    <div class="waChatBar"><span class="waBack">‹</span><div class="waChatAvatar"></div><div class="waChatInfo"><span class="waChatName blur">Contato</span><span class="waChatStatus">online</span></div><span class="waIcons">⌕ ⋮</span></div>
+    <div class="waScanBody">
     <div class="waScanTrack">
       <div class="printBubble in blur"><span class="msgText">Oi, tudo bem?</span><span class="msgTime">08:12</span></div>
       <div class="printBubble out blur"><span class="msgText">Vamos nos falar depois</span><span class="msgTime">08:13</span></div>
@@ -502,6 +528,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
       <div class="printBubble in blur"><span class="msgText">Combinado então</span><span class="msgTime">19:03</span></div>
       <div class="printBubble out blur"><span class="msgText">❤️</span><span class="msgTime">19:04</span></div>
       <div class="printBubble in blur imgMsg"><div class="imgThumb"></div><span class="msgTime">21:15</span></div>
+      <div class="printBubble in typingBubble"><span class="typingDot"></span><span class="typingDot"></span><span class="typingDot"></span></div>
       <div class="printBubble out blur"><span class="msgText">Te ligo mais tarde</span><span class="msgTime">21:16</span></div>
       <div class="printBubble in blur"><span class="msgText">Oi, tudo bem?</span><span class="msgTime">08:12</span></div>
       <div class="printBubble out blur"><span class="msgText">Vamos nos falar depois</span><span class="msgTime">08:13</span></div>
@@ -514,7 +541,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
       <div class="printBubble in blur"><span class="msgText">Combinado então</span><span class="msgTime">19:03</span></div>
       <div class="printBubble out blur"><span class="msgText">❤️</span><span class="msgTime">19:04</span></div>
       <div class="printBubble in blur imgMsg"><div class="imgThumb"></div><span class="msgTime">21:15</span></div>
+      <div class="printBubble in typingBubble"><span class="typingDot"></span><span class="typingDot"></span><span class="typingDot"></span></div>
       <div class="printBubble out blur"><span class="msgText">Te ligo mais tarde</span><span class="msgTime">21:16</span></div>
+    </div>
     </div>
     </div>
   </div>
