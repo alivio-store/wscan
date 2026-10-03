@@ -1228,7 +1228,7 @@ function flyDddMap(region){
     setTimeout(()=>{ dddLeafletMap.invalidateSize(); },50);
     if(target){
       setTimeout(()=>{
-        dddLeafletMap.flyTo(target,6,{duration:5.3});
+        dddLeafletMap.flyTo(target,5,{duration:5.3});
         setTimeout(()=>{ if(pin) pin.classList.add('show'); },5200);
       },500);
     }
