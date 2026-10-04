@@ -446,6 +446,19 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   color:#c5cbd3;
   text-align:center;
 }
+.simBanner{
+  background:#fff7e6;
+  border:2px solid #f59e0b;
+  color:#7c4a03;
+  border-radius:14px;
+  padding:14px 16px;
+  font-weight:800;
+  font-size:13.5px;
+  line-height:1.45;
+  text-align:center;
+  margin-bottom:18px;
+}
+.simBanner strong{color:#b45309}
 .fakeBuyBtn{cursor:default}
 @media(max-width:600px){
   #s1{
@@ -501,15 +514,16 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <section id="s1" class="screen on center">
 <div class="card hero">
-<h1>Você desconfia de uma traição no WhatsApp?</h1>
-<p class="sub">Insira o número que deseja verificar e veja o resultado da análise.</p>
+<div class="simBanner">⚠️ <strong>ATENÇÃO:</strong> O WScan é uma <strong>SIMULAÇÃO</strong> de entretenimento. Não acessamos WhatsApp, contas ou dados reais de ninguém — tudo que você vê é gerado automaticamente só para diversão.</div>
+<h1>Simule uma verificação de WhatsApp</h1>
+<p class="sub">Insira um nome e número e veja como ficaria uma "análise de traição" gerada na hora — um relatório 100% fictício, para você se divertir.</p>
     <label class="label">🙋 PRIMEIRO NOME DA PESSOA</label>
 <input id="targetName" class="nameField" type="text" placeholder="Ex: Maria" maxlength="30" autocomplete="off">
 <div id="nameErr" class="err">Digite o primeiro nome da pessoa</div>
     <label class="label" style="margin-top:16px">📱 NÚMERO DO WHATSAPP</label>
 <div class="phonebox"><div class="prefix">+55</div><input id="phone" inputmode="numeric" placeholder="11 99999-8765" maxlength="15"></div>
 <div id="err" class="err">Digite um número real</div>
-<button type="button" class="btn" onclick="start()">🔍 VERIFICAR AGORA</button>
+<button type="button" class="btn" onclick="start()">🔍 GERAR SIMULAÇÃO</button>
 <div class="secure">🔒 100% anônimo · Dados protegidos · Criptografado</div>
 <div id="precheck" class="precheck">
   <div id="dddMapWrap" class="dddMapWrap"><div id="dddMap"></div><div class="dddMapPin"></div></div>
@@ -522,9 +536,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <section id="s2" class="screen">
 <div class="wrap">
-<div id="analysisWarning" class="warning" style="background:#dc2626">⚠️ ANÁLISE EM ANDAMENTO — NÃO FECHE ESTA PÁGINA</div>
+<div id="analysisWarning" class="warning" style="background:#dc2626">⚠️ SIMULAÇÃO EM ANDAMENTO — NÃO FECHE ESTA PÁGINA</div>
 
-<div id="suspiciousAlert" class="suspiciousAlert" style="margin-top:18px">⚠️ ATENÇÃO: CONVERSAS SUSPEITAS ENCONTRADAS!<br>AGUARDE COMPLETAR A ANÁLISE...</div>
+<div id="suspiciousAlert" class="suspiciousAlert" style="margin-top:18px">⚠️ ATENÇÃO: A SIMULAÇÃO ENCONTROU CONVERSAS SUSPEITAS!<br>AGUARDE COMPLETAR...</div>
 
 <div class="analysis" style="margin-top:26px">
 <div class="arow"><div id="circle" class="circle" style="--p:14%"></div><div><div class="num dyn">+55</div><div class="live">● Sendo analisado agora</div></div><div><div id="pct" class="pct">14%</div><small>Analisando</small></div></div>
@@ -593,6 +607,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <section id="s4" class="screen">
 <div class="sticky"><div class="timer">ANÁLISE DE <span class="dyn"></span> SERÁ DELETADA EM <b id="clock">09:42</b></div></div>
 <div class="wrap">
+<div class="simBanner">⚠️ Lembrete: este relatório é uma <strong>SIMULAÇÃO</strong> gerada automaticamente para entretenimento. Nenhum dado real de WhatsApp foi acessado.</div>
 <div class="danger"><h2 id="relDanger">⚠ SEU RELACIONAMENTO PODE ESTAR EM PERIGO!</h2><p>Foram sinalizados conteúdos suspeitos associados ao número <strong class="dyn"></strong>.</p><p id="partnerSuspicion" style="margin-top:8px"></p></div>
 <div class="reportcard">
   <div class="num dyn"></div>
@@ -603,7 +618,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   <div style="margin-top:20px;padding-top:18px;border-top:1px solid #e5e7eb;color:#5f6f82;line-height:1.55;font-size:17px">
     <strong style="color:#111827">Existe um contato salvo como A*****e Oliveira, de <span id="leakCity">sua região</span> que troca mensagens com muita frequência.</strong>
   </div>
-  <div style="margin-top:16px;color:#5f6f82;font-weight:800;font-size:15px">Conseguimos recuperar um print:</div>
+  <div style="margin-top:16px;color:#5f6f82;font-weight:800;font-size:15px">Exemplo de print gerado pela simulação:</div>
   <div class="printLeak">
     <div class="printBubble in blur"><span class="msgText">Oi, sumiu 👀</span><span class="msgTime">21:32</span></div>
     <div class="printBubble out blur"><span class="msgText">To sem tempo hoje, depois te ligo</span><span class="msgTime">21:33</span></div>
@@ -615,7 +630,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 </div>
 
 <div class="reportcard" style="text-align:center;color:#68788a;line-height:1.55;font-size:18px">
-  O sistema de dados detectou um padrão de comunicação frequente com um contato <strong style="color:#ef4444">da mesma região</strong>.
+  A simulação gerou um exemplo de padrão de comunicação frequente com um contato <strong style="color:#ef4444">da mesma região</strong>.
   <div style="margin-top:14px">
     <span class="live" style="background:#effff6;color:#078d77;border:1px solid #72e4ad">Precisão do relatório: 98%</span>
   </div>
