@@ -118,10 +118,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
 .metaBox{background:#f7f9fb;border-radius:15px;padding:12px;color:#64748b;font-size:13px}
 .metaBox b{display:block;color:#111827;margin-top:4px;font-size:15px}
-.giftImg{width:140px;height:140px}
-.giftBox{animation:giftPulse 1.8s infinite}
-@keyframes giftPulse{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.35)}50%{box-shadow:0 0 0 9px rgba(37,211,102,0)}}
-@media(max-width:520px){.card{padding:34px 20px}.arow{grid-template-columns:72px 1fr auto}.circle{width:70px;height:70px}.pct{font-size:34px}.giftImg{width:150px;height:150px}.giftBox{flex-direction:column !important;align-items:center !important;text-align:center !important}}
+@media(max-width:520px){.card{padding:34px 20px}.arow{grid-template-columns:72px 1fr auto}.circle{width:70px;height:70px}.pct{font-size:34px}}
 </style>
 
 <style>
@@ -644,21 +641,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <div class="lockedGallery">
   <div class="lockedGalleryHead">
-    <h3>Fotos e vídeos encontrados</h3>
-    <span>CONTEÚDO BLOQUEADO</span>
-  </div>
-  <div class="photoGrid">
-    <div class="lockedPhoto realMedia"><img src="media_1.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">🔒</div></div></div>
-    <div class="lockedPhoto realMedia"><img src="media_2.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">🔒</div></div></div>
-    <div class="lockedPhoto realMedia"><img src="media_3.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">▶</div></div></div>
-  </div>
-  <div class="galleryFoot">
-    20 fotos e 5 vídeos foram sinalizados durante a análise. O conteúdo permanece oculto até o desbloqueio do relatório.
-  </div>
-</div>
-
-<div class="lockedGallery">
-  <div class="lockedGalleryHead">
     <h3>Áudios encontrados</h3>
     <span>CONTEÚDO BLOQUEADO</span>
   </div>
@@ -681,7 +663,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
     </div>
     <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px">
       <span style="font-size:26px;flex-shrink:0">⚠️</span>
-      <div style="font-weight:950;font-size:19px;line-height:1.25;color:#111827">CONTEÚDO <span style="color:#dc2626">OBSCENO</span><br>IDENTIFICADO</div>
+      <div style="font-weight:950;font-size:19px;line-height:1.25;color:#111827">CONTEÚDO <span style="color:#dc2626">SUSPEITO</span><br>IDENTIFICADO</div>
       <span style="font-size:26px;flex-shrink:0">⚠️</span>
     </div>
     <div style="font-weight:950;font-size:16px;line-height:1.4;color:#111827">
@@ -718,27 +700,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   <p style="margin:0 auto 18px;max-width:520px;color:#4b5563;line-height:1.55">
     Desbloqueie as mensagens, mídias e informações ocultadas nesta análise e receba créditos adicionais para consultar outros números.
   </p>
-  <div style="text-align:left;max-width:420px;margin:0 auto 18px;background:#eaf8f4;border:2px solid #25d366;border-radius:16px;padding:18px 20px">
-    <div style="font-weight:950;color:#078d77;margin-bottom:12px;font-size:17px;letter-spacing:.02em">🔓 BÔNUS NO APLICATIVO:</div>
-    <div style="display:grid;gap:10px;color:#0f6b5c;font-weight:800;font-size:15px">
-      <div>✅ Histórico de atividades do aparelho</div>
-      <div>✅ Gravação de ligações</div>
-      <div>✅ Mensagens no Instagram</div>
-      <div>✅ Acesso aos Sites Visitados</div>
-    </div>
-  </div>
-  <div style="text-align:center;font-weight:900;color:#111827;margin:4px 0 10px;font-size:15px;line-height:1.35">
-    ÚLTIMO DIA - <span id="giftDate" style="color:#dc2626">carregando...</span> PARA GANHAR UM BRINDE GRÁTIS
-  </div>
-  <div class="giftBox" style="text-align:left;max-width:420px;margin:0 auto 18px;background:#eaf8f4;border:2px solid #25d366;border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:16px">
-    <img src="brindecamera.png" alt="Mini câmera de brinde" class="giftImg" style="object-fit:cover;object-position:center 65%;border-radius:12px;flex-shrink:0;box-shadow:0 4px 12px rgba(15,23,42,.15)">
-    <div>
-      <div style="font-weight:900;color:#078d77;margin-bottom:5px;font-size:17px">🎁 Ganhe de Brinde:</div>
-      <div style="color:#0f6b5c;font-weight:800;font-size:17px">Mini Câmera Portátil</div>
-      <div style="display:inline-block;background:#dc2626;color:#fff;font-weight:900;font-size:11.5px;letter-spacing:.02em;line-height:1.3;padding:6px 10px;border-radius:8px;margin-top:6px">🚚 RECEBA O BRINDE EM ATÉ 2 DIAS</div>
-      <div style="color:#0f6b5c;font-weight:600;font-size:13.5px;margin-top:6px">Câmera compacta para usar no carro, em casa ou em qualquer outro lugar</div>
-    </div>
-  </div>
   <div id="priceBlock" style="font-size:16px;color:#6b7280;margin-bottom:3px">
     De: <span style="text-decoration:line-through">R$ 199,90</span>
   </div>
