@@ -1,0 +1,1347 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<title>WhatsApp Check</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+<!-- Google tag (gtag.js) — mesmo ID dos demais produtos da Alívio -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7SRPE880LX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7SRPE880LX');
+</script>
+
+<!-- Meta Pixel Code — mesmo Pixel dos demais produtos da Alívio -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1734988077420170');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1734988077420170&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+<!-- TikTok Pixel Code Start -->
+<script>
+!function (w, d, t) {
+  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+
+
+  ttq.load('DB0NVHRC77U3DPGBC0L0');
+  ttq.page();
+}(window, document, 'ttq');
+</script>
+<!-- TikTok Pixel Code End -->
+
+<style>
+*{box-sizing:border-box} :root{--g:#25d366;--ink:#111827;--muted:#6d7b91;--bg:#f1f4f6;--dark:#1d1e34}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+.screen{display:none;min-height:100vh}.screen.on{display:block}.screen.center.on{display:flex;align-items:center;justify-content:center;padding:24px}
+.card{width:min(720px,100%);background:#fff;border-radius:32px;padding:46px 34px;box-shadow:0 18px 55px rgba(15,23,42,.09)}
+.hero{text-align:center}.hero h1{font-size:clamp(36px,7vw,58px);line-height:1.04;margin:0 0 20px}.green{color:var(--g)}
+.sub{font-size:clamp(18px,4vw,27px);line-height:1.45;color:var(--muted);margin:0 0 34px}
+.label{display:block;text-align:left;color:#64748b;font-weight:800;margin-bottom:10px}
+.nameField{width:100%;box-sizing:border-box;height:70px;border:1px solid #dce3e9;border-radius:22px;font-size:22px;padding:0 20px;outline:none}
+.phonebox{display:flex;gap:10px}.prefix,.phonebox input{height:70px;border:1px solid #dce3e9;border-radius:22px;font-size:22px}
+.prefix{width:110px;display:grid;place-items:center;font-weight:900;background:#f5f7f9}.phonebox input{width:100%;padding:0 20px;outline:none}
+.err{display:none;text-align:left;color:#dc2626;font-weight:800;margin:10px 0 0}
+.btn{width:100%;border:0;border-radius:22px;background:var(--g);color:white;padding:21px;font-size:22px;font-weight:900;margin-top:22px;cursor:pointer}
+.btnPulseYellow{background:#facc15;color:#111827;animation:btnPulse 1.4s infinite}
+@keyframes btnPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(250,204,21,.55)}50%{transform:scale(1.03);box-shadow:0 0 0 12px rgba(250,204,21,0)}}
+.secure{text-align:center;color:#708096;margin-top:22px}
+.precheck{display:none;margin-top:22px;text-align:left;background:#f6f8fa;border-radius:18px;padding:16px 18px}
+.dddMapWrap{position:relative;width:100%;height:200px;border-radius:14px;overflow:hidden;margin-bottom:14px;background:#0b141a}
+.dddMapWrap #dddMap{width:100%;height:100%;filter:invert(1) hue-rotate(180deg) brightness(.85) contrast(.95) saturate(.8)}
+.dddMapPin{position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#25d366;box-shadow:0 0 0 0 rgba(37,211,102,.7);animation:dddPinPulse 1.6s infinite;pointer-events:none;opacity:0;transition:opacity .4s}
+.dddMapPin.show{opacity:1}
+@keyframes dddPinPulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.6)}70%{box-shadow:0 0 0 16px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+.preline{display:flex;align-items:center;gap:10px;padding:8px 0;color:#64748b;font-weight:750}
+.preline .spin{width:16px;height:16px;border:2px solid #d5dde5;border-top-color:#25d366;border-radius:50%;animation:spin .8s linear infinite}
+.preline.done{color:#15985b}.preline.done .spin{animation:none;border:0;width:16px;height:16px}
+.preline.done .spin:after{content:"✓";font-weight:950;color:#25b968}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* análise */
+.wrap{max-width:720px;margin:auto;padding:26px 14px 50px}.warning{margin:0 -14px 28px;background:#078b80;color:#fff;text-align:center;padding:18px 14px;font-weight:900}
+.badge{width:max-content;margin:0 auto 18px;background:var(--g);color:#fff;padding:11px 20px;border-radius:11px;font-weight:900}
+.title2{text-align:center;font-size:clamp(24px,5vw,36px);line-height:1.25;margin:0 auto 25px}
+.analysis{background:#fff;border-radius:28px;padding:23px;box-shadow:0 15px 40px rgba(15,23,42,.07)}
+.arow{display:grid;grid-template-columns:78px 1fr auto;gap:12px;align-items:center}.circle{width:76px;height:76px;border-radius:50%;background:conic-gradient(var(--g) var(--p),#e7edf2 0);position:relative}.circle:after{content:"";position:absolute;inset:9px;border-radius:50%;background:#fff}
+.num{font-weight:900;font-size:clamp(18px,4.5vw,29px)}.live{display:inline-block;margin-top:7px;color:#078f69;background:#e0f8ec;border-radius:999px;padding:6px 10px;font-weight:800;font-size:13px}.pct{font-size:40px;color:var(--g);font-weight:950}.bar{height:10px;background:#e8edf1;border-radius:999px;margin:26px 0;overflow:hidden}.bar i{display:block;height:100%;width:14%;background:var(--g);transition:.3s}.wait{text-align:center;color:#54b6aa;font-weight:900;letter-spacing:.12em}.desc{text-align:center;color:#6b778b;margin-top:8px;line-height:1.45}
+.items{display:grid;gap:12px;margin-top:18px}.item{display:flex;justify-content:space-between;background:#fff;border-radius:18px;padding:17px;font-weight:800}.ok{color:#16b96c}
+
+
+/* relatório */
+.sticky{position:sticky;top:0;z-index:5}.timer{background:#17182d;color:#b4b7c5;text-align:center;padding:13px;font-weight:850;letter-spacing:.08em}.timer b{color:#f04747;font-size:31px;margin-left:8px}
+.danger{background:linear-gradient(135deg,#b51f24,#d92727);color:#fff;border-radius:26px;padding:27px 22px;text-align:center}.danger h2{margin:0 0 12px}.reportcard{background:#fff;border-radius:25px;margin-top:20px;padding:23px}.dark{background:var(--dark);color:#e9eaf0}.dark h2{text-align:center}.r{display:flex;gap:14px;padding:17px 0;border-bottom:1px solid #323349;font-size:18px;line-height:1.45}.r b{color:#ff6969}.ico{min-width:46px;height:46px;border-radius:13px;background:#392a40;display:grid;place-items:center}
+.pill{text-align:center;border:1px solid #c84a55;color:#ff747c;border-radius:999px;padding:8px;font-weight:900;font-size:13px;letter-spacing:.06em}
+.urgentTip{margin-top:18px;background:#fef3c7;border:2px solid #f59e0b;border-radius:16px;padding:16px 18px;color:#78350f;font-weight:800;line-height:1.5;font-size:15.5px;animation:tipPulse 1.8s infinite}
+.urgentTip strong{color:#b45309}
+@keyframes tipPulse{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.35)}50%{box-shadow:0 0 0 9px rgba(245,158,11,0)}}
+.testimonialCard{margin-top:16px;background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:16px;box-shadow:0 10px 30px rgba(15,23,42,.07);text-align:left}
+.testimonialHead{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:2px}
+.testimonialHead .name{font-weight:900;color:#111827;font-size:16px}
+.testimonialStars{color:#f59e0b;font-size:15px;letter-spacing:1px;width:100%}
+.testimonialBadge{display:inline-block;background:#dcfce7;color:#16a34a;font-weight:800;font-size:11px;padding:3px 9px;border-radius:999px}
+.testimonialVideoWrap{position:relative;margin-top:12px;border-radius:14px;overflow:hidden;background:#000}
+.testimonialVideoWrap video{display:block;width:100%;height:auto}
+.testimonialPlayBtn{position:absolute;inset:0;margin:auto;width:58px;height:58px;border-radius:50%;background:rgba(37,99,235,.88);color:#fff;font-size:22px;display:grid;place-items:center;cursor:pointer;border:0;box-shadow:0 8px 22px rgba(0,0,0,.3)}
+.testimonialPlayBtn.hidden{display:none}
+.suspiciousAlert{display:none;margin-top:18px;background:#dc2626;color:#fff;border-radius:16px;padding:16px 18px;text-align:center;font-weight:900;line-height:1.5;font-size:15.5px;animation:alertBlink 1s steps(1) infinite}
+.suspiciousAlert.show{display:block}
+@keyframes alertBlink{0%,49%{opacity:1}50%,100%{opacity:.35}}
+.engageQ{display:none;margin-top:18px;background:#e6f9ee;border:2px solid var(--g);border-radius:16px;padding:16px 18px;text-align:center}
+.engageQ.show{display:block}
+.engageQLabel{font-size:12px;font-weight:800;letter-spacing:.06em;color:#0f6b4d;text-transform:uppercase;margin-bottom:6px}
+.engageQText{font-size:16px;font-weight:800;color:#0b4a37;line-height:1.4}
+.engageQInput{width:100%;box-sizing:border-box;margin-top:14px;border:1.5px solid #86d9ab;border-radius:12px;padding:12px;font-size:14px;color:#0b4a37;font-weight:700;outline:none}
+.engageQSubmit{width:100%;box-sizing:border-box;margin-top:10px;border:0;border-radius:12px;padding:12px;font-size:14px;font-weight:900;color:#fff;background:var(--g);cursor:pointer}
+.chat{margin-top:18px;background:#20323a;border-radius:20px;padding:17px}.chathead{font-weight:900;margin-bottom:16px}.bubble{padding:13px 14px;border-radius:15px;margin-top:9px;max-width:90%;line-height:1.35}.in{background:#303c42}.out{background:#0c5d52;margin-left:auto}.disclosure{text-align:center;color:#b3b8c4;font-size:10.5px;line-height:1.4;margin:20px 0}
+
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.metaBox{background:#f7f9fb;border-radius:15px;padding:12px;color:#64748b;font-size:13px}
+.metaBox b{display:block;color:#111827;margin-top:4px;font-size:15px}
+@media(max-width:520px){.card{padding:34px 20px}.arow{grid-template-columns:72px 1fr auto}.circle{width:70px;height:70px}.pct{font-size:34px}}
+</style>
+
+<style>
+.circle{
+  position:relative;
+}
+.circle::after{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 63% 28%, rgba(255,218,185,.96) 0 12%, transparent 13%),
+    radial-gradient(circle at 35% 38%, rgba(69,84,103,.92) 0 18%, transparent 19%),
+    linear-gradient(145deg,#6b7280 0 34%,#d6b38d 35% 57%,#485b69 58% 100%);
+  background-size:cover;
+  filter:blur(5px) saturate(.9);
+  transform:scale(1.08);
+  box-shadow:inset 0 0 0 1px #eef2f7;
+  z-index:2;
+  animation:scanMedia 6s infinite ease-in-out;
+}
+.circle::before{
+  content:"🔒";
+  position:absolute;
+  z-index:3;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(17,24,39,.74);
+  color:#fff;
+  font-size:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
+  animation:lockPulse 1.5s infinite ease-in-out;
+}
+@keyframes scanMedia{
+  0%,18%{
+    background:
+      radial-gradient(circle at 63% 28%, rgba(255,218,185,.96) 0 12%, transparent 13%),
+      radial-gradient(circle at 35% 38%, rgba(69,84,103,.92) 0 18%, transparent 19%),
+      linear-gradient(145deg,#6b7280 0 34%,#d6b38d 35% 57%,#485b69 58% 100%);
+    transform:scale(1.08) translateX(0);
+  }
+  24%,42%{
+    background:
+      radial-gradient(circle at 36% 31%, rgba(248,207,169,.95) 0 12%, transparent 13%),
+      radial-gradient(circle at 68% 52%, rgba(91,70,78,.9) 0 17%, transparent 18%),
+      linear-gradient(135deg,#836d72 0 33%,#d2b298 34% 58%,#526474 59% 100%);
+    transform:scale(1.12) translateX(-2px);
+  }
+  48%,66%{
+    background:
+      radial-gradient(circle at 57% 35%, rgba(255,224,194,.96) 0 13%, transparent 14%),
+      radial-gradient(circle at 30% 65%, rgba(64,89,84,.9) 0 20%, transparent 21%),
+      linear-gradient(150deg,#4d6964 0 35%,#c59e84 36% 61%,#6e7686 62% 100%);
+    transform:scale(1.1) translateX(2px);
+  }
+  72%,90%{
+    background:
+      radial-gradient(circle at 42% 29%, rgba(250,211,176,.96) 0 12%, transparent 13%),
+      radial-gradient(circle at 71% 61%, rgba(74,82,95,.92) 0 18%, transparent 19%),
+      linear-gradient(140deg,#5f6672 0 34%,#d8b893 35% 59%,#765e68 60% 100%);
+    transform:scale(1.13) translateY(-1px);
+  }
+  100%{
+    background:
+      radial-gradient(circle at 63% 28%, rgba(255,218,185,.96) 0 12%, transparent 13%),
+      radial-gradient(circle at 35% 38%, rgba(69,84,103,.92) 0 18%, transparent 19%),
+      linear-gradient(145deg,#6b7280 0 34%,#d6b38d 35% 57%,#485b69 58% 100%);
+    transform:scale(1.08);
+  }
+}
+@keyframes lockPulse{
+  0%,100%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-50%,-50%) scale(1.08)}
+}
+.printLeak{
+  position:relative;
+  margin-top:10px;
+  border-radius:16px;
+  overflow:hidden;
+  background:#0b141a;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.printBubble{
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  max-width:78%;
+  padding:8px 12px 6px;
+  font-weight:700;
+  font-size:14.5px;
+  line-height:1.35;
+  box-shadow:0 4px 14px rgba(0,0,0,.3);
+}
+.printBubble .msgText{flex:1}
+.printBubble .msgTime{flex-shrink:0;font-size:10.5px;font-weight:600;opacity:.75;white-space:nowrap}
+.printBubble.in{
+  align-self:flex-start;
+  background:#202c33;
+  color:#e9edef;
+  border-radius:4px 14px 14px 14px;
+}
+.printBubble.in .msgTime{color:#8696a0}
+.printBubble.out{
+  align-self:flex-end;
+  background:#005c4b;
+  color:#fff;
+  border-radius:14px 4px 14px 14px;
+}
+.printBubble.out .msgTime{color:#d8fdd2}
+.printBubble.blur{
+  filter:blur(5.5px);
+  user-select:none;
+}
+.printBubble.audioMsg{align-items:center;gap:10px;padding:8px 14px 8px 8px}
+.audioPlay{
+  flex-shrink:0;width:30px;height:30px;border-radius:50%;
+  background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:12px;
+}
+.audioWave{flex:1;letter-spacing:1px;font-size:15px;line-height:1;opacity:.85;white-space:nowrap;overflow:hidden}
+.printBubble.imgMsg{flex-direction:column;align-items:flex-end;gap:4px;padding:4px}
+.imgThumb{width:170px;height:120px;border-radius:10px;background:linear-gradient(135deg,#4a5a62,#1f2f36)}
+.waScan{display:none;margin-top:18px;background:#0b141a;border-radius:20px;padding:14px;overflow:hidden}
+.waScan.show{display:block}
+.waScanHead{display:flex;align-items:center;gap:8px;color:#8696a0;font-weight:800;font-size:13px;margin-bottom:10px}
+.waScanDot{width:8px;height:8px;border-radius:50%;background:#25d366;flex-shrink:0;animation:waScanBlink 1.2s infinite}
+@keyframes waScanBlink{0%,100%{opacity:1}50%{opacity:.3}}
+.waScanPanels{height:260px;position:relative;overflow:hidden}
+.waScanList,.waScanFeed{position:absolute;inset:0;display:flex;flex-direction:column}
+.waScanList{animation:waScanListFade 10s ease-in-out infinite}
+.waScanFeed{animation:waScanFeedFade 10s ease-in-out infinite}
+@keyframes waScanListFade{0%,28%{opacity:1;transform:scale(1)}35%,88%{opacity:0;transform:scale(1.03)}95%,100%{opacity:1;transform:scale(1)}}
+@keyframes waScanFeedFade{0%,28%{opacity:0;transform:scale(.97)}38%,82%{opacity:1;transform:scale(1)}90%,100%{opacity:0;transform:scale(.97)}}
+.waListBar,.waChatBar{display:flex;align-items:center;gap:10px;padding-bottom:10px;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.waListTitle{font-weight:800;font-size:15px;color:#e9edef;flex:1}
+.waIcons{color:#8696a0;font-size:13px;letter-spacing:8px;margin-left:auto}
+.waBack{font-size:20px;color:#8696a0;line-height:1}
+.waChatAvatar{position:relative;width:32px;height:32px;border-radius:50%;flex-shrink:0;overflow:hidden}
+.waChatInfo{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.waChatName{font-weight:700;font-size:13.5px;color:#e9edef}
+.waChatStatus{color:#25d366;font-size:11px}
+.waScanBody{flex:1;position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,#000 92%,transparent);mask-image:linear-gradient(to bottom,#000 92%,transparent)}
+.waScanRow{display:flex;align-items:center;gap:10px;padding:9px 2px}
+.waScanRow+.waScanRow{border-top:1px solid rgba(255,255,255,.06)}
+.waScanAvatar{position:relative;width:38px;height:38px;border-radius:50%;flex-shrink:0;overflow:hidden}
+.waAvatarPhoto{
+  width:100%;height:100%;border-radius:50%;
+  --skin:#c68a5b;--hair:#2b1a12;--shirt:#1e3a5f;--bg1:#7a8894;--bg2:#3a4652;
+  background:
+    radial-gradient(circle at 50% 22%, var(--hair) 0%, var(--hair) 21%, transparent 22%),
+    radial-gradient(circle at 50% 33%, var(--skin) 0%, var(--skin) 17%, transparent 18%),
+    radial-gradient(ellipse 34% 26% at 50% 86%, var(--shirt) 0%, var(--shirt) 100%, transparent 100%),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+  filter:blur(3.5px);
+  transform:scale(1.25);
+}
+.waScanRow:nth-child(10n+2) .waAvatarPhoto{--skin:#8d5a3c;--hair:#140d08;--shirt:#7c2d12;--bg1:#8a8580;--bg2:#44403c}
+.waScanRow:nth-child(10n+4) .waAvatarPhoto{--skin:#e8b48c;--hair:#4a2a12;--shirt:#581c4a;--bg1:#8c8992;--bg2:#3f3f46}
+.waScanRow:nth-child(10n+5) .waAvatarPhoto{--skin:#a16b43;--hair:#1a1206;--shirt:#14532d;--bg1:#837c73;--bg2:#292524}
+.waScanRow:nth-child(10n+6) .waAvatarPhoto{--skin:#f0c9a0;--hair:#5c3a1e;--shirt:#1e40af;--bg1:#8a909c;--bg2:#374151}
+.waScanRow:nth-child(10n+8) .waAvatarPhoto{--skin:#6b4226;--hair:#0d0906;--shirt:#854d0e;--bg1:#817c7c;--bg2:#27272a}
+.waScanRow:nth-child(10n+9) .waAvatarPhoto{--skin:#d9a066;--hair:#3a2414;--shirt:#0f766e;--bg1:#8b8680;--bg2:#3d3833}
+.waScanRow:nth-child(10n) .waAvatarPhoto{--skin:#7a4a2c;--hair:#120b06;--shirt:#9d174d;--bg1:#857f78;--bg2:#2e2a26}
+.waGroupAvatar{background:linear-gradient(135deg,#64748b,#334155);display:flex;align-items:center;justify-content:center}
+.waGroupIconGlyph{font-size:16px;filter:grayscale(.25) brightness(.95);opacity:.9}
+.waChatAvatar .waAvatarPhoto{--skin:#c68a5b;--hair:#2b1a12;--shirt:#374151;--bg1:#7a8894;--bg2:#3a4652}
+.waScanOnline::after{content:"";position:absolute;right:-1px;bottom:-1px;width:10px;height:10px;border-radius:50%;background:#25d366;border:2px solid #0b141a}
+.waScanRowText{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.waScanRowName{color:#e9edef;font-weight:700;font-size:13.5px}
+.waScanRowMsg{color:#8696a0;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.waScanRowMeta{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.waScanRowTime{color:#8696a0;font-size:11px}
+.waScanRowBadge{background:#25d366;color:#0b141a;font-weight:800;font-size:10.5px;min-width:17px;height:17px;border-radius:999px;display:grid;place-items:center;padding:0 4px}
+.blur{filter:blur(4px);user-select:none}
+.printBubble.out .msgTime::after{content:" ✓✓";color:#53bdeb}
+.typingBubble{display:flex;gap:5px;padding:13px 16px;align-items:center}
+.typingDot{width:7px;height:7px;border-radius:50%;background:#8696a0;animation:typingBounce 1.2s infinite}
+.typingDot:nth-child(2){animation-delay:.2s}
+.typingDot:nth-child(3){animation-delay:.4s}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+.waScanTrack{display:flex;flex-direction:column;gap:8px;animation:waScanScroll 9s linear infinite}
+.waScanListTrack{display:flex;flex-direction:column;animation:waScanScroll 5s linear infinite}
+.waDateChip{align-self:center;background:rgba(255,255,255,.1);color:#cbd5e1;font-size:11px;font-weight:700;padding:5px 12px;border-radius:8px;letter-spacing:.03em;text-transform:uppercase;margin:2px 0}
+@keyframes waScanScroll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.lockedGallery{
+  margin-top:22px;
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 10px 30px rgba(15,23,42,.07);
+}
+.lockedGalleryHead{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-end;
+  margin-bottom:14px;
+}
+.lockedGalleryHead h3{
+  margin:0;
+  font-size:18px;
+  color:#111827;
+}
+.lockedGalleryHead span{
+  font-size:12px;
+  font-weight:800;
+  color:#dc2626;
+}
+.photoGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.lockedPhoto{
+  position:relative;
+  aspect-ratio:1/1;
+  overflow:hidden;
+  border-radius:12px;
+  background:#dfe6ee;
+}
+.lockedPhoto::before{
+  content:"";
+  position:absolute;
+  inset:-12px;
+  filter:blur(9px);
+  transform:scale(1.08);
+  background:
+    radial-gradient(circle at 68% 30%, rgba(255,216,176,.95) 0 12%, transparent 13%),
+    radial-gradient(circle at 30% 35%, rgba(66,92,120,.9) 0 18%, transparent 19%),
+    linear-gradient(135deg,#63758a 0 38%,#d2b58c 39% 61%,#798b7d 62% 100%);
+}
+.lockedPhoto:nth-child(2)::before{
+  background:
+    radial-gradient(circle at 35% 30%, rgba(247,206,168,.95) 0 12%, transparent 13%),
+    linear-gradient(145deg,#9b7d72 0 34%,#d3c1ae 35% 58%,#4b5966 59% 100%);
+}
+.lockedPhoto:nth-child(3)::before{
+  background:
+    radial-gradient(circle at 60% 38%, rgba(255,222,190,.95) 0 13%, transparent 14%),
+    linear-gradient(135deg,#43605a 0 36%,#c69f87 37% 61%,#6e7a89 62% 100%);
+}
+.lockedPhoto:nth-child(4)::before{
+  background:
+    radial-gradient(circle at 45% 28%, rgba(250,210,173,.95) 0 13%, transparent 14%),
+    linear-gradient(135deg,#5d6773 0 33%,#d9bd9a 34% 59%,#7d666c 60% 100%);
+}
+.lockedPhoto:nth-child(5)::before{
+  background:
+    radial-gradient(circle at 60% 30%, rgba(247,206,168,.95) 0 11%, transparent 12%),
+    linear-gradient(145deg,#65727b 0 36%,#c8ac91 37% 58%,#425c72 59% 100%);
+}
+.lockedPhoto:nth-child(6)::before{
+  background:
+    radial-gradient(circle at 37% 34%, rgba(255,220,184,.95) 0 12%, transparent 13%),
+    linear-gradient(135deg,#6d5c52 0 35%,#d8b491 36% 61%,#61737d 62% 100%);
+}
+.lockOverlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(15,23,42,.22);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+}
+.lockBadge{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:rgba(17,24,39,.82);
+  color:#fff;
+  font-size:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,.22);
+}
+.galleryFoot{
+  margin-top:12px;
+  font-size:13px;
+  color:#6b7280;
+  line-height:1.45;
+  text-align:center;
+}
+@media(max-width:520px){
+  .photoGrid{grid-template-columns:repeat(3,1fr)}
+  .lockedGallery{padding:14px}
+}
+</style>
+
+
+<style>
+.lockedPhoto.realMedia::before{display:none !important}
+.lockedPhoto.realMedia img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  filter:blur(10px) brightness(.78);
+  transform:scale(1.12);
+}
+.lockedPhoto.realMedia{
+  background:#111827;
+}
+@media(max-width:520px){
+  .photoGrid{grid-template-columns:repeat(3,1fr) !important;gap:6px !important}
+  .lockedPhoto{border-radius:10px !important}
+  .lockBadge{width:34px !important;height:34px !important;font-size:16px !important}
+}
+</style>
+
+
+<style>
+.simDisclosure{
+  display:block;
+  margin-top:8px;
+  font-size:8px;
+  line-height:1.25;
+  color:#c5cbd3;
+  text-align:center;
+}
+.simBanner{
+  background:#fff7e6;
+  border:2px solid #f59e0b;
+  color:#7c4a03;
+  border-radius:14px;
+  padding:14px 16px;
+  font-weight:800;
+  font-size:13.5px;
+  line-height:1.45;
+  text-align:center;
+  margin-bottom:18px;
+}
+.simBanner strong{color:#b45309}
+.fakeBuyBtn{cursor:default}
+@media(max-width:600px){
+  #s1{
+    min-height:100svh !important;
+    padding:8px 10px !important;
+    align-items:center !important;
+  }
+  #s1 .card{
+    width:min(100%,430px) !important;
+    padding:16px 14px !important;
+    border-radius:18px !important;
+    margin:0 auto !important;
+  }
+  #s1 h1{
+    font-size:25px !important;
+    line-height:1.05 !important;
+    margin:0 0 8px !important;
+  }
+  #s1 p{
+    margin-top:6px !important;
+    margin-bottom:8px !important;
+    line-height:1.25 !important;
+  }
+  #s1 .attention,
+  #s1 .alert,
+  #s1 .notice{
+    margin:8px 0 !important;
+    padding:9px 10px !important;
+    line-height:1.2 !important;
+  }
+  #s1 input{
+    min-height:48px !important;
+    font-size:18px !important;
+  }
+  #s1 .btn{
+    min-height:48px !important;
+    margin-top:8px !important;
+  }
+  #s1 .secure{
+    margin-top:7px !important;
+    font-size:11px !important;
+  }
+}
+@media(max-width:600px) and (max-height:720px){
+  #s1 .card{padding:12px !important}
+  #s1 h1{font-size:22px !important}
+  #s1 p{font-size:12px !important}
+}
+</style>
+
+</head>
+<body>
+
+<section id="s1" class="screen on center">
+<div class="card hero">
+<div class="simBanner">⚠️ <strong>ATENÇÃO:</strong> O WScan é uma <strong>SIMULAÇÃO</strong> de entretenimento. Não acessamos WhatsApp, contas ou dados reais de ninguém — tudo que você vê é gerado automaticamente só para diversão.</div>
+<h1>Simule uma verificação de WhatsApp</h1>
+<p class="sub">Insira um nome e número e veja como ficaria uma "análise de traição" gerada na hora — um relatório 100% fictício, para você se divertir.</p>
+    <label class="label">🙋 PRIMEIRO NOME DA PESSOA</label>
+<input id="targetName" class="nameField" type="text" placeholder="Ex: Maria" maxlength="30" autocomplete="off">
+<div id="nameErr" class="err">Digite o primeiro nome da pessoa</div>
+    <label class="label" style="margin-top:16px">📱 NÚMERO DO WHATSAPP</label>
+<div class="phonebox"><div class="prefix">+55</div><input id="phone" inputmode="numeric" placeholder="11 99999-8765" maxlength="15"></div>
+<div id="err" class="err">Digite um número real</div>
+<button type="button" class="btn" onclick="start()">🔍 GERAR SIMULAÇÃO</button>
+<div class="secure">🔒 100% anônimo · Dados protegidos · Criptografado</div>
+<div id="precheck" class="precheck">
+  <div id="dddMapWrap" class="dddMapWrap"><div id="dddMap"></div><div class="dddMapPin"></div></div>
+  <div id="pre1" class="preline"><span class="spin"></span><span>Buscando operadora de telefonia...</span></div>
+  <div id="pre2" class="preline"><span class="spin"></span><span>Conectando ao servidor de verificação...</span></div>
+  <div id="pre3" class="preline"><span class="spin"></span><span>Carregando número...</span></div>
+</div>
+</div>
+</section>
+
+<section id="s2" class="screen">
+<div class="wrap">
+<div id="analysisWarning" class="warning" style="background:#dc2626">⚠️ SIMULAÇÃO EM ANDAMENTO — NÃO FECHE ESTA PÁGINA</div>
+
+<div id="suspiciousAlert" class="suspiciousAlert" style="margin-top:18px">⚠️ ATENÇÃO: A SIMULAÇÃO ENCONTROU CONVERSAS SUSPEITAS!<br>AGUARDE COMPLETAR...</div>
+
+<div class="analysis" style="margin-top:26px">
+<div class="arow"><div id="circle" class="circle" style="--p:14%"></div><div><div class="num dyn">+55</div><div class="live">● Sendo analisado agora</div></div><div><div id="pct" class="pct">14%</div><small>Analisando</small></div></div>
+<div class="bar"><i id="bar"></i></div>
+<div id="analysisStatus" class="wait">VALIDANDO NÚMERO...</div><div class="desc">O WhatsApp de <strong class="dynName"></strong> está sendo analisado</div>
+</div>
+
+<div class="waScan">
+  <div class="waScanHead"><span class="waScanDot"></span> Analisando conversas do WhatsApp...</div>
+  <div class="waScanPanels">
+    <div class="waScanList">
+      <div class="waListBar"><span class="waListTitle">WhatsApp</span><span class="waIcons">⌕ ⋮</span></div>
+      <div class="waScanBody">
+      <div class="waScanListTrack">
+      <div class="waScanRow"><div class="waScanAvatar waScanOnline"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 1</span><span class="waScanRowMsg blur">última mensagem recebida aqui</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="0">08:13</span><span class="waScanRowBadge">3</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 2</span><span class="waScanRowMsg blur">ok, combinado então</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="0">12:05</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar waGroupAvatar"><span class="waGroupIconGlyph">👥</span></div><div class="waScanRowText"><span class="waScanRowName blur">Família ❤️</span><span class="waScanRowMsg blur">Mãe: chega cedo hoje</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="0">10:42</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 3</span><span class="waScanRowMsg blur">áudio de 0:41</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="1">14:28</span><span class="waScanRowBadge">1</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 4</span><span class="waScanRowMsg blur">kkkk verdade, pode ser</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="0">16:52</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 5</span><span class="waScanRowMsg blur">te ligo mais tarde ❤️</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="2">19:04</span><span class="waScanRowBadge">5</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 6</span><span class="waScanRowMsg blur">vi sua call, depois falamos</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="3">21:16</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar waGroupAvatar"><span class="waGroupIconGlyph">👥</span></div><div class="waScanRowText"><span class="waScanRowName blur">Trampo</span><span class="waScanRowMsg blur">Carlos: vamos fechar isso hoje</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="0">11:30</span><span class="waScanRowBadge">4</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 7</span><span class="waScanRowMsg blur">foto enviada</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="0">22:03</span><span class="waScanRowBadge">2</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 8</span><span class="waScanRowMsg blur">separado, pode falar</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="1">23:11</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar waScanOnline"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 1</span><span class="waScanRowMsg blur">última mensagem recebida aqui</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="0">08:13</span><span class="waScanRowBadge">3</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 2</span><span class="waScanRowMsg blur">ok, combinado então</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="0">12:05</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar waGroupAvatar"><span class="waGroupIconGlyph">👥</span></div><div class="waScanRowText"><span class="waScanRowName blur">Família ❤️</span><span class="waScanRowMsg blur">Mãe: chega cedo hoje</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="0">10:42</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 3</span><span class="waScanRowMsg blur">áudio de 0:41</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="1">14:28</span><span class="waScanRowBadge">1</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 4</span><span class="waScanRowMsg blur">kkkk verdade, pode ser</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="0">16:52</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 5</span><span class="waScanRowMsg blur">te ligo mais tarde ❤️</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="2">19:04</span><span class="waScanRowBadge">5</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 6</span><span class="waScanRowMsg blur">vi sua call, depois falamos</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="3">21:16</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar waGroupAvatar"><span class="waGroupIconGlyph">👥</span></div><div class="waScanRowText"><span class="waScanRowName blur">Trampo</span><span class="waScanRowMsg blur">Carlos: vamos fechar isso hoje</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="0">11:30</span><span class="waScanRowBadge">4</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 7</span><span class="waScanRowMsg blur">foto enviada</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="0">22:03</span><span class="waScanRowBadge">2</span></div></div>
+      <div class="waScanRow"><div class="waScanAvatar"><div class="waAvatarPhoto"></div></div><div class="waScanRowText"><span class="waScanRowName blur">Contato 8</span><span class="waScanRowMsg blur">separado, pode falar</span></div><div class="waScanRowMeta"><span class="waScanRowTime" data-ago="1">23:11</span></div></div>
+      </div>
+      </div>
+    </div>
+    <div class="waScanFeed">
+    <div class="waChatBar"><span class="waBack">‹</span><div class="waChatAvatar"><div class="waAvatarPhoto"></div></div><div class="waChatInfo"><span class="waChatName blur">Contato</span><span class="waChatStatus">online</span></div><span class="waIcons">⌕ ⋮</span></div>
+    <div class="waScanBody">
+    <div class="waScanTrack"></div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="engageQ">
+  <div class="engageQLabel">Enquanto está carregando...</div>
+  <div class="engageQText"><span id="partnerArticle">O</span> <strong class="dynNameCased"></strong> é <span id="partnerWord">seu parceiro</span> há quanto tempo?</div>
+  <input type="text" id="engageQCustom" class="engageQInput" placeholder="Digite aqui... exemplo: 3 meses ou 5 anos" maxlength="30" oninput="typeDuration(this.value)">
+  <button type="button" id="engageQSubmit" class="engageQSubmit" onclick="confirmDuration()">Confirmar resposta</button>
+</div>
+
+<div class="meta">
+      <div class="metaBox">REGIÃO DO DDD<b id="dddRegion">Identificando...</b></div>
+      <div class="metaBox">ID DO RELATÓRIO<b id="reportId">WA-00000XX</b></div>
+    </div>
+    <div class="items">
+<div class="item"><span>💬 Histórico de mensagens</span><span id="a1" class="ok">Buscando...</span></div>
+<div class="item"><span>🖼️ Fotos e mídias</span><span id="a2" class="ok">Aguardando...</span></div>
+<div class="item"><span>📍 Atividade recente</span><span id="a3" class="ok">Aguardando...</span></div>
+</div>
+</div>
+</section>
+
+<section id="s4" class="screen">
+<div class="sticky"><div class="timer">ANÁLISE DE <span class="dyn"></span> SERÁ DELETADA EM <b id="clock">09:42</b></div></div>
+<div class="wrap">
+<div class="simBanner">⚠️ Lembrete: este relatório é uma <strong>SIMULAÇÃO</strong> gerada automaticamente para entretenimento. Nenhum dado real de WhatsApp foi acessado.</div>
+<div class="danger"><h2 id="relDanger">⚠ SEU RELACIONAMENTO PODE ESTAR EM PERIGO!</h2><p>Foram sinalizados conteúdos suspeitos associados ao número <strong class="dyn"></strong>.</p><p id="partnerSuspicion" style="margin-top:8px"></p></div>
+<div class="reportcard">
+  <div class="num dyn"></div>
+  <div style="font-weight:800;color:#111827;margin-top:5px" class="dynName"></div>
+  <div style="color:#718096;margin-top:2px">Número analisado</div>
+  <div class="live">● WhatsApp ativo</div>
+
+  <div style="margin-top:20px;padding-top:18px;border-top:1px solid #e5e7eb;color:#5f6f82;line-height:1.55;font-size:17px">
+    <strong style="color:#111827">Existe um contato salvo como A*****e Oliveira, de <span id="leakCity">sua região</span> que troca mensagens com muita frequência.</strong>
+  </div>
+  <div style="margin-top:16px;color:#5f6f82;font-weight:800;font-size:15px">Exemplo de print gerado pela simulação:</div>
+  <div class="printLeak">
+    <div class="printBubble in blur"><span class="msgText">Oi, sumiu 👀</span><span class="msgTime">21:32</span></div>
+    <div class="printBubble out blur"><span class="msgText">To sem tempo hoje, depois te ligo</span><span class="msgTime">21:33</span></div>
+    <div class="printBubble in blur audioMsg"><span class="audioPlay">▶</span><span class="audioWave">▂▅▇▃▆▂▇▄▅▂▆▃▇▄</span><span class="msgTime">0:41</span></div>
+    <div class="printBubble out blur"><span class="msgText">Jamais esqueceria</span><span class="msgTime">21:38</span></div>
+    <div class="printBubble in blur"><span class="msgText">Vi suas fotos novas 😍</span><span class="msgTime">21:44</span></div>
+    <div class="printBubble in"><span class="msgText">Estou com saudade ❤️</span><span class="msgTime">21:47</span></div>
+  </div>
+</div>
+
+<div class="reportcard" style="text-align:center;color:#68788a;line-height:1.55;font-size:18px">
+  A simulação gerou um exemplo de padrão de comunicação frequente com um contato <strong style="color:#ef4444">da mesma região</strong>.
+  <div style="margin-top:14px">
+    <span class="live" style="background:#effff6;color:#078d77;border:1px solid #72e4ad">Precisão do relatório: 98%</span>
+  </div>
+  <div style="margin-top:14px;color:#7b8797;font-size:15px">Relatório gerado em: <span id="reportTime">--/--/---- --:--:--</span></div>
+</div>
+<div class="reportcard dark">
+<h2>Resultados da análise</h2>
+<div class="r"><div class="ico">💬</div><div>Encontramos <b>5 mensagens comprometedoras</b> na análise</div></div>
+<div class="r"><div class="ico">🖼</div><div><b>20 fotos</b> e <b>5 vídeos</b> foram sinalizados</div></div>
+<div class="r"><div class="ico">👥</div><div>Um contato não registrado aparece repetidamente</div></div>
+<div class="r"><div class="ico">👁</div><div><b>9 imagens</b> de visualização única foram sinalizadas</div></div>
+<div class="r"><div class="ico">☎</div><div><b>2 conversas arquivadas</b> foram marcadas como suspeitas</div></div>
+</div>
+<div class="reportcard dark">
+<div class="pill">● PADRÕES DE CONVERSA IDENTIFICADOS</div>
+<h2 style="text-align:left">Algumas mensagens íntimas em uma conversa do dia <strong id="yesterdayDate">carregando...</strong> <strong style="color:#ff6969">são suspeitas:</strong></h2>
+<div style="margin-top:18px">
+  <div class="r"><div class="ico">💬</div><div id="phrase1">“carregando...”</div></div>
+  <div class="r"><div class="ico">💬</div><div id="phrase2">“carregando...”</div></div>
+</div>
+<div class="urgentTip">⚠️ <strong>IMPORTANTE:</strong> Entre <strong id="tipWhen" style="color:#dc2626">carregando...</strong> costuma ter mais conversas suspeitas com um contato que <strong class="dynName"></strong> está sempre apagando. HOJE, <strong id="tipDay" style="color:#dc2626">carregando...</strong> é uma boa oportunidade para pegar no flagra.</div>
+<a href="#priceBlock" class="btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="event.preventDefault();document.getElementById('priceBlock').scrollIntoView({behavior:'smooth',block:'center'})">🔓 VER RESULTADO COMPLETO</a>
+
+<div class="lockedGallery">
+  <div class="lockedGalleryHead">
+    <h3>Áudios encontrados</h3>
+    <span>CONTEÚDO BLOQUEADO</span>
+  </div>
+  <img src="../imagem_audios_whatsapp.png" alt="Áudios encontrados na conversa" style="width:100%;height:auto;border-radius:14px;display:block">
+  <div class="galleryFoot" style="color:#374151;font-weight:700;font-size:14px">
+    Desbloquear estes áudios gravados em uma conversa suspeita do dia <strong id="audioLeakDate" style="color:#dc2626">carregando...</strong>.
+  </div>
+</div>
+
+<div style="margin-top:22px;background:#fff;border:1px solid #e5e7eb;border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(15,23,42,.08);text-align:center">
+  <div style="background:#128c7e;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;color:#fff">
+    <span style="font-size:18px">←</span>
+    <div style="display:flex;gap:16px;font-size:16px">
+      <span>📹</span><span>📞</span><span>⋮</span>
+    </div>
+  </div>
+  <div style="padding:18px 16px 20px">
+    <div style="filter:blur(3px);opacity:.55;margin-bottom:16px;text-align:left">
+      <div class="printBubble in" style="margin:0 auto">Oii, to com sdds, tá podendo falar???</div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px">
+      <span style="font-size:26px;flex-shrink:0">⚠️</span>
+      <div style="font-weight:950;font-size:19px;line-height:1.25;color:#111827">CONTEÚDO <span style="color:#dc2626">SUSPEITO</span><br>IDENTIFICADO</div>
+      <span style="font-size:26px;flex-shrink:0">⚠️</span>
+    </div>
+    <div style="font-weight:950;font-size:16px;line-height:1.4;color:#111827">
+      CONVERSA CLASSIFICADA COMO<br><span style="color:#dc2626">"CRITICAMENTE SUSPEITA"</span>
+    </div>
+    <div style="font-weight:950;font-size:17px;line-height:1.35;color:#111827;margin-top:18px">
+      FINALIZE SEU <span style="color:#2563eb">CADASTRO</span> ABAIXO PARA TER ACESSO
+    </div>
+    <div style="font-size:22px;color:#111827;margin-top:4px;line-height:1.1">⌄<br>⌄<br>⌄</div>
+  </div>
+</div>
+
+<div style="margin-top:22px;background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:22px 18px;text-align:center;box-shadow:0 10px 30px rgba(15,23,42,.08)">
+  <div style="font-size:13px;font-weight:900;letter-spacing:.08em;color:#16a34a;margin-bottom:7px">WSCAN</div>
+  <div style="font-size:12px;color:#64748b;font-weight:700;margin-bottom:14px">ANÁLISE INTELIGENTE DE ATIVIDADE</div>
+  <div style="position:relative;margin-bottom:6px">
+    <img src="../wscanapp.png" alt="App WScan — telas de análise, relatório e mídias identificadas" style="width:100%;height:auto;border-radius:14px;display:block;cursor:pointer" onclick="document.getElementById('priceBlock').scrollIntoView({behavior:'smooth',block:'center'})">
+    <div style="position:absolute;left:17.5%;top:18.2%;width:65.5%;height:9%;background:#fdfdfe;border-radius:16px;border:1px solid #eef0f2;box-shadow:0 1px 4px rgba(15,23,42,.04);display:flex;align-items:center;gap:4%;padding:0 4%;box-sizing:border-box">
+      <img src="../whatsapp_icon.png" alt="" style="width:22%;height:auto;flex-shrink:0;display:block">
+      <div style="display:flex;flex-direction:column;justify-content:center;overflow:hidden;min-width:0">
+        <div class="dynName" style="font-weight:900;color:#111827;font-size:clamp(13px,4vw,20px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:3px">
+          <span style="width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;flex-shrink:0"></span>
+          <span style="color:#374151;font-weight:600;font-size:clamp(10px,3vw,14px)">WhatsApp ativo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#6b7280;font-weight:700;margin-bottom:16px">Número analisado: <span class="dyn" style="color:#111827"></span></div>
+  <h2 style="margin:0 0 12px;font-size:22px;line-height:1.2;color:#111827">
+    Veja o relatório completo no WScan para <span class="dynName"></span>
+  </h2>
+  <p id="cheatedQuestion" style="margin:0 0 14px;font-size:17px;font-weight:900;color:#dc2626;line-height:1.3"></p>
+  <p style="margin:0 auto 18px;max-width:520px;color:#4b5563;line-height:1.55">
+    Desbloqueie as mensagens, mídias e informações ocultadas nesta análise e receba créditos adicionais para consultar outros números.
+  </p>
+  <div id="priceBlock" style="font-size:16px;color:#6b7280;margin-bottom:3px">
+    De: <span style="text-decoration:line-through">R$ 199,90</span>
+  </div>
+  <div style="font-size:31px;font-weight:950;color:#16a34a;margin-bottom:2px">R$ 67,90</div>
+  <div style="font-size:15px;color:#4b5563;font-weight:700;margin-bottom:15px">ou 12x de R$ 6,82 no cartão</div>
+  <a href="#" class="btn checkoutLink btnPulseYellow" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="event.preventDefault();trackCheckout()">DESBLOQUEAR AGORA</a>
+  <div style="text-align:center;color:#078d77;font-weight:800;font-size:13px;margin-top:14px">🛡️ Garantia de 7 dias — reembolso garantido</div>
+  <div style="text-align:center;color:#078d77;font-weight:800;font-size:13px;margin-top:6px">🔒 Compra anônima: Não aparece o nome na fatura do cartão nem no extrato do Pix.</div>
+</div>
+
+<div style="text-align:center;font-weight:900;color:#e9eaf0;margin:28px 0 4px;font-size:16px;line-height:1.35">
+  ESTAS PESSOAS RESOLVERAM DAR SEUS DEPOIMENTOS PESSOAIS POR CONTA PRÓPRIA
+</div>
+<div style="text-align:center;color:#9a9db0;font-weight:600;font-size:12.5px;margin-bottom:6px">
+  Depoimentos voluntários e anônimos. Ninguém é obrigado a se identificar.
+</div>
+
+<div class="testimonialCard">
+  <div class="testimonialHead">
+    <span class="name">Carlos E.</span>
+    <span class="testimonialBadge">VERIFICADO</span>
+    <span class="testimonialStars">★★★★★</span>
+  </div>
+  <div class="testimonialVideoWrap">
+    <video id="tv1" playsinline preload="metadata" poster="../Carlos_Eduardo_poster.jpg">
+      <source src="../Carlos_Eduardo.mp4" type="video/mp4">
+    </video>
+    <button type="button" class="testimonialPlayBtn" onclick="playTestimonial('tv1')">▶</button>
+  </div>
+</div>
+
+<div class="testimonialCard">
+  <div class="testimonialHead">
+    <span class="name">Fernanda M.</span>
+    <span class="testimonialBadge">VERIFICADO</span>
+    <span class="testimonialStars">★★★★★</span>
+  </div>
+  <div class="testimonialVideoWrap">
+    <video id="tv2" playsinline preload="metadata" poster="../Fernanda_Mesquita_poster.jpg">
+      <source src="../Fernanda_Mesquita.mp4" type="video/mp4">
+    </video>
+    <button type="button" class="testimonialPlayBtn" onclick="playTestimonial('tv2')">▶</button>
+  </div>
+</div>
+
+<div class="testimonialCard">
+  <div class="testimonialHead">
+    <span class="name">João A.</span>
+    <span class="testimonialBadge">VERIFICADO</span>
+    <span class="testimonialStars">★★★★★</span>
+  </div>
+  <div class="testimonialVideoWrap">
+    <video id="tv3" playsinline preload="metadata" poster="../Joao_Augusto_poster.jpg">
+      <source src="../Joao_Augusto.mp4" type="video/mp4">
+    </video>
+    <button type="button" class="testimonialPlayBtn" onclick="playTestimonial('tv3')">▶</button>
+  </div>
+</div>
+
+<div style="margin-top:22px;background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:22px 18px;text-align:center;box-shadow:0 10px 30px rgba(15,23,42,.08)">
+  <div style="font-size:13px;font-weight:900;letter-spacing:.08em;color:#16a34a;margin-bottom:10px">FAÇA O TESTE POR 7 DIAS</div>
+  <p style="margin:0 auto 18px;max-width:480px;color:#4b5563;line-height:1.55">
+    Desbloqueie agora a Análise do WhatsApp de <strong class="dynName"></strong> e use como quiser até o dia <strong id="trialEndDate">carregando...</strong>. Caso não goste ou não queira mais usar, receba o valor de R$ 67,90 de volta na sua conta.
+  </p>
+  <a href="#" class="btn checkoutLink" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box;max-width:420px;margin:0 auto" onclick="event.preventDefault();trackCheckout()">COMEÇAR O TESTE</a>
+</div>
+
+</div>
+<div class="disclosure"><span class="simDisclosure">WScan é uma experiência demonstrativa desenvolvida pelo Advanced Digital Behavior Research Institute (ADBRI), a partir de estudos conduzidos pelos engenheiros Thomas Aquiles e Frederick Wagner. Esta é uma simulação e não realiza acesso a contas, mensagens ou dados de terceiros. WScan Technologies © 2026. Todos os direitos reservados.</span></div>
+</div>
+</section>
+
+<script>
+const $=id=>document.getElementById(id);
+let analysisTimer, clockTimer, waFeedTimer, shown='', targetName='', clockStarted=false, lastRegion='', visitorCity='', relationshipDuration='';
+// Repassa os parâmetros de rastreamento do anúncio (utm_source, utm_campaign,
+// src, click_id, fbclid etc.) da URL da página para os links de checkout da
+// PerfectPay, para que a origem do clique apareça no painel deles.
+(function forwardTrackingParams(){
+  const qs=window.location.search;
+  if(!qs) return;
+  document.querySelectorAll('.checkoutLink').forEach(a=>{
+    const sep=a.href.indexOf('?')>-1?'&':'?';
+    a.href += sep + qs.slice(1);
+  });
+})();
+function trackCheckout(link){
+  try{ if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_ids:['wscan-relatorio'],content_type:'product',value:67.90,currency:'BRL'}); }catch(e){}
+  try{ if(typeof gtag==='function') gtag('event','begin_checkout',{value:67.90,currency:'BRL'}); }catch(e){}
+  try{ if(typeof ttq!=='undefined') ttq.track('InitiateCheckout',{content_id:'wscan-relatorio',content_type:'product',value:67.90,currency:'BRL'}); }catch(e){}
+  if(link){
+    setTimeout(()=>{ window.location.href=link.href; },250);
+    return false;
+  }
+}
+function playTestimonial(id){
+  const v=$(id);
+  if(!v) return;
+  document.querySelectorAll('.testimonialVideoWrap video').forEach(x=>{ if(x!==v) x.pause(); });
+  v.controls=true;
+  v.play().catch(()=>{});
+  const btn=v.nextElementSibling;
+  if(btn) btn.classList.add('hidden');
+}
+// Detecta a cidade do visitante pelo IP assim que a página carrega, para já
+// estar pronta quando a tela do relatório (s4) for exibida mais tarde.
+(function fetchVisitorCity(){
+  fetch('https://ipapi.co/json/').then(r=>r.json()).then(d=>{
+    if(d && d.city) visitorCity = d.city;
+  }).catch(()=>{});
+})();
+function fillLeakCity(){
+  const el=$('leakCity');
+  if(el) el.textContent = visitorCity || lastRegion || 'sua região';
+}
+// Gera o feed de mensagens "escaneadas" do WhatsApp (s2) com conteúdo
+// aleatório a cada ciclo, pra nunca repetir sempre o mesmo texto quando
+// o chat simulado "abre".
+const WA_EMOJI=['😈','💋','❤️','😍','🔥','😏','🙈','😘','🥵','😉'];
+const WA_TEXTS_IN=['Oi, tudo bem?','Hoje à noite?','Kkkkk verdade','Saudades suas','Vem aqui rapidinho',
+  'Hoje deu tudo certo','Ninguém vai saber','Olha essa foto','Só pensando em você',
+  'Posso te ligar?','Ainda tá pensando em mim?','Que hora te pego?','Manda um áudio pra mim',
+  'Com saudade de você','Isso fica entre nós','Me liga quando puder','Vamos nos ver essa semana',
+  'Tava com saudade','Hoje não consigo parar de pensar em você','Vi sua call perdida'];
+const WA_TEXTS_OUT=['Vamos nos falar depois','Pode ser','Apaga isso depois','Te ligo mais tarde',
+  'Não fala pra ninguém','To chegando aí','Também morrendo de saudade','Combinado, só nós dois',
+  'Isso fica entre a gente','Beijo grande','Mal posso esperar','Ninguém vai desconfiar',
+  'To contando as horas','Depois eu te explico','Hoje não dá, amanhã sim','Vou dar um jeito',
+  'Finge que não foi nada','Ainda bem que ninguém viu','Combinamos então'];
+function waDayLabel(daysAgo){
+  if(daysAgo===0) return null;
+  if(daysAgo===1) return 'ONTEM';
+  const d=new Date(); d.setDate(d.getDate()-daysAgo);
+  return WEEKDAYS[d.getDay()].toUpperCase();
+}
+// Preenche os horários da lista de conversas: hoje mostra a hora, dias
+// anteriores mostram "Ontem" ou o nome do dia da semana (como o
+// WhatsApp real mostra na lista de conversas).
+function fillWaListTimes(){
+  document.querySelectorAll('.waScanRowTime[data-ago]').forEach(el=>{
+    const ago=parseInt(el.dataset.ago,10);
+    if(ago===0){
+      el.textContent=String(Math.floor(Math.random()*24)).padStart(2,'0')+':'+String(Math.floor(Math.random()*60)).padStart(2,'0');
+    }else if(ago===1){
+      el.textContent='Ontem';
+    }else{
+      const d=new Date(); d.setDate(d.getDate()-ago);
+      el.textContent=WEEKDAYS[d.getDay()];
+    }
+  });
+}
+function waRandomBubble(dir,time){
+  const kind=Math.random();
+  if(kind<0.15) return '<div class="printBubble '+dir+' blur imgMsg"><div class="imgThumb"></div><span class="msgTime">'+time+'</span></div>';
+  if(kind<0.28){
+    const dur=String(Math.floor(Math.random()*50)+8).padStart(2,'0');
+    const frames='▂▅▇▃▆▂▇▄▅▂▆▃▇▄▅▇▂▆';
+    let wave=''; for(let i=0;i<14;i++) wave+=frames[Math.floor(Math.random()*frames.length)];
+    return '<div class="printBubble '+dir+' blur audioMsg"><span class="audioPlay">▶</span><span class="audioWave">'+wave+'</span><span class="msgTime">0:'+dur+'</span></div>';
+  }
+  const pool=dir==='in' ? WA_TEXTS_IN : WA_TEXTS_OUT;
+  let text=pool[Math.floor(Math.random()*pool.length)];
+  if(Math.random()<0.45) text+=' '+WA_EMOJI[Math.floor(Math.random()*WA_EMOJI.length)];
+  return '<div class="printBubble '+dir+' blur"><span class="msgText">'+text+'</span><span class="msgTime">'+time+'</span></div>';
+}
+// Monta ~200 mensagens agrupadas por dia (hoje com hora, Ontem, e os
+// dias anteriores pelo nome do dia da semana), do mais antigo pro mais
+// recente — igual o WhatsApp real mostra o histórico de uma conversa.
+function renderWaFeed(){
+  const track=document.querySelector('.waScanTrack');
+  if(!track) return;
+  const dayPlan=[4,3,2,1,0];
+  const perDay=[16,18,20,22,23];
+  const items=[];
+  let dir='in';
+  dayPlan.forEach((daysAgo,idx)=>{
+    const label=waDayLabel(daysAgo);
+    if(label) items.push('<div class="waDateChip">'+label+'</div>');
+    let hour=Math.floor(Math.random()*6)+6;
+    for(let i=0;i<perDay[idx];i++){
+      if(Math.random()<0.4 && hour<23) hour++;
+      const time=String(hour).padStart(2,'0')+':'+String(Math.floor(Math.random()*60)).padStart(2,'0');
+      items.push(waRandomBubble(dir,time));
+      dir = dir==='in' ? 'out' : 'in';
+    }
+  });
+  items.splice(items.length-2,0,'<div class="printBubble in typingBubble"><span class="typingDot"></span><span class="typingDot"></span><span class="typingDot"></span></div>');
+  const html=items.join('');
+  track.innerHTML=html+html;
+}
+// Sugere uma faixa de horário relativa a agora (de 2h à frente a 3h à
+// frente) como o "momento com mais conversas suspeitas" — sempre
+// calculado a partir da hora real de agora.
+const WEEKDAYS=['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+function dateOffset(days){
+  const d=new Date();
+  d.setDate(d.getDate()+days);
+  const dd=String(d.getDate()).padStart(2,'0');
+  const mm=String(d.getMonth()+1).padStart(2,'0');
+  return dd+'/'+mm+'/'+d.getFullYear();
+}
+function fillYesterdayDate(){
+  const el=$('yesterdayDate');
+  if(el) el.textContent=dateOffset(-1);
+}
+function fillAudioLeakDate(){
+  const el=$('audioLeakDate');
+  if(el) el.textContent=dateOffset(-4);
+}
+function fillTrialEndDate(){
+  const el=$('trialEndDate');
+  if(el) el.textContent=dateOffset(7);
+}
+function fillGiftDate(){
+  const el=$('giftDate');
+  if(el) el.textContent=dateOffset(0);
+}
+function fillUrgentTip(){
+  const el=$('tipWhen'), dayEl=$('tipDay');
+  const now=new Date();
+  if(el){
+    const hour=now.getHours();
+    if(hour<9){
+      el.textContent='11h e 14h';
+    }else if(hour>=20){
+      el.textContent='21h e meia-noite';
+    }else{
+      const start=new Date(now.getTime()+2*3600000);
+      const end=new Date(now.getTime()+3*3600000);
+      const fmt=d=>String(d.getHours()).padStart(2,'0')+'h00';
+      el.textContent = fmt(start)+' e '+fmt(end);
+    }
+  }
+  if(dayEl) dayEl.textContent = WEEKDAYS[now.getDay()].toUpperCase();
+}
+function digits(v){return v.replace(/\D/g,'')}
+function isObviousFakeNumber(d){
+  if(!d) return true;
+
+  // All digits identical: 00000000000, 99999999999 etc.
+  if(/^(\d)\1+$/.test(d)) return true;
+
+  // Obvious ascending/descending sequences embedded in the number.
+  const seqs = [
+    '0123456789','1234567890','123456789',
+    '9876543210','0987654321','987654321'
+  ];
+  if(seqs.some(function(s){ return d.includes(s); })) return true;
+
+  // Repeated simple blocks, e.g. 1212121212, 34343434343, 898989898.
+  if(/^(\d{1,3})\1{2,}$/.test(d)) return true;
+
+  // Reject long alternating/repeating patterns anywhere in the number,
+  // while allowing normal endings such as 96723-9898.
+  for(let size=2; size<=3; size++){
+    for(let start=0; start<=d.length-(size*3); start++){
+      const block=d.slice(start,start+size);
+      let repeated=block.repeat(3);
+      if(d.slice(start,start+(size*3))===repeated) return true;
+    }
+  }
+
+  // Too many of the same digit (e.g. 99999990123).
+  const counts = {};
+  for(const ch of d) counts[ch] = (counts[ch] || 0) + 1;
+  if(Math.max.apply(null,Object.values(counts)) >= Math.max(7, d.length-3)) return true;
+
+  return false;
+}
+
+function fmt(v){let n=digits(v).slice(0,11);if(n.length<=2)return n;if(n.length<=7)return n.slice(0,2)+' '+n.slice(2);return n.slice(0,2)+' '+n.slice(2,7)+'-'+n.slice(7)}
+$('phone').addEventListener('input',e=>e.target.value=fmt(e.target.value));
+function onlyLetters(v){return v.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ\s'-]/g,'')}
+$('targetName').addEventListener('input',e=>{
+  const before=e.target.value, after=onlyLetters(before);
+  if(before!==after){
+    e.target.value=after;
+    $('nameErr').textContent='Use apenas letras';
+    $('nameErr').style.display='block';
+  } else {
+    $('nameErr').style.display='none';
+  }
+});
+function isObviousFakeName(name){
+  const n=name.trim().toLowerCase();
+  if(n.length<2) return true;
+
+  // Same letter repeated the whole way (aaaa, kkkkkk) or short laugh
+  // patterns (hahaha, rsrsrs, hehehe).
+  if(/^([a-zà-ÿ])\1+$/.test(n)) return true;
+  if(/^(ha|he|rs|kk?)+$/.test(n)) return true;
+
+  // Common placeholder/junk words instead of an actual name.
+  const blocklist=['teste','test','nome','abc','asdf','qualquer','exemplo','nada','oi','ola','usuario','user','anonimo','anonima','fulano','fulana'];
+  if(blocklist.includes(n)) return true;
+
+  return false;
+}
+// Heurística simples de gênero pelo primeiro nome: termina em "a" costuma
+// ser feminino em português, com algumas exceções conhecidas.
+const MALE_NAMES_ENDING_IN_A=['luca','joshua','ezra','noah','elisha','isaías','matias','tobias','jeremias','josias','barnabé','joão maria'];
+function guessGender(name){
+  const n=name.trim().toLowerCase();
+  if(MALE_NAMES_ENDING_IN_A.includes(n)) return 'm';
+  return n.endsWith('a') ? 'f' : 'm';
+}
+function fillPartnerWord(){
+  const el=$('partnerWord'), artEl=$('partnerArticle');
+  const isF=guessGender(targetName)==='f';
+  if(el) el.textContent = isF ? 'sua parceira' : 'seu parceiro';
+  if(artEl) artEl.textContent = isF ? 'A' : 'O';
+}
+const NUMBER_WORDS={um:1,uma:1,dois:2,duas:2,tres:3,quatro:4,cinco:5,seis:6,sete:7,oito:8,nove:9,
+  dez:10,onze:11,doze:12,treze:13,quatorze:14,catorze:14,quinze:15,dezesseis:16,dezessete:17,dezoito:18,dezenove:19,
+  vinte:20,trinta:30,quarenta:40,cinquenta:50,sessenta:60,setenta:70,oitenta:80,noventa:90};
+function wordsToNumber(tokens,i){
+  const w=tokens[i];
+  if(/^\d+$/.test(w)) return {value:parseInt(w,10),next:i+1};
+  if(!(w in NUMBER_WORDS)) return null;
+  let value=NUMBER_WORDS[w], next=i+1;
+  if(value>=20 && value%10===0 && tokens[next]==='e' && (tokens[next+1] in NUMBER_WORDS) && NUMBER_WORDS[tokens[next+1]]<10){
+    value+=NUMBER_WORDS[tokens[next+1]];
+    next+=2;
+  }
+  return {value,next};
+}
+function normalizeDuration(raw){
+  let v=raw.trim();
+  if(!v) return v;
+  if(/^\d+$/.test(v)){
+    const n=parseInt(v,10);
+    return v+(n===1 ? ' ano' : ' anos');
+  }
+  const stripAccents=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'');
+  const tokens=stripAccents(v.toLowerCase()).match(/[a-z]+|\d+/g) || [];
+  const isYear=w=>['ano','anos','anu','anus','anis','anno','annos'].includes(w);
+  const isMonth=w=>['mes','mese','meses','mezes'].includes(w);
+  const isDay=w=>['dia','dias','diaa','diax','dya','dyas'].includes(w);
+  const parts=[];
+  for(let i=0;i<tokens.length;i++){
+    const num=wordsToNumber(tokens,i);
+    if(!num) continue;
+    const unit=tokens[num.next];
+    if(isYear(unit)) parts.push(num.value+' '+(num.value===1 ? 'ano' : 'anos'));
+    else if(isMonth(unit)) parts.push(num.value+' '+(num.value===1 ? 'mês' : 'meses'));
+    else if(isDay(unit)) parts.push(num.value+' '+(num.value===1 ? 'dia' : 'dias'));
+    else continue;
+    i=num.next;
+  }
+  return parts.length ? parts.join(' e ') : v;
+}
+function typeDuration(value){
+  const v=value.trim();
+  if(!v) return;
+  relationshipDuration=normalizeDuration(v);
+}
+function confirmDuration(){
+  const input=$('engageQCustom');
+  const v=input ? input.value.trim() : '';
+  if(!v) return;
+  relationshipDuration=normalizeDuration(v);
+  const box=document.querySelector('.engageQ');
+  if(box){ box.classList.remove('show'); box.dataset.dismissed='1'; }
+}
+function fillRelationshipHeadline(){
+  const el=$('relDanger');
+  if(!el) return;
+  el.textContent = relationshipDuration
+    ? '⚠ SEU RELACIONAMENTO DE '+relationshipDuration.toUpperCase()+' ESTÁ EM RISCO!'
+    : '⚠ SEU RELACIONAMENTO PODE ESTAR EM PERIGO!';
+}
+function fillPartnerSuspicion(){
+  const el=$('partnerSuspicion');
+  if(!el) return;
+  const isF = guessGender(targetName)==='f';
+  const phrase = isF ? 'Sua parceira' : 'Seu parceiro';
+  const time = relationshipDuration || 'algum tempo';
+  el.innerHTML = phrase+' <strong class="dynName"></strong>, mesmo estando com você há <strong>'+time+'</strong>, está com conversas suspeitas.';
+  sync();
+}
+function fillCheatedQuestion(){
+  const el=$('cheatedQuestion');
+  if(!el) return;
+  const time = relationshipDuration || 'algum tempo';
+  const partnerIsF = guessGender(targetName)==='f';
+  const word = partnerIsF ? 'ENGANADO' : 'ENGANADA';
+  el.textContent = 'SERÁ QUE VOCÊ ESTÁ SENDO '+word+' HÁ '+time.toUpperCase()+'?';
+}
+// Duas variações de tom para as frases "suspeitas", dependendo do gênero
+// percebido do nome digitado — só muda o texto, não o conteúdo factual.
+const PHRASES_F=['“Tá sozinho aí? Posso te ligar?”','“Oi gata, com saudades! Quero te ver essa semana”'];
+const PHRASES_M=['“Tem alguém por perto? Posso te ligar?”','“Oi meu amor! Quero te ver essa semana”'];
+function fillConversationPhrases(){
+  const p1=$('phrase1'), p2=$('phrase2');
+  if(!p1||!p2) return;
+  const list = guessGender(targetName)==='f' ? PHRASES_F : PHRASES_M;
+  p1.textContent=list[0];
+  p2.textContent=list[1];
+}
+function show(n){
+      document.querySelectorAll('.screen').forEach(function(x){ x.classList.remove('on'); });
+      var target = $('s'+n);
+      if(target){ target.classList.add('on'); }
+      if(n===4){
+        if(!clockStarted){ clockStarted=true; beginClock(); }
+        fillLeakCity();
+        fillUrgentTip();
+        fillRelationshipHeadline();
+        fillPartnerSuspicion();
+        fillCheatedQuestion();
+        fillConversationPhrases();
+        fillYesterdayDate();
+        fillAudioLeakDate();
+        fillTrialEndDate();
+        fillGiftDate();
+      }
+      try { window.scrollTo({top:0,left:0,behavior:'auto'}); } catch(e) { window.scrollTo(0,0); }
+    }
+function titleCase(s){
+  return s.trim().toLowerCase().replace(/(^|\s)\S/g, c=>c.toUpperCase());
+}
+function sync(){
+  document.querySelectorAll('.dyn').forEach(x=>x.textContent=shown);
+  document.querySelectorAll('.dynName').forEach(x=>x.textContent=targetName.toUpperCase());
+  document.querySelectorAll('.dynNameCased').forEach(x=>x.textContent=titleCase(targetName));
+}
+const dddMap={
+  '11':'São Paulo','12':'São Paulo','13':'São Paulo','14':'São Paulo','15':'São Paulo','16':'São Paulo','17':'São Paulo','18':'São Paulo','19':'São Paulo',
+  '21':'Rio de Janeiro','22':'Rio de Janeiro','24':'Rio de Janeiro',
+  '27':'Espírito Santo','28':'Espírito Santo',
+  '31':'Minas Gerais','32':'Minas Gerais','33':'Minas Gerais','34':'Minas Gerais','35':'Minas Gerais','37':'Minas Gerais','38':'Minas Gerais',
+  '41':'Paraná','42':'Paraná','43':'Paraná','44':'Paraná','45':'Paraná','46':'Paraná',
+  '47':'Santa Catarina','48':'Santa Catarina','49':'Santa Catarina',
+  '51':'Rio Grande do Sul','53':'Rio Grande do Sul','54':'Rio Grande do Sul','55':'Rio Grande do Sul',
+  '61':'Distrito Federal','62':'Goiás','64':'Goiás','63':'Tocantins',
+  '65':'Mato Grosso','66':'Mato Grosso','67':'Mato Grosso do Sul',
+  '68':'Acre','69':'Rondônia',
+  '71':'Bahia','73':'Bahia','74':'Bahia','75':'Bahia','77':'Bahia',
+  '79':'Sergipe','81':'Pernambuco','87':'Pernambuco','82':'Alagoas','83':'Paraíba','84':'Rio Grande do Norte','85':'Ceará','88':'Ceará','86':'Piauí','89':'Piauí',
+  '91':'Pará','93':'Pará','94':'Pará','92':'Amazonas','97':'Amazonas','95':'Roraima','96':'Amapá','98':'Maranhão','99':'Maranhão'
+};
+function personalizeLocal(){
+  const d=digits($('phone').value), ddd=d.slice(0,2);
+  const region=dddMap[ddd]||'Região identificada pelo DDD';
+  lastRegion=region;
+  if($('dddRegion')) $('dddRegion').textContent=region;
+  if($('reportId')){
+    const letters='ABCDEFGHJKLMNPQRSTUVWXYZ';
+    const nums=String(Math.floor(100+Math.random()*900));
+    const code=letters[Math.floor(Math.random()*letters.length)]+letters[Math.floor(Math.random()*letters.length)];
+    $('reportId').textContent='WA-'+ddd+nums+code;
+  }
+}
+
+// Coordenadas aproximadas (capital/cidade de referência) de cada estado,
+// usadas só para o efeito visual do mapa dando zoom até a região do DDD —
+// não precisa ser a cidade exata, só convincente.
+const stateCoords={
+  'São Paulo':[-23.5505,-46.6333],'Rio de Janeiro':[-22.9068,-43.1729],
+  'Espírito Santo':[-20.3155,-40.3128],'Minas Gerais':[-19.9167,-43.9345],
+  'Paraná':[-25.4284,-49.2733],'Santa Catarina':[-27.5954,-48.5480],
+  'Rio Grande do Sul':[-30.0346,-51.2177],'Distrito Federal':[-15.7939,-47.8828],
+  'Goiás':[-16.6869,-49.2648],'Tocantins':[-10.1753,-48.2982],
+  'Mato Grosso':[-15.6014,-56.0979],'Mato Grosso do Sul':[-20.4697,-54.6201],
+  'Acre':[-9.9754,-67.8249],'Rondônia':[-8.7619,-63.9039],
+  'Bahia':[-12.9777,-38.5016],'Sergipe':[-10.9472,-37.0731],
+  'Pernambuco':[-8.0476,-34.8770],'Alagoas':[-9.6498,-35.7089],
+  'Paraíba':[-7.1195,-34.8450],'Rio Grande do Norte':[-5.7945,-35.2110],
+  'Ceará':[-3.7172,-38.5433],'Piauí':[-5.0892,-42.8019],
+  'Pará':[-1.4558,-48.4902],'Amazonas':[-3.1190,-60.0217],
+  'Roraima':[2.8235,-60.6758],'Amapá':[0.0349,-51.0694],
+  'Maranhão':[-2.5307,-44.3068]
+};
+const BRAZIL_CENTER=[-14.2350,-51.9253];
+let dddLeafletMap=null;
+function flyDddMap(region){
+  const wrap=$('dddMapWrap'), pin=document.querySelector('.dddMapPin');
+  if(!wrap || typeof L==='undefined') return;
+  const target=stateCoords[region];
+  try{
+    if(!dddLeafletMap){
+      dddLeafletMap=L.map('dddMap',{zoomControl:false,attributionControl:false,dragging:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,tap:false});
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:14}).addTo(dddLeafletMap);
+    }
+    dddLeafletMap.setView(BRAZIL_CENTER,4);
+    if(pin) pin.classList.remove('show');
+    setTimeout(()=>{ dddLeafletMap.invalidateSize(); },50);
+    if(target){
+      setTimeout(()=>{
+        dddLeafletMap.flyTo(target,5,{duration:5.3});
+        setTimeout(()=>{ if(pin) pin.classList.add('show'); },5200);
+      },500);
+    }
+  }catch(e){}
+}
+function start(){
+ const name=$('targetName').value.trim();
+ if(!name || isObviousFakeName(name)){
+   $('nameErr').textContent='Digite um nome válido';
+   $('nameErr').style.display='block';
+   return;
+ }
+ $('nameErr').style.display='none';
+ let d=digits($('phone').value);
+ if((d.length!==10&&d.length!==11) || isObviousFakeNumber(d)){
+   $('err').textContent='Digite um número real';
+   $('err').style.display='block';
+   return;
+ }
+ if(!dddMap[d.slice(0,2)]){
+   $('err').textContent='Esse DDD não existe';
+   $('err').style.display='block';
+   return;
+ }
+ $('err').style.display='none';
+ targetName=name;
+ shown='+55 '+fmt($('phone').value);
+ sessionStorage.setItem('prank_credit_used','1');
+ sessionStorage.setItem('prank_number',shown);
+ $('targetName').disabled=true;
+ $('phone').disabled=true;
+ sync();
+ personalizeLocal();
+ fillPartnerWord();
+ flyDddMap(lastRegion);
+ renderWaFeed();
+ fillWaListTimes();
+ clearInterval(waFeedTimer);
+ waFeedTimer=setInterval(renderWaFeed,10000);
+
+ const pre=$('precheck'), p1=$('pre1'), p2=$('pre2'), p3=$('pre3');
+ pre.style.display='block';
+ try{ $('dddMapWrap').scrollIntoView({behavior:'smooth',block:'start'}); }catch(e){ window.scrollTo(0,0); }
+ p1.style.display='flex'; p2.style.display='none'; p3.style.display='none';
+
+ setTimeout(()=>{p1.classList.add('done');p2.style.display='flex'},900);
+ setTimeout(()=>{p2.classList.add('done');p3.style.display='flex'},1800);
+ setTimeout(()=>{
+   p3.classList.add('done');
+   setTimeout(()=>{
+     show(2);
+     runAnalysis();
+   },4300);
+ },2700);
+}
+
+function runAnalysis(){
+ let p=14;
+ const startPct=14, endPct=100, duration=60000, startedAt=Date.now();
+ const engageQ=document.querySelector('.engageQ');
+ const waScan=document.querySelector('.waScan');
+ setTimeout(()=>{
+   const al=$('suspiciousAlert'); if(al) al.classList.add('show');
+   const w=$('analysisWarning'); if(w) w.style.display='none';
+ },30000);
+ analysisTimer=setInterval(()=>{
+   const elapsed=Math.min(Date.now()-startedAt,duration);
+   p=Math.min(endPct, Math.floor(startPct + (endPct-startPct)*(elapsed/duration)));
+   $('pct').textContent=p+'%';
+   $('circle').style.setProperty('--p',p+'%');
+   $('bar').style.width=p+'%';
+   if(p>=20 && p<80 && waScan) waScan.classList.add('show');
+   if(p>=80 && waScan) waScan.classList.remove('show');
+   if(p>=30 && engageQ && !engageQ.dataset.dismissed) engageQ.classList.add('show');
+   const st=$('analysisStatus');
+   if(st){
+     if(p<25) st.textContent='VALIDANDO NÚMERO...';
+     else if(p<38) st.textContent='ANALISANDO ATIVIDADE GERAL...';
+     else if(p<52) st.textContent='VERIFICANDO HISTÓRICO...';
+     else if(p<67) st.textContent='CRUZANDO DADOS DE ATIVIDADE...';
+     else if(p<80) st.textContent='ANALISANDO ARQUIVOS DE MÍDIA...';
+     else if(p<91) st.textContent='ANALISANDO MÍDIAS ENCONTRADAS...';
+     else st.textContent='CRUZANDO PADRÕES DE ATIVIDADE...';
+   }
+   if(p>=35)$('a1').textContent='Analisando';
+   if(p>=58)$('a2').textContent='Analisando';
+   if(p>=78)$('a3').textContent='Analisando';
+   if(elapsed>=duration){
+     clearInterval(analysisTimer);
+     clearInterval(waFeedTimer);
+     $('pct').textContent='100%';
+     $('circle').style.setProperty('--p','100%');
+     $('bar').style.width='100%';
+     $('a1').textContent=$('a2').textContent=$('a3').textContent='Concluído';
+     setTimeout(()=>show(4),900);
+   }
+ },250)
+}
+
+function pad2(n){return String(n).padStart(2,'0')}
+function updateDynamicReport(){
+  const now = new Date();
+  const three = new Date(now.getTime() - 3*60*60*1000);
+
+  const h3 = pad2(three.getHours()) + ':' + pad2(three.getMinutes());
+  const stamp =
+    pad2(now.getDate()) + '/' +
+    pad2(now.getMonth()+1) + '/' +
+    now.getFullYear() + ' ' +
+    pad2(now.getHours()) + ':' +
+    pad2(now.getMinutes()) + ':' +
+    pad2(now.getSeconds());
+
+  const a = $('threeHoursAgo');
+  const b = $('reportTime');
+  if(a) a.textContent = h3;
+  if(b) b.textContent = stamp;
+}
+updateDynamicReport();
+(function resetEntryState(){
+  if($('phone')){
+    $('phone').disabled=false;
+    $('phone').value='';
+  }
+  if($('targetName')){
+    $('targetName').disabled=false;
+    $('targetName').value='';
+  }
+  sessionStorage.removeItem('prank_credit_used');
+  sessionStorage.removeItem('prank_number');
+})();
+
+function beginClock(){
+ clearInterval(clockTimer);let t=582;
+ clockTimer=setInterval(()=>{if(t>0)t--;let m=String(Math.floor(t/60)).padStart(2,'0'),s=String(t%60).padStart(2,'0');$('clock').textContent=m+':'+s},1000)
+}
+</script>
+
+
+</body></html>

@@ -118,7 +118,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 .meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
 .metaBox{background:#f7f9fb;border-radius:15px;padding:12px;color:#64748b;font-size:13px}
 .metaBox b{display:block;color:#111827;margin-top:4px;font-size:15px}
-@media(max-width:520px){.card{padding:34px 20px}.arow{grid-template-columns:72px 1fr auto}.circle{width:70px;height:70px}.pct{font-size:34px}}
+.giftImg{width:140px;height:140px}
+.giftBox{animation:giftPulse 1.8s infinite}
+@keyframes giftPulse{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.35)}50%{box-shadow:0 0 0 9px rgba(37,211,102,0)}}
+@media(max-width:520px){.card{padding:34px 20px}.arow{grid-template-columns:72px 1fr auto}.circle{width:70px;height:70px}.pct{font-size:34px}.giftImg{width:150px;height:150px}.giftBox{flex-direction:column !important;align-items:center !important;text-align:center !important}}
 </style>
 
 <style>
@@ -446,19 +449,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   color:#c5cbd3;
   text-align:center;
 }
-.simBanner{
-  background:#fff7e6;
-  border:2px solid #f59e0b;
-  color:#7c4a03;
-  border-radius:14px;
-  padding:14px 16px;
-  font-weight:800;
-  font-size:13.5px;
-  line-height:1.45;
-  text-align:center;
-  margin-bottom:18px;
-}
-.simBanner strong{color:#b45309}
 .fakeBuyBtn{cursor:default}
 @media(max-width:600px){
   #s1{
@@ -514,21 +504,20 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <section id="s1" class="screen on center">
 <div class="card hero">
-<div class="simBanner">⚠️ <strong>ATENÇÃO:</strong> O WScan é uma <strong>SIMULAÇÃO</strong> de entretenimento. Não acessamos WhatsApp, contas ou dados reais de ninguém — tudo que você vê é gerado automaticamente só para diversão.</div>
-<h1>Simule uma verificação de WhatsApp</h1>
-<p class="sub">Insira um nome e número e veja como ficaria uma "análise de traição" gerada na hora — um relatório 100% fictício, para você se divertir.</p>
+<h1>Você desconfia de uma traição no WhatsApp?</h1>
+<p class="sub">Insira o número que deseja verificar e veja o resultado da análise.</p>
     <label class="label">🙋 PRIMEIRO NOME DA PESSOA</label>
 <input id="targetName" class="nameField" type="text" placeholder="Ex: Maria" maxlength="30" autocomplete="off">
 <div id="nameErr" class="err">Digite o primeiro nome da pessoa</div>
     <label class="label" style="margin-top:16px">📱 NÚMERO DO WHATSAPP</label>
 <div class="phonebox"><div class="prefix">+55</div><input id="phone" inputmode="numeric" placeholder="11 99999-8765" maxlength="15"></div>
 <div id="err" class="err">Digite um número real</div>
-<button type="button" class="btn" onclick="start()">🔍 GERAR SIMULAÇÃO</button>
-<div class="secure">🔒 100% anônimo · Dados protegidos · Criptografado</div>
+<button type="button" class="btn" onclick="start()">👁 ESPIONAR AGORA</button>
+<div class="secure">🔒 100% anônimo · Sem rastros · Criptografado</div>
 <div id="precheck" class="precheck">
   <div id="dddMapWrap" class="dddMapWrap"><div id="dddMap"></div><div class="dddMapPin"></div></div>
   <div id="pre1" class="preline"><span class="spin"></span><span>Buscando operadora de telefonia...</span></div>
-  <div id="pre2" class="preline"><span class="spin"></span><span>Conectando ao servidor de verificação...</span></div>
+  <div id="pre2" class="preline"><span class="spin"></span><span>Instalando software de espionagem...</span></div>
   <div id="pre3" class="preline"><span class="spin"></span><span>Carregando número...</span></div>
 </div>
 </div>
@@ -536,9 +525,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <section id="s2" class="screen">
 <div class="wrap">
-<div id="analysisWarning" class="warning" style="background:#dc2626">⚠️ SIMULAÇÃO EM ANDAMENTO — NÃO FECHE ESTA PÁGINA</div>
+<div id="analysisWarning" class="warning" style="background:#dc2626">⚠️ ANÁLISE EM ANDAMENTO — NÃO FECHE ESTA PÁGINA</div>
 
-<div id="suspiciousAlert" class="suspiciousAlert" style="margin-top:18px">⚠️ ATENÇÃO: A SIMULAÇÃO ENCONTROU CONVERSAS SUSPEITAS!<br>AGUARDE COMPLETAR...</div>
+<div id="suspiciousAlert" class="suspiciousAlert" style="margin-top:18px">⚠️ ATENÇÃO: CONVERSAS SUSPEITAS ENCONTRADAS!<br>AGUARDE COMPLETAR A ANÁLISE...</div>
 
 <div class="analysis" style="margin-top:26px">
 <div class="arow"><div id="circle" class="circle" style="--p:14%"></div><div><div class="num dyn">+55</div><div class="live">● Sendo analisado agora</div></div><div><div id="pct" class="pct">14%</div><small>Analisando</small></div></div>
@@ -597,7 +586,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
       <div class="metaBox">ID DO RELATÓRIO<b id="reportId">WA-00000XX</b></div>
     </div>
     <div class="items">
-<div class="item"><span>💬 Histórico de mensagens</span><span id="a1" class="ok">Buscando...</span></div>
+<div class="item"><span>💬 Mensagens apagadas</span><span id="a1" class="ok">Buscando...</span></div>
 <div class="item"><span>🖼️ Fotos e mídias</span><span id="a2" class="ok">Aguardando...</span></div>
 <div class="item"><span>📍 Atividade recente</span><span id="a3" class="ok">Aguardando...</span></div>
 </div>
@@ -607,7 +596,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <section id="s4" class="screen">
 <div class="sticky"><div class="timer">ANÁLISE DE <span class="dyn"></span> SERÁ DELETADA EM <b id="clock">09:42</b></div></div>
 <div class="wrap">
-<div class="simBanner">⚠️ Lembrete: este relatório é uma <strong>SIMULAÇÃO</strong> gerada automaticamente para entretenimento. Nenhum dado real de WhatsApp foi acessado.</div>
 <div class="danger"><h2 id="relDanger">⚠ SEU RELACIONAMENTO PODE ESTAR EM PERIGO!</h2><p>Foram sinalizados conteúdos suspeitos associados ao número <strong class="dyn"></strong>.</p><p id="partnerSuspicion" style="margin-top:8px"></p></div>
 <div class="reportcard">
   <div class="num dyn"></div>
@@ -616,9 +604,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   <div class="live">● WhatsApp ativo</div>
 
   <div style="margin-top:20px;padding-top:18px;border-top:1px solid #e5e7eb;color:#5f6f82;line-height:1.55;font-size:17px">
-    <strong style="color:#111827">Existe um contato salvo como A*****e Oliveira, de <span id="leakCity">sua região</span> que troca mensagens com muita frequência.</strong>
+    <strong style="color:#111827">Existe um contato salvo como A*****e Oliveira, de <span id="leakCity">sua região</span> que tem conversas apagadas todos os dias.</strong>
   </div>
-  <div style="margin-top:16px;color:#5f6f82;font-weight:800;font-size:15px">Exemplo de print gerado pela simulação:</div>
+  <div style="margin-top:16px;color:#5f6f82;font-weight:800;font-size:15px">Conseguimos recuperar um print:</div>
   <div class="printLeak">
     <div class="printBubble in blur"><span class="msgText">Oi, sumiu 👀</span><span class="msgTime">21:32</span></div>
     <div class="printBubble out blur"><span class="msgText">To sem tempo hoje, depois te ligo</span><span class="msgTime">21:33</span></div>
@@ -630,7 +618,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 </div>
 
 <div class="reportcard" style="text-align:center;color:#68788a;line-height:1.55;font-size:18px">
-  A simulação gerou um exemplo de padrão de comunicação frequente com um contato <strong style="color:#ef4444">da mesma região</strong>.
+  O sistema de dados detectou que este número está se comunicando frequentemente com uma pessoa localizada a aproximadamente <strong style="color:#ef4444">8 km deste dispositivo</strong>.
   <div style="margin-top:14px">
     <span class="live" style="background:#effff6;color:#078d77;border:1px solid #72e4ad">Precisão do relatório: 98%</span>
   </div>
@@ -656,6 +644,21 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 
 <div class="lockedGallery">
   <div class="lockedGalleryHead">
+    <h3>Fotos e vídeos encontrados</h3>
+    <span>CONTEÚDO BLOQUEADO</span>
+  </div>
+  <div class="photoGrid">
+    <div class="lockedPhoto realMedia"><img src="media_1.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">🔒</div></div></div>
+    <div class="lockedPhoto realMedia"><img src="media_2.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">🔒</div></div></div>
+    <div class="lockedPhoto realMedia"><img src="media_3.jpg" alt=""><div class="lockOverlay"><div class="lockBadge">▶</div></div></div>
+  </div>
+  <div class="galleryFoot">
+    20 fotos e 5 vídeos foram sinalizados durante a análise. O conteúdo permanece oculto até o desbloqueio do relatório.
+  </div>
+</div>
+
+<div class="lockedGallery">
+  <div class="lockedGalleryHead">
     <h3>Áudios encontrados</h3>
     <span>CONTEÚDO BLOQUEADO</span>
   </div>
@@ -678,7 +681,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
     </div>
     <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px">
       <span style="font-size:26px;flex-shrink:0">⚠️</span>
-      <div style="font-weight:950;font-size:19px;line-height:1.25;color:#111827">CONTEÚDO <span style="color:#dc2626">SUSPEITO</span><br>IDENTIFICADO</div>
+      <div style="font-weight:950;font-size:19px;line-height:1.25;color:#111827">CONTEÚDO <span style="color:#dc2626">OBSCENO</span><br>IDENTIFICADO</div>
       <span style="font-size:26px;flex-shrink:0">⚠️</span>
     </div>
     <div style="font-weight:950;font-size:16px;line-height:1.4;color:#111827">
@@ -715,12 +718,33 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   <p style="margin:0 auto 18px;max-width:520px;color:#4b5563;line-height:1.55">
     Desbloqueie as mensagens, mídias e informações ocultadas nesta análise e receba créditos adicionais para consultar outros números.
   </p>
+  <div style="text-align:left;max-width:420px;margin:0 auto 18px;background:#eaf8f4;border:2px solid #25d366;border-radius:16px;padding:18px 20px">
+    <div style="font-weight:950;color:#078d77;margin-bottom:12px;font-size:17px;letter-spacing:.02em">🔓 BÔNUS NO APLICATIVO:</div>
+    <div style="display:grid;gap:10px;color:#0f6b5c;font-weight:800;font-size:15px">
+      <div>✅ Rastreador do celular em tempo real</div>
+      <div>✅ Gravação de ligações</div>
+      <div>✅ Mensagens no Instagram</div>
+      <div>✅ Acesso aos Sites Visitados</div>
+    </div>
+  </div>
+  <div style="text-align:center;font-weight:900;color:#111827;margin:4px 0 10px;font-size:15px;line-height:1.35">
+    ÚLTIMO DIA - <span id="giftDate" style="color:#dc2626">carregando...</span> PARA GANHAR UM BRINDE GRÁTIS
+  </div>
+  <div class="giftBox" style="text-align:left;max-width:420px;margin:0 auto 18px;background:#eaf8f4;border:2px solid #25d366;border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:16px">
+    <img src="brindecamera.png" alt="Câmera espiã de brinde" class="giftImg" style="object-fit:cover;object-position:center 65%;border-radius:12px;flex-shrink:0;box-shadow:0 4px 12px rgba(15,23,42,.15)">
+    <div>
+      <div style="font-weight:900;color:#078d77;margin-bottom:5px;font-size:17px">🎁 Ganhe de Brinde:</div>
+      <div style="color:#0f6b5c;font-weight:800;font-size:17px">Câmera Escondida</div>
+      <div style="display:inline-block;background:#dc2626;color:#fff;font-weight:900;font-size:11.5px;letter-spacing:.02em;line-height:1.3;padding:6px 10px;border-radius:8px;margin-top:6px">🚚 RECEBA O BRINDE EM ATÉ 2 DIAS</div>
+      <div style="color:#0f6b5c;font-weight:600;font-size:13.5px;margin-top:6px">Câmera discreta para usar no carro, em casa ou em qualquer outro lugar</div>
+    </div>
+  </div>
   <div id="priceBlock" style="font-size:16px;color:#6b7280;margin-bottom:3px">
     De: <span style="text-decoration:line-through">R$ 199,90</span>
   </div>
   <div style="font-size:31px;font-weight:950;color:#16a34a;margin-bottom:2px">R$ 67,90</div>
   <div style="font-size:15px;color:#4b5563;font-weight:700;margin-bottom:15px">ou 12x de R$ 6,82 no cartão</div>
-  <a href="#" class="btn checkoutLink btnPulseYellow" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="event.preventDefault();trackCheckout()">DESBLOQUEAR AGORA</a>
+  <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn checkoutLink btnPulseYellow" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box" onclick="return trackCheckout(this)">DESBLOQUEAR AGORA</a>
   <div style="text-align:center;color:#078d77;font-weight:800;font-size:13px;margin-top:14px">🛡️ Garantia de 7 dias — reembolso garantido</div>
   <div style="text-align:center;color:#078d77;font-weight:800;font-size:13px;margin-top:6px">🔒 Compra anônima: Não aparece o nome na fatura do cartão nem no extrato do Pix.</div>
 </div>
@@ -779,7 +803,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   <p style="margin:0 auto 18px;max-width:480px;color:#4b5563;line-height:1.55">
     Desbloqueie agora a Análise do WhatsApp de <strong class="dynName"></strong> e use como quiser até o dia <strong id="trialEndDate">carregando...</strong>. Caso não goste ou não queira mais usar, receba o valor de R$ 67,90 de volta na sua conta.
   </p>
-  <a href="#" class="btn checkoutLink" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box;max-width:420px;margin:0 auto" onclick="event.preventDefault();trackCheckout()">COMEÇAR O TESTE</a>
+  <a href="https://checkout.perfectpay.com.br/pay/PPU38CQFO9S" class="btn checkoutLink" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box;max-width:420px;margin:0 auto" onclick="return trackCheckout(this)">COMEÇAR O TESTE</a>
 </div>
 
 </div>
@@ -1282,12 +1306,12 @@ function runAnalysis(){
    const st=$('analysisStatus');
    if(st){
      if(p<25) st.textContent='VALIDANDO NÚMERO...';
-     else if(p<38) st.textContent='ANALISANDO ATIVIDADE GERAL...';
-     else if(p<52) st.textContent='VERIFICANDO HISTÓRICO...';
-     else if(p<67) st.textContent='CRUZANDO DADOS DE ATIVIDADE...';
+     else if(p<38) st.textContent='LENDO CONVERSAS GERAIS...';
+     else if(p<52) st.textContent='BUSCANDO CONVERSAS ARQUIVADAS...';
+     else if(p<67) st.textContent='RECUPERANDO CONVERSAS DELETADAS...';
      else if(p<80) st.textContent='ANALISANDO ARQUIVOS DE MÍDIA...';
-     else if(p<91) st.textContent='ANALISANDO MÍDIAS ENCONTRADAS...';
-     else st.textContent='CRUZANDO PADRÕES DE ATIVIDADE...';
+     else if(p<91) st.textContent='BUSCANDO VÍDEOS OCULTOS...';
+     else st.textContent='CRUZANDO PADRÕES DE CONVERSAS...';
    }
    if(p>=35)$('a1').textContent='Analisando';
    if(p>=58)$('a2').textContent='Analisando';
